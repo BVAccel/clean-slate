@@ -1,5 +1,5 @@
 const screenshot = require('./screenshot');
 
-console.log(`running tests`);
+console.log(`running tests.`);
 
 screenshot();
