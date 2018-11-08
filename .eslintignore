@@ -1,3 +1,6 @@
+archive/
+dist/
 src/assets/static/
 src/assets/scripts/_*
-*.js
+test/**/*.js
+slate.config.js

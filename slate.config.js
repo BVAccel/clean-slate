@@ -55,6 +55,7 @@ const rules = [
 ];
 
 module.exports = {
+  'eslint.config': '.eslintrc.js',
   'cssVarLoader.liquidPath': [
     'src/snippets/base/css-variables.liquid'
   ],

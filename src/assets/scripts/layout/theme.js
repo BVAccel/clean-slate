@@ -13,15 +13,14 @@ import { focusHash, bindInPageLinks } from '@shopify/theme-a11y';
 
 import { $$ } from '../common/Helpers';
 
-// import { configureStore } from '../store/configureStore';
-// import reducer from '../reducer';
-// import configureStore from '../store';
+// import { configureStore } from '../_store/configureStore';
+// import reducer from '../_store/reducer';
+// import configureStore from '../_store';
 
 // const store = configureStore();
 
 
 import QuantitySelect from '../components/QuantitySelect';
-
 
 const QuantitySelects = $$('[data-quantity-select]').map(node => {
   return new QuantitySelect(node);
@@ -70,3 +69,4 @@ window.addEventListener('load', () => {
 // }
 
 console.log(`hello from theme.js!`);
+alert(`hello from theme.js`);
