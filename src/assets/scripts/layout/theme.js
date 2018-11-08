@@ -15,9 +15,9 @@ import { $$ } from '../common/Helpers';
 
 // import { configureStore } from '../store/configureStore';
 // import reducer from '../reducer';
-import configureStore from '../store';
+// import configureStore from '../store';
 
-const store = configureStore();
+// const store = configureStore();
 
 
 import QuantitySelect from '../components/QuantitySelect';

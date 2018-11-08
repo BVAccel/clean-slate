@@ -1,6 +1,6 @@
-export const getItemList = store => {
-  return store.getState().items.all
-};
+// export const getItemList = store => {
+//   return store.getState().items.all
+// };
 
 // Game
 // export function isRunning (store) {

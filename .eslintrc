@@ -3,9 +3,6 @@
     "plugin:shopify/esnext",
     "plugin:shopify/jquery"
   ],
-  "env": {
-    "jest": true
-  },
   "rules": {
     "babel/no-invalid-this": 0,
     "import/no-anonymous-default-export": 0,
@@ -13,7 +10,8 @@
     "no-alert": 0,
     "no-console": 0,
     "no-new": 0,
-    "node/shebang": 0
+    "node/shebang": 0,
+    "func-style": ["error", "expression"]
   },
   "globals": {
     "document": true,
