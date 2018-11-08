@@ -1,11 +1,5 @@
 {
   "rules": {
     "no-alert": 0
-  },
-  "globals": {
-    "document": true,
-    "window": true,
-    "Shopify": true,
-    "theme": true
   }
 }

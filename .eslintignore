@@ -1,2 +1,3 @@
 src/assets/static/
 src/assets/scripts/_*
+*.js
