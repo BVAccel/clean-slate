@@ -68,3 +68,5 @@ window.addEventListener('load', () => {
 //     // initContainers();
 //   });
 // }
+
+console.log(`hello from theme.js!`);

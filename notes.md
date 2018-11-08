@@ -37,6 +37,7 @@
 * automated testing
 * uncss
 * personal/private pipeline for individual developers
+* codeclimate
 
 ## Pipelines
 
@@ -57,3 +58,27 @@
 * Deliver the application files to server
 * Restart the application on server
 * Notify you if any of the above actions fails
+
+
+# Deployments
+
+## Pull Requests:
+* happen while merging into _testing_ branch
+* are done for all _feature_ branches
+* need to figure out exactly how to deal with hotfixes
+
+* autoformatting code with eslint and stylelint?
+
+
+## Order of Review
+* automated testing
+* code review
+* qa
+* client
+
+## Release Branches
+* why are they necessary?
+
+> why do the features that are undecided need to hang around in staging? what if we cut new staging and testing branches after every release? and if the client wants to see something that's 3 months old, we just merge the feature branch into the new staging branch again
+
+after deploying a release, run script that sunsets staging and testing branches and cuts new staging and testing branches off of freshly deployed production branch
