@@ -11,7 +11,8 @@ const takeScreenshot = async () => {
     console.log(`branch is: ${branch}`);
     console.log(`id is: ${id}`);
 
-    const path = `./test/screenshot/images/${branch}/${id}.png`
+    // const path = `./test/screenshot/images/${branch}/${id}.png`
+    const path = `./test/screenshot/images/${id}.png`
     console.log(`path is: ${path}`);
 
     if (!url) {
@@ -21,12 +22,17 @@ const takeScreenshot = async () => {
     }
 
     console.log(`opening browser.`);
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage']
+    });
 
     console.log(`creating new page.`);
     const page = await browser.newPage();
 
-    console.log(`goign to ${url}.`);
+    console.log(`going to ${url}.`);
     await page.goto(url);
 
     console.log(`taking screenshot to ${path}.`);
