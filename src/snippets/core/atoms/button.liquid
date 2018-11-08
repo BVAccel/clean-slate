@@ -1,3 +1,12 @@
+{%- comment -%}
+
+  Arguments:
+
+    • content - required
+    • type
+
+{%- endcomment -%}
+
 <button
   class="oo-button {{ classes -}}"
   {%- if type -%}type="{{- type -}}"{%- endif -%}
@@ -6,41 +15,3 @@
   {{- content -}}
 
 </button>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: content,
-    _name: 'content',
-    _required: true -%}
-  {%- include 'argument',
-    _value: type,
-    _name: 'type',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'button' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <button
-    class="oo-button {{ classes -}}"
-    {%- if type -%}type="{{- type -}}"{%- endif -%}
-    {{ extra_attrs -}}>
-
-    {{- content -}}
-
-  </button>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

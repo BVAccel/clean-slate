@@ -1,3 +1,11 @@
+{%- comment -%}
+
+  Arguments:
+
+    • name - required
+
+{%- endcomment -%}
+
 <div class="oo-icon icon-{{- name }} {{ classes -}}" {{ extra_attrs -}}>
 
   {%- assign _icon_name = name | prepend: 'icon-' -%}
@@ -10,41 +18,3 @@
   {%- assign _icon_name = nil -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: name,
-    _name: 'name',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'icon' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-icon icon-{{- name }} {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- assign _icon_name = name | prepend: 'icon-' -%}
-
-    {%- include 'svg',
-      snippet: _icon_name,
-      classes: 'inside-oo-icon',
-      extra_attrs: '' -%}
-
-    {%- assign _icon_name = nil -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

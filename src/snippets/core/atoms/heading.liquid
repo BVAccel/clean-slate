@@ -1,42 +1,15 @@
+{%- comment -%}
+
+  Arguments:
+
+    • title - required
+    • level
+
+{%- endcomment -%}
+
 <h{%- unless level -%}2{% else %}{{- level -}}{%- endunless %}
   class="oo-heading {{ classes -}}" {{ extra_attrs -}}>
 
   {{- title -}}
 
 </h{%- unless level -%}2{% else %}{{- level -}}{%- endunless %}>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: title,
-    _name: 'title',
-    _required: true -%}
-  {%- include 'argument',
-    _value: level,
-    _name: 'level',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'heading' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <h{%- unless level -%}2{% else %}{{- level -}}{%- endunless %}
-    class="oo-heading {{ classes -}}" {{ extra_attrs -}}>
-
-    {{- title -}}
-
-  </h{%- unless level -%}2{% else %}{{- level -}}{%- endunless %}>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

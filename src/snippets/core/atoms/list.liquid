@@ -1,3 +1,11 @@
+{%- comment -%}
+
+  Arguments:
+
+    • content - required
+
+{%- endcomment -%}
+
 <ul class="oo-list {{ classes -}}" {{ extra_attrs -}}>
 
   {%- assign _list_array = content | remove_first: '-->' | split: '-->' -%}
@@ -13,44 +21,3 @@
   {%- assign _list_array = nil -%}
 
 </ul>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: content,
-    _name: 'content',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'list' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <ul class="oo-list {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- assign _list_array = content | remove_first: '-->' | split: '-->' -%}
-    {%- for _item in _list_array -%}
-
-      <li class="oo-list--item">
-
-        {{- _item -}}
-
-      </li>
-
-    {%- endfor -%}
-    {%- assign _list_array = nil -%}
-
-  </ul>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

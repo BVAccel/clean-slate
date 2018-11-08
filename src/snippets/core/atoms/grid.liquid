@@ -1,3 +1,11 @@
+{%- comment -%}
+
+  Arguments:
+
+    • items - required
+
+{%- endcomment -%}
+
 <div class="oo-grid {{ classes -}}" {{ extra_attrs -}}>
 
   {%- assign _items_array = items | remove_first: '-->' | split: '-->' -%}
@@ -9,40 +17,3 @@
   {%- assign _items_array = nil -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: items,
-    _name: 'items',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'grid' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-grid {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- assign _items_array = items | remove_first: '-->' | split: '-->' -%}
-    {% for _item in _items_array %}
-
-      {{ _item }}
-
-    {% endfor %}
-    {%- assign _items_array = nil -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

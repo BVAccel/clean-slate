@@ -1,36 +1,13 @@
+{%- comment -%}
+
+  Arguments:
+
+    • content - required
+
+{%- endcomment -%}
+
 <p class="oo-text {{ classes -}}" {{ extra_attrs -}}>
 
   {{- content -}}
 
 </p>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: content,
-    _name: 'content',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'text' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <p class="oo-text {{ classes -}}" {{ extra_attrs -}}>
-
-    {{- content -}}
-
-  </p>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

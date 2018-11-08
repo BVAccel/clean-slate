@@ -1,3 +1,19 @@
+{%- comment -%}
+
+  Arguments:
+
+    • resource - required
+    • size
+    • srcset
+    • sizes
+    • alt
+    • crop
+    • scale
+    • format
+    • lazyload
+
+{%- endcomment -%}
+
 {%- capture _src -%}
   {%- include 'img-url',
     resource: resource,
@@ -43,104 +59,3 @@
 {%- assign _srcset = nil -%}
 {%- assign _lqip_src = nil -%}
 {%- assign _sizes = nil -%}
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: resource,
-    _name: 'resource',
-    _required: true -%}
-  {%- include 'argument',
-    _value: size,
-    _name: 'size',
-    _required: false -%}
-  {%- include 'argument',
-    _value: srcset,
-    _name: 'srcset',
-    _required: false -%}
-  {%- include 'argument',
-    _value: sizes,
-    _name: 'sizes',
-    _required: false -%}
-  {%- include 'argument',
-    _value: alt,
-    _name: 'alt',
-    _required: false -%}
-  {%- include 'argument',
-    _value: crop,
-    _name: 'crop',
-    _required: false -%}
-  {%- include 'argument',
-    _value: scale,
-    _name: 'scale',
-    _required: false -%}
-  {%- include 'argument',
-    _value: format,
-    _name: 'format',
-    _required: false -%}
-  {%- include 'argument',
-    _value: lazyload,
-    _name: 'lazyload',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'image' -%}
-{%- endcapture -%}
-
-{%- capture _src -%}
-  {%- include 'img-url',
-    resource: resource,
-    size: size,
-    crop: crop,
-    scale: scale,
-    format: format -%}
-{%- endcapture -%}
-
-{%- capture _lqip_src -%}
-  {%- include 'lqip-img-url',
-    resource: resource,
-    size: size,
-    crop: crop,
-    scale: scale,
-    format: format -%}
-{%- endcapture -%}
-
-{%- capture _srcset -%}
-  {%- include 'srcset' with srcset,
-    resource: resource,
-    size: size -%}
-{%- endcapture -%}
-
-{%- capture _sizes -%}
-  {%- include 'sizes' with sizes, resource: resource -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <picture class="oo-image-wrapper {{ classes -}}" {{ extra_attrs -}}>
-
-    <img
-      class="oo-image {% unless lazyload -%}lazyload{%- endunless -%}"
-      data-src="{{- _src -}}"
-      data-srcset="{{- _srcset -}}"
-      alt="{%- if alt != blank %}{{- alt -}}{% elsif resource.alt != blank %}{{- resource.alt -}}{% endif -%}"
-      {%- if _lqip_src != blank -%}src="{{- _lqip_src -}}"{%- endif -%}
-      {%- if _sizes != blank -%}data-sizes="{{- _sizes -}}"{%- endif -%}>
-
-  </picture>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _src = nil -%}
-{%- assign _srcset = nil -%}
-{%- assign _lqip_src = nil -%}
-{%- assign _sizes = nil -%}
-{%- assign _errors = nil -%}
-{% endcomment %}
