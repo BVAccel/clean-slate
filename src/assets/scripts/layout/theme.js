@@ -69,4 +69,4 @@ window.addEventListener('load', () => {
 // }
 
 console.log(`hello from theme.js!`);
-// alert(`hello from theme.js`);
+alert(`hello from theme.js`);
