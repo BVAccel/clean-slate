@@ -1,3 +1,20 @@
+{% comment %}
+
+  Arguments:
+
+    • image
+    • size
+    • video
+    • content
+    • title
+    • subtitle
+    • button_one_text
+    • button_one_href
+    • button_two_text
+    • button_two_href
+
+{% endcomment %}
+
 <div class="oo-hero {{ classes -}}" {{ extra_attrs -}}>
 
   {%- if image != blank -%}
@@ -47,114 +64,3 @@
   {%- endif -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: image,
-    _name: 'image',
-    _required: false -%}
-  {%- include 'argument',
-    _value: size,
-    _name: 'size',
-    _required: false -%}
-  {%- include 'argument',
-    _value: video,
-    _name: 'video',
-    _required: false -%}
-  {%- include 'argument',
-    _value: content,
-    _name: 'content',
-    _required: false -%}
-  {%- include 'argument',
-    _value: title,
-    _name: 'title',
-    _required: false -%}
-  {%- include 'argument',
-    _value: subtitle,
-    _name: 'subtitle',
-    _required: false -%}
-  {%- include 'argument',
-    _value: button_one_text,
-    _name: 'button_one_text',
-    _required: false -%}
-  {%- include 'argument',
-    _value: button_one_href,
-    _name: 'button_one_href',
-    _required: false -%}
-  {%- include 'argument',
-    _value: button_two_text,
-    _name: 'button_two_text',
-    _required: false -%}
-  {%- include 'argument',
-    _value: button_two_href,
-    _name: 'button_two_href',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'hero' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-hero {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- if image != blank -%}
-
-      {%- include 'image',
-        resource: image,
-        size: size,
-        classes: 'inside-oo-hero',
-        extra_attrs: '' -%}
-
-    {%- elsif video != blank -%}
-
-      {%- include 'video',
-        src: video,
-        classes: 'inside-oo-hero',
-        extra_attrs: '' -%}
-
-    {%- else -%}
-
-      {{- content -}}
-
-    {%- endif -%}
-
-    {%- capture _heading_content -%}
-      {%- if subtitle != blank -%}
-        <div class="oo-heading--content">
-          {{ subtitle }}
-        </div>
-      {%- endif -%}
-    {%- endcapture -%}
-
-    {%- include 'header',
-      title: title,
-      level: 3,
-      content: _heading_content -%}
-
-    {%- if button_one_text != blank -%}
-      {%- include 'link',
-        href: button_one_href,
-        content: button_one_text -%}
-    {%- endif -%}
-
-    {%- if button_two_text != blank -%}
-      {%- include 'link',
-        href: button_two_href,
-        content: button_two_text -%}
-    {%- endif -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

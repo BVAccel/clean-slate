@@ -1,3 +1,13 @@
+{% comment %}
+
+  Arguments:
+
+    • option - required
+    • show_option_name
+    • show_selected_value
+
+{% endcomment %}
+
 <div
   class="oo-option-group group-{{- option.name | handle }} {{ classes -}}"
   data-option-group="{{- option.name -}}"
@@ -50,89 +60,3 @@
 
   {%- endfor -%}
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: option,
-    _name: 'option',
-    _required: true -%}
-  {%- include 'argument',
-    _value: show_option_name,
-    _name: 'show_option_name',
-    _required: false -%}
-  {%- include 'argument',
-    _value: show_selected_value,
-    _name: 'show_selected_value',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'option-group' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div
-    class="oo-option-group group-{{- option.name | handle }} {{ classes -}}"
-    data-option-group="{{- option.name -}}"
-    {{ extra_attrs -}}>
-
-    {%- capture _selected_value -%}
-      {%- unless show_selected_value == blank -%}
-        <div data-selected-value>{{ option.selected_value }}</div>
-      {%- endunless -%}
-    {%- endcapture -%}
-
-    {%- assign _title = option.name | append: ':' -%}
-
-    {%- unless show_option_name == blank -%}
-      {%- include 'header',
-        title: _title,
-        level: 3,
-        content: _selected_value,
-        classes: 'inside-oo-option-group',
-        extra_attrs: '' -%}
-    {%- endunless -%}
-    {%- assign _selected_value = nil -%}
-    {%- assign _title = nil -%}
-
-    {%- for _value in option.values -%}
-
-      {%- if option.selected_value == _value -%}
-        {%- assign _selected = 'checked' -%}
-      {%- endif -%}
-
-      {%- capture _classes -%}
-        oo-option-value inside-oo-option-group swatch-{{- _value | handle -}}
-      {%- endcapture -%}
-
-      {%- capture _extra_attrs -%}
-        data-option-value
-      {%- endcapture -%}
-
-      {%- include 'input-group',
-        type: 'radio',
-        name: option.name,
-        value: _value,
-        hide_input: true,
-        input_attrs: _selected,
-        classes: _classes,
-        extra_attrs: _extra_attrs -%}
-
-      {%- assign _selected = nil -%}
-      {%- assign _extra_attrs = nil -%}
-
-    {%- endfor -%}
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

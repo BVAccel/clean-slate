@@ -1,3 +1,16 @@
+{% comment %}
+
+  Arguments:
+
+    • type
+    • name
+    • value
+    • input_attrs
+    • hide_input
+    • hide_label
+
+{% endcomment %}
+
 {%- capture _id -%}
   {{- name | handle -}}-{{- value | handle -}}-{{- 'now' | date: '%N' | modulo: 9999 | plus: 1 -}}
 {%- endcapture -%}
@@ -33,84 +46,3 @@
   {%- assign _id = nil -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: type,
-    _name: 'type',
-    _required: false -%}
-  {%- include 'argument',
-    _value: name,
-    _name: 'name',
-    _required: false -%}
-  {%- include 'argument',
-    _value: value,
-    _name: 'value',
-    _required: false -%}
-  {%- include 'argument',
-    _value: input_attrs,
-    _name: 'input_attrs',
-    _required: false -%}
-  {%- include 'argument',
-    _value: hide_input,
-    _name: 'hide_input',
-    _required: false -%}
-  {%- include 'argument',
-    _value: hide_label,
-    _name: 'hide_label',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'input-group' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- capture _id -%}
-  {{- name | handle -}}-{{- value | handle -}}-{{- 'now' | date: '%N' | modulo: 9999 | plus: 1 -}}
-{%- endcapture -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-input-group {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- capture _input_class_string -%}
-      inside-oo-input-group {% if hide_input == true -%}u-visually-hidden{%- endif -%}
-    {%- endcapture -%}
-
-    {%- capture _label_class_string -%}
-      inside-oo-input-group {% if hide_label == true -%}u-visually-hidden{%- endif -%}
-    {%- endcapture -%}
-
-    {%- include 'input',
-      type: type,
-      name: name,
-      value: value,
-      id: _id,
-      classes: _input_class_string,
-      extra_attrs: input_attrs -%}
-
-    {%- assign _input_class_string = nil -%}
-
-    {%- include 'label',
-      for: _id,
-      content: value,
-      classes: _label_class_string,
-      extra_attrs: '' -%}
-
-    {%- assign _label_class_string = nil -%}
-
-    {%- assign _id = nil -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

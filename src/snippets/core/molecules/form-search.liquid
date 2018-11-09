@@ -1,3 +1,11 @@
+{% comment %}
+
+  Arguments:
+
+    • placeholder_text
+
+{% endcomment %}
+
 <form
   action="/search"
   method="get"
@@ -37,69 +45,3 @@
   {% assign _button_content = nil %}
 
 </form>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: placeholder_text,
-    _name: 'placeholder_text',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'form-search' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <form
-    action="/search"
-    method="get"
-    class="oo-form {{ classes -}}"
-    role="search"
-    data-form="search"
-    {{ extra_attrs -}}>
-
-    {%- capture _extra_attrs -%}
-      placeholder="{%- if placeholder_text != blank -%}{{ placeholder_text }}{%- else -%}search{%- endif -%}"
-    {%- endcapture -%}
-
-    {% include 'input',
-      type: 'search',
-      name: 'q',
-      value: '',
-      classes: 'inside-oo-form-search',
-      extra_attrs: _extra_attrs %}
-
-    {%- assign _extra_attrs = nil -%}
-
-    {% capture _button_content %}
-      {% include 'icon',
-        name: 'search',
-        classes: 'inside-oo-button',
-        value: '',
-        extra_attrs: '' %}
-      <span class="icon__fallback-text">Search</span>
-    {% endcapture %}
-
-    {% include 'button',
-      type: 'submit',
-      content: _button_content,
-      classes: 'inside-oo-form-search',
-      extra_attrs: ''  %}
-
-    {% assign _button_content = nil %}
-
-  </form>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-
-{% endcomment %}

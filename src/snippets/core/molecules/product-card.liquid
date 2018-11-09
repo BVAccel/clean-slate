@@ -1,3 +1,12 @@
+{% comment %}
+
+  Arguments:
+
+    • _product - required
+    • show_color_options
+
+{% endcomment %}
+
 <div
   class="oo-product-card {{ classes -}}"
   data-product-container="{{- _product.handle -}}"
@@ -56,91 +65,3 @@
 
   {%- assign _title_link_content_ = nil -%}
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: _product,
-    _name: '_product',
-    _required: true -%}
-  {%- include 'argument',
-    _value: show_color_options,
-    _name: 'show_color_options',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'product-card' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div
-    class="oo-product-card {{ classes -}}"
-    data-product-container="{{- _product.handle -}}"
-    {{ extra_attrs -}}>
-
-    {%- capture _image_link_content -%}
-      {%- include 'image',
-        resource: _product.featured_image,
-        size: '368x480',
-        crop: 'center' -%}
-    {%- endcapture -%}
-
-    {%- include 'link',
-      href: _product.url,
-      content: _image_link_content,
-      classes: '',
-      extra_attrs: '' -%}
-
-    {%- assign _image_link_content = nil -%}
-
-    {% unless _product.has_only_default_variant or show_color_options == false %}
-      {%- for _option in _product.options_with_values -%}
-        {%- assign _option_name = _option.name | handle -%}
-        {%- if _option_name == 'color' -%}
-          {%- assign _color_option_position = _option.position | minus: 1 -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {% include 'option-group',
-        option: _product.options_with_values[_color_option_position],
-        classes: '',
-        extra_attrs: '' %}
-    {% endunless %}
-
-    {%- capture _title_link_content -%}
-      {%- include 'header',
-        title: _product.title,
-        level: 3,
-        classes: '',
-        extra_attrs: '' -%}
-
-      {%- include 'price',
-        resource: _product,
-        compare_at_price: true,
-        range: true,
-        classes: '',
-        extra_attrs: '' -%}
-    {%- endcapture -%}
-
-    {%- include 'link',
-      href: _product.url,
-      content: _title_link_content,
-      classes: '',
-      extra_attrs: '' -%}
-
-    {%- assign _title_link_content_ = nil -%}
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

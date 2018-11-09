@@ -1,3 +1,12 @@
+{% comment %}
+
+  Arguments:
+
+    • icon - required
+    • text - required
+
+{% endcomment %}
+
 <div class="oo-icon-with-text {{ classes -}}" {{ extra_attrs -}}>
 
   {%- include 'icon',
@@ -11,46 +20,3 @@
     extra_attrs: '' -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: icon,
-    _name: 'icon',
-    _required: true -%}
-  {%- include 'argument',
-    _value: text,
-    _name: 'text',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'icon-with-text' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-icon-with-text {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- include 'icon',
-      name: icon,
-      classes: 'inside-oo-icon-with-text',
-      extra_attrs: '' -%}
-
-    {%- include 'text',
-      content: text,
-      classes: 'inside-oo-icon-with-text',
-      extra_attrs: '' -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign errors = nil -%}
-{% endcomment %}

@@ -1,3 +1,15 @@
+{% comment %}
+
+  Arguments:
+
+    • provider
+    • title
+    • subtitle
+    • button_text
+    • placeholder_text
+
+{% endcomment %}
+
 {%- capture _header_content -%}
   {%- include 'text', content: subtitle -%}
 {%- endcapture -%}
@@ -46,93 +58,3 @@
     content: button_text %}
 
 </form>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: provider,
-    _name: 'provider',
-    _required: false -%}
-  {%- include 'argument',
-    _value: title,
-    _name: 'title',
-    _required: false -%}
-  {%- include 'argument',
-    _value: subtitle,
-    _name: 'subtitle',
-    _required: false -%}
-  {%- include 'argument',
-    _value: button_text,
-    _name: 'button_text',
-    _required: false -%}
-  {%- include 'argument',
-    _value: placeholder_text,
-    _name: 'placeholder_text',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'form-newsletter-signup' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  {%- capture _header_content -%}
-    {%- include 'text', content: subtitle -%}
-  {%- endcapture -%}
-
-  {%- include 'header',
-    title: title,
-    level: 2,
-    content: _header_content -%}
-
-  {%- assign _header_content = nil -%}
-
-  <form
-    action=""
-    method=""
-    id=""
-    name=""
-    class="oo-form {{ classes -}}"
-    target="_blank"
-    novalidate
-    data-form="newsletter-signup"
-    {{ extra_attrs -}}>
-
-    {%- include 'input',
-      type: 'hidden',
-      name: 'hidden',
-      value: 'hidden',
-      id: '' -%}
-
-    {%- capture _input_attrs -%}
-      {%- if placeholder_text != blank -%}
-        placeholder="{{ placeholder_text }}"
-      {%- endif -%}
-    {%- endcapture -%}
-
-    {%- include 'input-group',
-      type: 'email',
-      name: 'email',
-      value: '',
-      input_attrs: _input_attrs,
-      hide_label: true -%}
-
-    {%- assign _input_attrs = nil -%}
-
-    {% include 'button',
-      type: 'submit',
-      content: button_text %}
-
-  </form>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

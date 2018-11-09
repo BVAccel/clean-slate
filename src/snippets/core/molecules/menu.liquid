@@ -1,3 +1,13 @@
+{% comment %}
+
+  Arguments:
+
+    • title - required
+    • list - required
+    • level
+
+{% endcomment %}
+
 <div class="oo-menu {{ classes -}}" {{ extra_attrs -}}>
 
   {%- include 'header',
@@ -12,51 +22,3 @@
     extra_attrs: '' -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: title,
-    _name: 'title',
-    _required: true -%}
-  {%- include 'argument',
-    _value: level,
-    _name: 'level',
-    _required: false -%}
-  {%- include 'argument',
-    _value: list,
-    _name: 'list',
-    _required: true -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'menu' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-menu {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- include 'header',
-      title: title,
-      level: level,
-      classes: 'inside-oo-menu',
-      extra_attrs: '' -%}
-
-    {%- include 'list',
-      content: list,
-      classes: 'inside-oo-menu',
-      extra_attrs: '' -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}

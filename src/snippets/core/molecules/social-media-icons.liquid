@@ -1,3 +1,12 @@
+{% comment %}
+
+  Arguments:
+
+    • networks - required
+    • type
+
+{% endcomment %}
+
 <div class="oo-social-media-icons {{ classes -}}" {{ extra_attrs -}}>
 
   {%- assign _networks_array = networks | split: ' ' -%}
@@ -36,71 +45,3 @@
   {%- assign type = nil -%}
 
 </div>
-
-{% comment %}
-{%- capture _arguments -%}
-  {%- include 'argument',
-    _value: networks,
-    _name: 'networks',
-    _required: true -%}
-  {%- include 'argument',
-    _value: type,
-    _name: 'type',
-    _required: false -%}
-{%- endcapture -%}
-
-{%- capture _errors -%}
-  {%- include 'errors' with _arguments, _snippet: 'social-media-icons' -%}
-{%- endcapture -%}
-
-{%- assign _arguments = nil -%}
-
-{%- if _errors == '' -%}
-
-  <div class="oo-social-media-icons {{ classes -}}" {{ extra_attrs -}}>
-
-    {%- assign _networks_array = networks | split: ' ' -%}
-
-    {%- if type == blank -%}
-      {% assign type = 'link' %}
-    {%- endif -%}
-
-    {%- for _network in _networks_array -%}
-      {%- assign _setting_name = 'social_' | append: _network | append: '_link' -%}
-      {%- assign _href = settings[_setting_name] -%}
-      {%- assign _setting_name = nil -%}
-
-
-      {%- capture _icon -%}
-        {%- include 'icon', name: _network -%}
-      {%- endcapture -%}
-
-      {%- capture _network_attr -%}
-        data-network="{{ _network }}"
-      {%- endcapture -%}
-
-      {%- include type,
-        content: _icon,
-        href: _href,
-        classes: '',
-        extra_attrs: _network_attr %}
-
-      {%- assign _href = nil -%}
-      {%- assign _icon = nil -%}
-      {%- assign _network_attr = nil -%}
-    {%- endfor -%}
-
-    {%- assign _networks_array = nil -%}
-
-    {%- assign type = nil -%}
-
-  </div>
-
-{%- else -%}
-
-  {{- _errors -}}
-
-{%- endif -%}
-
-{%- assign _errors = nil -%}
-{% endcomment %}
