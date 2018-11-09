@@ -20,14 +20,14 @@ import { $$ } from '../common/Helpers';
 // const store = configureStore();
 
 
-import QuantitySelect from '../components/QuantitySelect';
+// import QuantitySelect from '../components/QuantitySelect';
 
 
-const QuantitySelects = $$('[data-quantity-select]').map(node => {
-  return new QuantitySelect(node);
-});
+// const QuantitySelects = $$('[data-quantity-select]').map(node => {
+//   return new QuantitySelect(node);
+// });
 
-QuantitySelects.forEach(QuantitySelect => QuantitySelect.addEvents())
+// QuantitySelects.forEach(QuantitySelect => QuantitySelect.addEvents())
 
 console.log(QuantitySelects);
 
