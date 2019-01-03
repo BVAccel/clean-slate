@@ -20,24 +20,26 @@ const plugins = [
     'PubSub': 'pubsub-js',
   }),
   new CopyWebpackPlugin([
-      {
-        from: 'sections/**/*',
-        to: '../sections/',
-        flatten: true,
-      },
-      {
-        from: 'snippets/**/*',
-        to: '../snippets/',
-        flatten: true,
-      },
-      {
-        from: 'scripts/**/*.liquid',
-        to: '../snippets/',
-        flatten: true,
-      },
-  ], { ignore: [ 'static/*' ] }),
-  new CopyWebpackPlugin([
-
+    {
+      from: 'sections/**/*',
+      to: '../sections/',
+      flatten: true,
+    },
+    {
+      from: 'snippets/**/*',
+      to: '../snippets/',
+      flatten: true,
+    },
+    {
+      from: 'scripts/**/*.liquid',
+      to: '../snippets/',
+      flatten: true,
+    },
+    {
+      from: 'scripts/components/**/*.liquid',
+      to: '../snippets/',
+      flatten: true,
+    }
   ], { ignore: [ 'static/*' ] }),
 ];
 
