@@ -1,0 +1,14 @@
+.oo-bottombar {
+  display: flex;
+  justify-content: center;
+
+  > * {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 2px solid $color-gray;
+
+    &:last-child {
+      border: none;
+    }
+  }
+}

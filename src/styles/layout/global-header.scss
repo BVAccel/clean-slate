@@ -1,0 +1,41 @@
+.oo-global-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.global-header--primary-navigation {
+  margin-right: auto;
+}
+
+.global-header--block-group.pull-right {
+  margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.global-header--logo {
+  display: block;
+  max-width: 320px;
+}
+
+.global-header--cart {
+  align-items: center;
+
+  .button--content {
+    order: -1;
+  }
+}
+
+.global-header--primary-navigation,
+.global-header--logo,
+.global-header--block-group.pull-right {
+  flex-basis: 33.33%;
+}
+
+.global-header--primary-navigation,
+.global-header--secondary-navigation,
+.global-header--block-group.pull-right,
+.global-header--cart {
+  display: flex;
+}

@@ -1,0 +1,190 @@
+<section
+  class="oo-global-header"
+  data-section-id="{{ section.id }}"
+  data-section-type="global-header">
+
+  {%- for block in section.blocks -%}
+
+    {%- if block.settings.group_name != blank -%}
+      {%- assign group_name = block.settings.group_name -%}
+      {%- assign groups = groups | append: group_name | append: '--' | append: block.type -%}
+      {%- assign group_names = group_names | append: group_name | append: ',' -%}
+
+    {%- else -%}
+
+      {%- include 'global-header-case-statement' -%}
+
+    {%- endif -%}
+
+  {%- endfor -%}
+
+
+  {%- assign groups = groups | split: ',' | sort -%}
+  {%- assign group_names = group_names | split: ',' | uniq -%}
+
+
+  {%- for group_name in group_names -%}
+    <div class="global-header--block-group {{ group_name -}}">
+
+      {%- for block in section.blocks -%}
+        {%- for group in groups -%}
+          {%- if group contains block.type and group contains group_name -%}
+
+            {%- include 'global-header-case-statement' -%}
+
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+
+    </div>
+  {%- endfor -%}
+
+</section>
+
+{% schema %}
+  {
+    "name": "Global Header",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Logo",
+        "type": "logo",
+        "limit": 1,
+        "settings": [
+          {
+             "type": "header",
+             "content": "SVG"
+          },
+          {
+            "type": "text",
+            "id": "logo_svg_snippet",
+            "label": "If image is svg snippet, enter snippet name here"
+          },
+          {
+             "type": "header",
+             "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "logo_image",
+            "label": "If image is non-svg, add it here"
+          },
+          {
+            "type": "text",
+            "id": "logo_image_size",
+            "label": "e.g. 800x"
+          },
+          {
+            "type": "text",
+            "id": "logo_image_srcset",
+            "label": "srcset string (see image.liquid snippet for details)"
+          },
+          {
+            "type": "text",
+            "id": "logo_image_sizes",
+            "label": "sizes string (see image.liquid snippet for details)"
+          },
+          {
+            "type": "text",
+            "id": "logo_image_type",
+            "label": "Image type (e.g. 'pjpg')"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
+          }
+        ]
+      },
+      {
+        "name": "Primary Navigation",
+        "type": "primary_navigaiton",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "primary_navigation_linklist",
+            "label": "Primary Navigation Linklist",
+            "default": "main-menu"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
+          }
+        ]
+      },
+      {
+        "name": "Secondary Navigation",
+        "type": "secondary_navigaiton",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "secondary_navigation_linklist",
+            "label": "Secondary Navigation Linklist"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
+          }
+        ]
+      },
+      {
+        "name": "Search",
+        "type": "search",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "search_icon",
+            "label": "Icon for Search Button",
+            "info": "write out the icon snippet name e.g. `icon-search`",
+            "default": "icon-search"
+          },
+          {
+            "type": "text",
+            "id": "placeholder_text",
+            "label": "Search Input Placeholder Text",
+            "default": "Search"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
+          }
+        ]
+      },
+      {
+        "name": "Cart",
+        "type": "cart",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "cart_icon",
+            "label": "Icon for Cart Menu",
+            "info": "write out the icon snippet name e.g. `icon-cart`",
+            "default": "icon-cart"
+          },
+          {
+            "type": "textarea",
+            "id": "cart_content",
+            "label": "Additional Content for Cart Menu"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,10 @@
+.global-header--primary-navigation {
+
+  > * {
+    padding-right: 10px;
+  }
+}
+
+.parent-link > .child-link {
+  display: none;
+}

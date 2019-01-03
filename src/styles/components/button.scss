@@ -1,6 +1,5 @@
 .oo-button {
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
   margin: 0;
   padding: $oo-base-spacing-size calc(#{$oo-base-spacing-size} * 1.75);
   font-family: $font-heading;
@@ -29,6 +28,7 @@
     background-color: transparent;
     border: 2px solid $color-2;
     transition: all $oo-transition-duration $oo-transition-timing;
+
     &:hover {
       color: $color-white;
       background-color: $color-2;
@@ -40,6 +40,7 @@
     background-color: transparent;
     border: 2px solid $color-5;
     transition: all $oo-transition-duration $oo-transition-timing;
+
     &:hover {
       color: $color-white;
       background-color: $color-5;

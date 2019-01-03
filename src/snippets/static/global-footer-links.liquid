@@ -11,14 +11,14 @@
 
 {%- for parent in linklists[menu].links -%}
 
-  <section class="footer--links-block">
+  <section class="global-footer--links-block">
 
     {%- include 'header',
       level: 3,
       title: parent.title,
-      classes: 'footer--links-header' -%}
+      classes: 'global-footer--links-header' -%}
 
-      <div class="footer--links">
+      {% comment %}<div class="footer--links">{% endcomment %}
 
       {%- for child in parent.links -%}
 
@@ -35,11 +35,11 @@
           href: child.url,
           content: child.title,
           icon: icon,
-          classes: 'footer--link' -%}
+          classes: 'global-footer--link' -%}
 
       {%- endfor -%}
 
-      </div>
+      {% comment %}</div>{% endcomment %}
 
   </section>
 

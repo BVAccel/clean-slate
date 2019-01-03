@@ -54,15 +54,9 @@
 
     <a href="#MainContent" class="in-page-link u-visually-hidden">Skip to content</a>
 
-    {%- include 'dev-add-to-cart-controls' -%}
-
-    {%- section 'inline-cart' -%}
-
-    {%- section 'modal' -%}
-
     {%- section 'topbar' -%}
 
-    {%- section 'header' -%}
+    {%- section 'global-header' -%}
 
     <main role="main" class="oo-main" id="MainContent">
 
@@ -70,11 +64,19 @@
 
     </main>
 
-    {%- section 'footer' -%}
+    {%- section 'global-footer' -%}
 
     {%- section 'bottombar' -%}
 
+    {%- section 'inline-cart' -%}
+
+    {%- section 'modal' -%}
+
     {%- include 'overlay' -%}
+
+    {% comment %}
+    {%- include 'dev-add-to-cart-controls' -%}
+    {% endcomment %}
 
   </body>
 </html>

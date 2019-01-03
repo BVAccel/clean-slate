@@ -1,0 +1,37 @@
+.oo-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-full-grid,
+.flex-12-grid {
+  flex-basis: 74%;
+}
+
+.flex-9-grid {
+  flex-basis: 74%;
+}
+
+.flex-8-grid {
+  flex-basis: 66.66%;
+}
+
+.flex-half-grid,
+.flex-6-grid {
+  flex-basis: 50%;
+}
+
+.flex-third-grid,
+.flex-4-grid {
+  flex-basis: 33.33%;
+}
+
+.flex-quarter-grid,
+.flex-3-grid {
+  flex-basis: 25%;
+}
+
+.flex-2-grid {
+  flex-basis: 16.66%;
+}
+

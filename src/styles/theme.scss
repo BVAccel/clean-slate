@@ -9,12 +9,25 @@
 // Base
 @import 'base/index';
 
+// Blocks
+@import 'blocks/global-primary-navigation';
+@import 'blocks/global-secondary-navigation';
+@import 'blocks/global-header-search';
+
 // Components
 @import 'components/button';
 @import 'components/icon';
+@import 'components/link';
+@import 'components/svg';
+@import 'components/product-item';
 
 // Layout
 @import 'layout/global';
+@import 'layout/global-header';
+@import 'layout/global-footer';
+@import 'layout/topbar';
+@import 'layout/bottombar';
+@import 'layout/grid';
 
 // Shame
 @import 'helpers/shame';

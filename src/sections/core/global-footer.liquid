@@ -1,7 +1,7 @@
 <section
-  class="oo-footer"
+  class="oo-global-footer"
   data-section-id="{{ section.id }}"
-  data-section-type="footer">
+  data-section-type="global-footer">
 
   {%- for block in section.blocks -%}
     {%- case block.type -%}
@@ -12,26 +12,26 @@
           resource: block.settings.footer_logo,
           size: '200x',
           wrapper_tag: 'a',
-          classes: 'footer--logo',
+          classes: 'global-footer--logo',
           attrs: 'href="/"' -%}
 
       {%- when 'contact' -%}
 
-        {%- include 'footer-contact', content: block.settings.footer_contact_info -%}
+        {%- include 'global-footer-contact', content: block.settings.footer_contact_info -%}
 
       {%- when 'social_links' -%}
 
-        {%- include 'footer-social-links', block_settings: block.settings, -%}
+        {%- include 'global-footer-social-links', block_settings: block.settings, -%}
 
       {%- when 'footer_links' -%}
 
-        {%- include 'footer-links',
+        {%- include 'global-footer-links',
           menu: block.settings.footer_links_link_list,
           show_social_icons: block.settings.show_social_icons -%}
 
       {%- when 'newsletter' -%}
 
-        {%- include 'footer-newsletter-signup',
+        {%- include 'global-footer-newsletter-signup',
           header: block.settings.heading,
           placeholder: block.settings.placeholder_text,
           submit_icon: block.settings.submit_icon,
@@ -45,7 +45,7 @@
 
 {% schema %}
   {
-    "name": "Footer",
+    "name": "Global Footer",
     "settings": [
       {
         "type": "checkbox",
@@ -158,7 +158,7 @@
             "id": "submit_icon",
             "label": "Icon for Submit Button",
             "info": "write out the icon snippet name e.g. `icon-envelope`",
-            "default": "icon-add"
+            "default": "icon-envelope"
           },
           {
             "type": "text",

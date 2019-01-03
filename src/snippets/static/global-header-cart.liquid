@@ -1,0 +1,18 @@
+{%- comment -%}
+
+  Required arguments:
+
+  Optional arguments:
+  - cart_icon
+  - cart_content
+  - classes
+  - attrs
+
+{%- endcomment -%}
+
+
+{%- include 'button',
+  icon: cart_icon,
+  content: cart_content,
+  classes: 'global-header--cart',
+  attrs: 'data-toggle-inline-cart' -%}

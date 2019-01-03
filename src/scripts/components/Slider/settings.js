@@ -25,6 +25,7 @@ const productImageGallerySettings = {
 const homepageHeroSettings = {
   ...defaultSettings,
   arrows: false,
+  autoplay: true,
 }
 
 export default {

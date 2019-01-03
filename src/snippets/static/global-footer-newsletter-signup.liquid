@@ -1,15 +1,17 @@
 {%- comment -%}
 
   Required arguments:
-  -
 
   Optional arguments:
-  -
+  - header
+  - placeholder
+  - submit_icon
+  - submit_text
 
 {%- endcomment -%}
 
 
-<section>
+<section class="global-footer--newsletter-signup">
 
   {%- include 'header',
     level: 3,
@@ -20,10 +22,9 @@
       placeholder="{{ placeholder }}"
     {%- endcapture -%}
 
-
     {%- include 'input',
       type: 'email',
-      name: 'footer-newsletter-signup',
+      name: 'global-footer-newsletter-signup',
       attrs: input_placeholder -%}
 
     {%- include 'button',
@@ -33,7 +34,7 @@
   {%- endcapture -%}
 
   {%- include 'form-container',
-    name: 'footer-newsletter-signup',
+    name: 'global-footer-newsletter-signup',
     method: 'post',
     action: '',
     content: footer_newsletter_signup_content -%}

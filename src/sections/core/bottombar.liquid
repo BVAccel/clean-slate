@@ -1,6 +1,9 @@
 {%- if section.settings.bottombar_content != blank and section.settings.bottombar_enabled == true -%}
 
-  <section data-section-id="{{ section.id }}" data-section-type="topbar">
+  <section
+    class="oo-bottombar"
+    data-section-id="{{ section.id }}"
+    data-section-type="bottombar">
 
     {%- include 'bottombar', content: section.settings.bottombar_content  -%}
 

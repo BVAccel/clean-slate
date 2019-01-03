@@ -17,7 +17,7 @@
 
   {%- include 'input',
     type: 'search',
-    name: 'header-search',
+    name: 'global-header-search',
     attrs: input_placeholder -%}
 
   {%- include 'button',
@@ -27,9 +27,10 @@
 
 
 {%- include 'form-container',
-  name: 'header-search',
+  name: 'global-header-search',
   method: 'post',
   action: '/search',
-  content: search_form_content -%}
+  content: search_form_content,
+  classes: 'global-header--search' -%}
 
 {%- assign search_form_content = nil -%}

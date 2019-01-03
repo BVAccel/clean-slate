@@ -15,8 +15,12 @@
 {%- endif -%}
 
 
-{%- for _product in collection.products -%}
+{%- capture collection_grid_contents -%}
+  {%- for _product in collection.products -%}
 
-  {%- include 'product-item', _product: _product -%}
+    {%- include 'product-item', _product: _product -%}
 
-{%- endfor -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- include 'grid-container', content: collection_grid_contents -%}

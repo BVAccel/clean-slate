@@ -1,6 +1,9 @@
 {%- if section.settings.topbar_content != blank and section.settings.topbar_enabled == true -%}
 
-  <section data-section-id="{{ section.id }}" data-section-type="topbar">
+  <section
+    class="oo-topbar"
+    data-section-id="{{ section.id }}"
+    data-section-type="topbar">
 
     {%- include 'topbar', content: section.settings.topbar_content -%}
 

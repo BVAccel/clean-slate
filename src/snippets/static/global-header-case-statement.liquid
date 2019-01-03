@@ -1,0 +1,34 @@
+{%- case block.type -%}
+
+  {%- when 'logo' -%}
+
+    {%- include 'global-header-logo',
+      svg_snippet: block.settings.logo_svg_snippet,
+      logo_image: block.settings.logo_image,
+      logo_size: block.settings.logo_image_size,
+      logo_srcset: block.settings.logo_image_srcset,
+      logo_sizes: block.settings.logo_image_sizes -%}
+
+  {%- when 'primary_navigaiton' -%}
+
+    {%- include 'global-header-primary-navigation',
+      menu: block.settings.primary_navigation_linklist -%}
+
+  {%- when 'secondary_navigaiton' -%}
+
+    {%- include 'global-header-secondary-navigation',
+      menu: block.settings.secondary_navigation_linklist -%}
+
+  {%- when 'search' -%}
+
+    {%- include 'global-header-search',
+      icon: block.settings.search_icon,
+      placeholder: block.settings.placeholder_text -%}
+
+  {%- when 'cart' -%}
+
+    {%- include 'global-header-cart',
+      cart_icon: block.settings.cart_icon,
+      cart_content: block.settings.cart_content -%}
+
+{%- endcase -%}

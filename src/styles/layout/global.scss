@@ -1,4 +1,10 @@
-.oo-main {
+.oo-topbar,
+.oo-global-header,
+.oo-main,
+.oo-global-footer,
+.oo-bottombar {
   max-width: $oo-container-max;
   margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
