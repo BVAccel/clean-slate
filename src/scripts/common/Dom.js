@@ -17,8 +17,30 @@
   $(dom.inlineCartContents).html(getCartContents());
 
 */
+const dom = {
+  getContainer: key => {
+    return (key instanceof Element)
+      ? $(key).closest(dom.container)[0]
+      : $(`[data-container-id="${key}"]`)[0]
+  },
 
-export default {
+  $getContainer: key => {
+    return (key instanceof Element)
+      ? $(key).closest(dom.container)
+      : $(`[data-container-id="${key}"]`)
+  },
+
+  getContainers: type => $(`[data-container="${type}"]`).get(),
+
+  $getContainers: type => $(`[data-container="${type}"]`),
+
+  priceString: (strings, priceInCents) => {
+    const price = (priceInCents / 100).toFixed(2);
+    return `$${price}`;
+  },
+
+  isActive: '.is-active',
+
   overlay: '[data-overlay]',
 
   toggle: '[data-toggle]',
@@ -26,9 +48,6 @@ export default {
   container: '[data-container]',
 
   slider: '[data-slider]',
-
-  getContainer: id => $(`[data-container-id="${id}"]`).get(),
-  $getContainer: id => $(`[data-container-id="${id}"]`),
 
   modal: '[data-modal]',
   modalContents: '[data-modal-contents]',
@@ -63,11 +82,6 @@ export default {
   productGallerySlide: '[data-product-gallery-slide]',
 
   sliderHasNav: '[data-has-nav]',
-
-  isActive: '.is-active',
-
-  priceString: (strings, priceInCents) => {
-    const price = (priceInCents / 100).toFixed(2);
-    return `$${price}`;
-  }
 };
+
+export default dom;

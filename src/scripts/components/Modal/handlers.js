@@ -3,8 +3,6 @@ import { toggleElement } from 'common/Helpers';
 
 import contents from './contents';
 
-import state from 'state';
-
 const generateModalMarkup = data => {
   const { name, data: modalData } = data;
   return contents[name](modalData);

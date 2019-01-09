@@ -1,11 +1,11 @@
 import dom from 'common/Dom';
 import bva from 'common/Constants';
 
-import state from 'state';
+import State from 'state';
 
 const handleAddToCartClick = ({ currentTarget: self }) => {
-  const id = $(self).closest(dom.container).data('container-id');
-  const { variantId, quantity, properties } = state.getState(id);
+  const id = dom.getContainer(self).dataset.containerId;
+  const { variantId, quantity, properties } = State.get(id);
 
   PubSub.publish(bva.addToCart, { id: variantId, quantity, properties });
 
@@ -13,8 +13,8 @@ const handleAddToCartClick = ({ currentTarget: self }) => {
 };
 
 const handleRemoveFromCartClick = ({ currentTarget: self }) => {
-  const id = $(self).closest(dom.container).data('container-id');
-  const { key } = state.getState(id);
+  const id = dom.getContainer(self).dataset.containerId;
+  const { key } = State.get(id);
 
   PubSub.publish(bva.removeFromCart, { key });
 

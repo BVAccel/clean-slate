@@ -11,7 +11,7 @@ import Price from 'components/Price';
 import Slider from 'components/Slider';
 import Modal from 'components/Modal';
 
-import state from 'state';
+import State from 'state';
 
 import 'styles/theme.scss';
 import 'styles/theme.scss.liquid';
@@ -22,11 +22,9 @@ PubSub.immediateExceptions = true;
 focusHash();
 bindInPageLinks();
 
-CartControls.cacheCart();
-
 document.addEventListener('DOMContentLoaded', () => {
-  state.initSubscribers();
-  state.init();
+  State.initSubscribers();
+  State.init();
 
   CartControls.initSubscribers();
   CartControls.bindActions();

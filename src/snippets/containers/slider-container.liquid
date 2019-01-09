@@ -5,15 +5,28 @@
   - slides
 
   Optional arguments:
+  - filter_group_option
+  - filter_attr
   - classes
   - attrs
 
 {% endcomment %}
 
+{%- capture id -%}
+  slider-{{- 'now' | date: '%N' | modulo: 999999999 | plus: 1 -}}
+{%- endcapture -%}
 
 <div
-  class="oo-slider {{ classes -}}"
+  class="oo-slider slider--{{- name }} {{ classes -}}"
   data-slider="{{- name -}}"
+  data-container="slider"
+  data-container-name="{{- name -}}"
+  data-container-id="{{- id -}}"
+  {%- if filter_group_option -%}
+    data-filter-group-option="{{- filter_group_option -}}"
+    data-filter-attr="{{- filter_attr -}}"
+  {%- endif -%}
+  {% comment %}{%- if with_nav == true -%}data-has-nav{%- endif -%}{% endcomment %}
   {{ attrs -}}>
 
   {{- slides -}}

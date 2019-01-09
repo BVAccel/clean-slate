@@ -24,6 +24,7 @@ export default {
   openInlineCart: 'BVA.INLINE_CART.OPEN',
   closeInlineCart: 'BVA.INLINE_CART.CLOSE',
   toggleInlineCart: 'BVA.INLINE_CART.TOGGLE',
+  updateInlineCartUI: 'BVA.INLINE_CART.UPDATE_UI',
 
   addToCart: 'BVA.CART.ADD',
   removeFromCart: 'BVA.CART.REMOVE',
@@ -42,7 +43,11 @@ export default {
   updateProductsState: 'BVA.STATE.PRODUCTS.UPDATE',
 
   updateOptionGroupValue: 'BVA.OPTION_GROUP.VALUE_CHANGE',
+
   updateQuantity: 'BVA.QUANTITY.UPDATE',
+  updateLineItemQuantity: 'BVA.QUANTITY.UPDATE.LINE_ITEM',
+  updateProductQuantity: 'BVA.QUANTITY.UPDATE.PRODUCT',
+
   updateVariant: 'BVA.VARIANT.UPDATE',
   updateInventory: 'BVA.INVENTORY.UPDATE',
   updateVariantId: 'BVA.VARIANT_ID.UPDATE',

@@ -1,21 +1,30 @@
 import bva from 'common/Constants';
+
+import { updateModal } from './modal';
+import { updateCart } from './cart';
+
 import {
-  init,
-  initLineItemContainers,
+  updateProductQuantity,
   updateOptionGroupValue,
   updateVariant,
-  updateQuantity,
   updateInventory,
-  updatePrice,
-  updateModal, } from './handlers';
+  updatePrice, } from './product';
+
+import {
+  initLineItemContainers,
+  updateLineItemQuantity, } from './line-item';
 
 export const initSubscribers = () => {
-  PubSub.subscribe(bva.updateCart, (message, data) => {
+  PubSub.subscribe(bva.updateInlineCartUI, (message, data) => {
     return initLineItemContainers(data);
   });
 
-  PubSub.subscribe(bva.updateQuantity, (message, data) => {
-    return updateQuantity(data);
+  PubSub.subscribe(bva.updateProductQuantity, (message, data) => {
+    return updateProductQuantity(data);
+  });
+
+  PubSub.subscribe(bva.updateLineItemQuantity, (message, data) => {
+    return updateLineItemQuantity(data);
   });
 
   PubSub.subscribe(bva.updateOptionGroupValue, (message, data) => {
@@ -34,23 +43,15 @@ export const initSubscribers = () => {
     return updatePrice(data);
   });
 
-  PubSub.subscribe(bva.updateState, (message, data) => {
-    if (data.change === 'variant') {
-
-    } else if (data.change === 'inventory') {
-
-    } else if (data.change === 'quantity') {
-
-    } else if (data.change === 'option') {
-
-    }
-  });
-
   PubSub.subscribe(bva.showModal, (message, data) => {
     return updateModal(data);
   });
 
   PubSub.subscribe(bva.hideModal, (message, data) => {
     return updateModal(data);
+  });
+
+  PubSub.subscribe(bva.cartRequestSuccess, (message, data) => {
+    return updateCart(data);
   });
 };
