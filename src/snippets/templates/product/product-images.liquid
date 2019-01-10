@@ -15,77 +15,10 @@
 
   {%- if with_thumbs == true -%}
 
-    {%- capture product_gallery_thumbs -%}
-      {%- for image in _product.images -%}
-
-        {%- if group_images != blank -%}
-          {%- assign alt_parts = image.alt | split: alt_tag_delimiter -%}
-          {%- assign _alt = alt_parts | first -%}
-          {%- assign filter_value = alt_parts[1] | strip -%}
-
-          {%- capture slide_attrs -%}
-            data-filter-value="{{ filter_value }}"
-          {%- endcapture -%}
-        {%- endif -%}
-
-        {%- include 'image',
-          resource: image,
-          alt: _alt,
-          size: '280x',
-          lazyload: false,
-          wrapper: false,
-          format: 'pjpg',
-          classes: 'thumb-slide',
-          attrs: slide_attrs  -%}
-
-      {%- endfor -%}
-    {%- endcapture -%}
-
-    {%- include 'slider-container',
-      name: 'product-gallery-thumbs',
-      slides: product_gallery_thumbs,
-      group_slides: group_images,
-      filter_group_options: filter_group_options,
-      filter_attr: 'data-filter-value',
-      nav_for: 'product-gallery',
-      classes: 'product-images--navigation' -%}
+    {%- include 'product-images-gallery-thumbs' -%}
 
   {%- endif -%}
 
-
-  {%- capture product_gallery_slides -%}
-    {%- for image in _product.images -%}
-
-      {%- if group_images != blank -%}
-        {%- assign alt_parts = image.alt | split: alt_tag_delimiter -%}
-        {%- assign _alt = alt_parts | first -%}
-        {%- assign filter_value = alt_parts[1] | strip -%}
-
-        {%- capture slide_attrs -%}
-          data-filter-value="{{ filter_value }}"
-        {%- endcapture -%}
-      {%- endif -%}
-
-      {%- include 'image',
-        resource: image,
-        alt: _alt,
-        size: '1440x',
-        lazyload: false,
-        wrapper: false,
-        format: 'pjpg',
-        classes: 'swiper-slide',
-        attrs: slide_attrs  -%}
-
-    {%- endfor -%}
-  {%- endcapture -%}
-
-  {%- include 'slider-container',
-    name: 'product-gallery',
-    slides: product_gallery_slides,
-    group_slides: group_images,
-    filter_group_options: filter_group_options,
-    filter_attr: 'data-filter-value',
-    has_nav: 'product-gallery-thumbs',
-    classes: 'product-images--gallery' -%}
+  {%- include 'product-images-gallery' -%}
 
 </div>

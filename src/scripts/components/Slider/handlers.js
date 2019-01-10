@@ -10,6 +10,9 @@ import State from 'state';
 
 const filterSlider = swiper => {
   const sliderState= State.get(swiper.el.dataset.containerId);
+
+  if (!sliderState.isFilterable) return;
+
   const parentState = State.get(sliderState.parentId);
   const filterValue = parentState[sliderState.filterGroup];
   const newSlides = sliderState.slides.filter(slide => slide.dataset.filterValue == filterValue);
@@ -18,75 +21,91 @@ const filterSlider = swiper => {
   swiper.addSlide(0, newSlides);
 };
 
-const getFilterGroupAndOption = (parentId, filterGroupOptions) => {
-  const parentOptions = State.get(parentId)._data.options;
-  const parentOptionNames = parentOptions.map(option => option.name);
-  const filterGroup = filterGroupOptions
-    .split('|')
-    .find(option => parentOptionNames.includes(option));
-  const option = parentOptions.find(option => option.name === filterGroup);
+const checkiFFilterable = (slider, option) => {
+  const { filterAttr } = slider.el.dataset;
+  const possibleFilterValues = Array.from(slider.slides).map(slide => $(slide).attr(filterAttr));
+  const uniquePossibleFilterValues = unique(possibleFilterValues);
 
-  return { filterGroup, option };
+  const everyValuePresent = option.values.every(value => uniquePossibleFilterValues.includes(value));
+  const everyValueAtLeastTwice = option.values.every(value => {
+    const occurances = possibleFilterValues.reduce((count, possibleValue) => (possibleValue === value) ? count + 1 : count, 0);
+    return occurances >= 2;
+  });
+
+  return everyValuePresent && everyValueAtLeastTwice;
 };
 
-const checkIfFilterable = (swiper, option) => {
-  const { filterAttr } = swiper.el.dataset;
-  const possibleFilterValues = unique(Array.from(swiper.slides).map(slide => $(slide).attr(filterAttr)));
+const getOption = (parentState, filterGroup) => {
+  return parentState._data.options.find(option => option.name === filterGroup);
+};
 
-  return option.values.every(value => possibleFilterValues.includes(value));
+const getFilterGroup = (parentState, filterGroupOptions) => {
+  const parentOptionNames = parentState._data.options.map(option => option.name);
+  return filterGroupOptions
+    .split('|')
+    .find(option => parentOptionNames.includes(option));
+};
+
+const initSlider = (slider, sliderSettings) => {
+  const { hasNav } = slider.dataset;
+  const parentContainer = dom.getParentContainer(slider);
+
+  if (!parentContainer) {
+    const swiper = new Swiper(slider, sliderSettings);
+    return { swiper, parentContainer };
+  }
+
+  if (hasNav) {
+    const sliders = State.get('slider');
+    const navSlider = Object.values(sliders).find(slider => slider.name === hasNav).slider;
+    sliderSettings.thumbs = { swiper: navSlider };
+  }
+
+  const swiper = new Swiper(slider, sliderSettings);
+  return { swiper, parentContainer };
 };
 
 export const initSliders = () => {
-  dom.$getContainers('slider').each((i, slider) => {
-    const { container, filterGroupOptions, containerId, containerName, hasNav, navFor } = slider.dataset;
-    const { containerId: parentId, container: type } = dom.getParentContainer(slider).dataset;
-
-    let sliderSettings = settings[containerName] || settings.default;;
+  const promises = dom.getContainers('slider').map(slider => {
+    const { containerId: id, container, filterGroupOptions, containerName: name } = slider.dataset;
+    const sliderSettings = settings[name] || settings.default;
+    const { swiper, parentContainer } = initSlider(slider, sliderSettings);
+    const parentId = (parentContainer) ? parentContainer.dataset.containerId : undefined;
+    const slides = [ ...Array.from(swiper.slides) ];
     let isFilterable = false;
     let filterGroup;
-    let option;
-
-    if (hasNav) {
-      const sliders = State.get('slider');
-      const navSlider = Object.values(sliders).find(slider => slider.name === hasNav).slider;
-      sliderSettings.thumbs = { swiper: navSlider };
-    }
-
-    const swiper = new Swiper(slider, sliderSettings);
 
     if (filterGroupOptions) {
+      const parentState = State.get(parentId);
+      filterGroup = getFilterGroup(parentState, filterGroupOptions);
+      const option = getOption(parentState, filterGroup);
+      isFilterable = checkiFFilterable(swiper, option)
 
-      const filterOptions = getFilterGroupAndOption(parentId, filterGroupOptions);
-      filterGroup = filterOptions.filterGroup;
-      option = filterOptions.option;
+      if (filterGroup && option && isFilterable) {
+        const parentContainerType = parentContainer.dataset.container;
+        const filterGroupStateName = filterGroup.replace(' ', '_').toUpperCase();
+        const topic = `${bva.updateState}.${parentContainerType.toUpperCase()}.${filterGroupStateName}`;
 
-      if (filterGroup && option) {
-
-        isFilterable = checkIfFilterable(swiper, option);
-
-        if (isFilterable) {
-
-          const normalizedFilterGroupStateName = filterGroup.replace(' ', '_').toUpperCase();
-          const topic = `${bva.updateState}.${type.toUpperCase()}.${normalizedFilterGroupStateName}`;
-
-          PubSub.subscribe(topic, (message, data) => {
-            if (data.id === parentId) {
-              filterSlider(swiper);
-            }
-          });
-
-        }
+        PubSub.subscribe(topic, (message, data) => {
+          if (data.id === parentId) {
+            filterSlider(swiper);
+          }
+        });
       }
     }
 
-    const oldState = { id: containerId, change: 'slider', container };
-    const newState = { name: containerName, slider: swiper, slides: [ ...Array.from(swiper.slides) ], filterGroup, isFilterable, parentId };
-    State.set({ ...oldState, ...newState });
+    State.set({ id, change: 'slider', container, name, slider: swiper, slides, filterGroup, parentId, isFilterable});
 
-    if (isFilterable) {
-      filterSlider(swiper);
-    }
+    return Promise.resolve();
   });
+
+  return Promise.all(promises);
 };
 
+export const filterSliders = () => {
+  const promises = Object.values(State.get('slider'))
+    .map(sliderState => sliderState.slider)
+    .map(slider => filterSlider(slider));
 
+  return Promise.all(promises);
+};

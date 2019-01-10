@@ -11,26 +11,36 @@
 
 {% endcomment %}
 
+{%- assign _variant = _product.selected_or_first_available_variant -%}
+
 
 <div class="product-info {{ classes -}}" {{ attrs -}}>
 
   {%- include 'header', title: _product.title -%}
 
-  {%- include 'price',
-    _price: _product.price,
-    type: 'product.price' -%}
-
-  {%- if _product.compare_at_price > _product.price and show_compare_at_price == true -%}
+  <div class="product-prices">
 
     {%- include 'price',
-      _price: _product.compare_at_price,
-      type: 'product.compare_at_price' -%}
+      _price: _variant.price,
+      type: 'price' -%}
 
-  {%- endif -%}
+    {%- if show_compare_at_price == true -%}
 
-  {%- include 'text',
-    content: _product.description,
-    rte: true -%}
+      {%- include 'price',
+        _price: _variant.compare_at_price,
+        type: 'compare_at_price' -%}
+
+    {%- endif -%}
+
+  </div>
+
+  <div class="product-description">
+
+    {%- include 'text',
+      content: _product.description,
+      rte: true -%}
+
+  </div>
 
   {%- include 'product-add-to-cart-form',
     show_option_name: show_option_name,
@@ -39,3 +49,5 @@
     add_to_cart_button_classes: add_to_cart_button_classes -%}
 
 </div>
+
+{%- assign _variant = nil -%}

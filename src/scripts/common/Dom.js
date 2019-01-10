@@ -79,13 +79,16 @@ const dom = {
   quantityChange: '[data-quantity-change]',
 
   price: '[data-price="price"]',
-  compareAtPrice: '[data-price="compare-at-price"]',
+  compareAtPrice: '[data-price="compare_at_price"]',
 
   productGallerySlide: '[data-product-gallery-slide]',
 
   sliderHasNav: '[data-has-nav]',
 
   sliderFilterValue: '[data-filter-value]',
+
+  galleryThumb: '[data-gallery-thumb]',
+  gallerySlide: '[data-gallery-slide]',
 };
 
 export default dom;

@@ -16,5 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-  Slider.initSliders();
+  Slider.initSliders()
+    .then(sliders => Slider.filterSliders())
+    .then(sliders => Slider.bindActions());
 });

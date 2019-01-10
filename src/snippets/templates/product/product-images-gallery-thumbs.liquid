@@ -1,0 +1,34 @@
+{%- capture product_gallery_thumbs -%}
+  {%- for image in _product.images -%}
+
+    {%- if group_images != blank -%}
+      {%- assign alt_parts = image.alt | split: alt_tag_delimiter -%}
+      {%- assign _alt = alt_parts | first -%}
+      {%- assign filter_value = alt_parts[1] | strip -%}
+
+      {%- capture slide_attrs -%}
+        data-gallery-thumb data-filter-value="{{ filter_value }}"
+      {%- endcapture -%}
+    {%- endif -%}
+
+    {%- include 'image',
+      resource: image,
+      alt: _alt,
+      size: '280x',
+      lazyload: false,
+      wrapper: false,
+      format: 'pjpg',
+      classes: 'thumb-slide swiper-slide',
+      attrs: slide_attrs  -%}
+
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- include 'slider-container',
+  name: 'product-gallery-thumbs',
+  slides: product_gallery_thumbs,
+  group_slides: group_images,
+  filter_group_options: filter_group_options,
+  filter_attr: 'data-filter-value',
+  nav_for: 'product-gallery',
+  classes: 'product-images--navigation' -%}
