@@ -32,7 +32,8 @@
     "lazysizes": "^4.1.5",
     "normalize.css": "^7.0.0",
     "pubsub-js": "^1.7.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "swiper": "^4.4.6"
   },
   "scripts": {
     "dev": "slate-tools start --skipPrompts",

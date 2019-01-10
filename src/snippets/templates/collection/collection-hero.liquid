@@ -13,14 +13,3 @@
 
   {%- endunless -%}
 {%- endif -%}
-
-
-{%- capture collection_grid_contents -%}
-  {%- for _product in collection.products -%}
-
-    {%- include 'product-item', _product: _product -%}
-
-  {%- endfor -%}
-{%- endcapture -%}
-
-{%- include 'grid-container', content: collection_grid_contents -%}

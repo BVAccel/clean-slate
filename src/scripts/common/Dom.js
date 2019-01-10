@@ -31,13 +31,15 @@ const dom = {
   },
 
   getContainers: type => $(`[data-container="${type}"]`).get(),
-
   $getContainers: type => $(`[data-container="${type}"]`),
 
-  priceString: (strings, priceInCents) => {
-    const price = (priceInCents / 100).toFixed(2);
-    return `$${price}`;
-  },
+  getSelf: self => $(self).closest(dom.container)[0],
+  $getSelf: self => $(self).closest(dom.container),
+
+  getParentContainer: self => $(self).parent().closest(dom.container)[0],
+  $getParentContainer: self => $(self).parent().closest(dom.container),
+
+  priceString: (strings, priceInCents) => `$${(priceInCents / 100).toFixed(2)}`,
 
   isActive: '.is-active',
 
@@ -82,6 +84,8 @@ const dom = {
   productGallerySlide: '[data-product-gallery-slide]',
 
   sliderHasNav: '[data-has-nav]',
+
+  sliderFilterValue: '[data-filter-value]',
 };
 
 export default dom;

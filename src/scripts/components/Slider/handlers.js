@@ -1,73 +1,92 @@
-import 'slick-carousel';
+import Swiper from 'swiper';
 
 import dom from 'common/Dom';
+import bva from 'common/Constants';
+import { unique } from 'common/Helpers';
+
 import settings from './settings';
 
 import State from 'state';
 
-export const slickFilter = (sliderName, filter) => {
-  const $slider = $(`[data-slider="${sliderName}"]`);
-  $slider.slick('slickUnfilter');
-  $slider.slick('slickFilter', filter);
+const filterSlider = swiper => {
+  const sliderState= State.get(swiper.el.dataset.containerId);
+  const parentState = State.get(sliderState.parentId);
+  const filterValue = parentState[sliderState.filterGroup];
+  const newSlides = sliderState.slides.filter(slide => slide.dataset.filterValue == filterValue);
+
+  swiper.removeAllSlides();
+  swiper.addSlide(0, newSlides);
 };
 
-const filterSlider = (id, slider) => {
-  const containerState = State.get(id);
-  const sliderName = slider.dataset.slider;
-  const filterGroupOption = slider.dataset.filterGroupOption;
-  const filterValue = containerState[filterGroupOption];
-  const filterAttr = slider.dataset.filterAttr;
-  const filter = `[${filterAttr}="${filterValue}"]`;
+const getFilterGroupAndOption = (parentId, filterGroupOptions) => {
+  const parentOptions = State.get(parentId)._data.options;
+  const parentOptionNames = parentOptions.map(option => option.name);
+  const filterGroup = filterGroupOptions
+    .split('|')
+    .find(option => parentOptionNames.includes(option));
+  const option = parentOptions.find(option => option.name === filterGroup);
 
-  const optionValues = containerState._data.options.find(option => option.name === filterGroupOption).values;
+  return { filterGroup, option };
+};
 
-  const hasValue = $(slider)
-    .find(dom.productGallerySlide)
-    .get()
-    .some(slide => optionValues.includes($(slide).attr(filterAttr)));
+const checkIfFilterable = (swiper, option) => {
+  const { filterAttr } = swiper.el.dataset;
+  const possibleFilterValues = unique(Array.from(swiper.slides).map(slide => $(slide).attr(filterAttr)));
 
-  if (hasValue) {
-    slickFilter(sliderName, filter);
-  }
+  return option.values.every(value => possibleFilterValues.includes(value));
 };
 
 export const initSliders = () => {
   dom.$getContainers('slider').each((i, slider) => {
-    const {
-      container,
-      containerId: id,
-      containerName: name,
-      filterGroupOption,
-      hasNav,
-    } = slider.dataset;
+    const { container, filterGroupOptions, containerId, containerName, hasNav, navFor } = slider.dataset;
+    const { containerId: parentId, container: type } = dom.getParentContainer(slider).dataset;
 
-    const settingsBase = settings[name] || settings.default;
+    let sliderSettings = settings[containerName] || settings.default;;
+    let isFilterable = false;
+    let filterGroup;
+    let option;
 
-    const sliderSettings = (hasNav !== undefined)
-      ? { ...settingsBase, customPaging: settings.navCustomPaging, dots: true }
-      : { ...settingsBase };
+    if (hasNav) {
+      const sliders = State.get('slider');
+      const navSlider = Object.values(sliders).find(slider => slider.name === hasNav).slider;
+      sliderSettings.thumbs = { swiper: navSlider };
+    }
 
-    $(slider).slick(sliderSettings);
-    State.set({ id, change: 'SLIDER', container, name, slider, settings: sliderSettings });
+    const swiper = new Swiper(slider, sliderSettings);
 
-    if (filterGroupOption) {
-      const id = $(slider).parent().closest(dom.container).data('container-id');
-      filterSlider(id, slider);
+    if (filterGroupOptions) {
+
+      const filterOptions = getFilterGroupAndOption(parentId, filterGroupOptions);
+      filterGroup = filterOptions.filterGroup;
+      option = filterOptions.option;
+
+      if (filterGroup && option) {
+
+        isFilterable = checkIfFilterable(swiper, option);
+
+        if (isFilterable) {
+
+          const normalizedFilterGroupStateName = filterGroup.replace(' ', '_').toUpperCase();
+          const topic = `${bva.updateState}.${type.toUpperCase()}.${normalizedFilterGroupStateName}`;
+
+          PubSub.subscribe(topic, (message, data) => {
+            if (data.id === parentId) {
+              filterSlider(swiper);
+            }
+          });
+
+        }
+      }
+    }
+
+    const oldState = { id: containerId, change: 'slider', container };
+    const newState = { name: containerName, slider: swiper, slides: [ ...Array.from(swiper.slides) ], filterGroup, isFilterable, parentId };
+    State.set({ ...oldState, ...newState });
+
+    if (isFilterable) {
+      filterSlider(swiper);
     }
   });
 };
 
-export const updateSlides = data => {
-  const { id, ...option } = data;
-  const change = Object.keys(option)[0];
-  const $sliders = dom.$getContainer(id).find(dom.slider);
 
-  $sliders.each((i, slider) => {
-    const sliderName = slider.dataset.slider;
-    const filterGroupOption = slider.dataset.filterGroupOption;
-
-    if (change === filterGroupOption) {
-      filterSlider(id, slider);
-    }
-  });
-};

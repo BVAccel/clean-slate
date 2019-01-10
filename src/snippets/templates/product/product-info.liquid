@@ -13,6 +13,7 @@
 
 
 <div class="product-info {{ classes -}}" {{ attrs -}}>
+
   {%- include 'header', title: _product.title -%}
 
   {%- include 'price',
@@ -27,11 +28,14 @@
 
   {%- endif -%}
 
-  {%- include 'text', content: _product.description, rte: true -%}
+  {%- include 'text',
+    content: _product.description,
+    rte: true -%}
 
-  {%- include 'add-to-cart-form',
+  {%- include 'product-add-to-cart-form',
     show_option_name: show_option_name,
     show_selected_value: show_selected_value,
     add_to_cart_button_text: add_to_cart_button_text
     add_to_cart_button_classes: add_to_cart_button_classes -%}
+
 </div>

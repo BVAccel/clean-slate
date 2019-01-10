@@ -7,6 +7,9 @@ const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const sectionsBase = 'core';
+const snippetsBase = 'core';
+
 const externals = {
   jquery: 'jQuery',
 };
@@ -17,28 +20,21 @@ const plugins = [
     'jQuery': 'jquery',
     'window.$': 'jquery',
     'window.jQuery': 'jquery',
-    'PubSub': 'pubsub-js',
   }),
   new CopyWebpackPlugin([
-      {
-        from: 'sections/**/*',
-        to: '../sections/',
-        flatten: true,
-      },
-      {
-        from: 'snippets/**/*',
-        to: '../snippets/',
-        flatten: true,
-      },
-      {
-        from: 'scripts/**/*.liquid',
-        to: '../snippets/',
-        flatten: true,
-      },
-  ], { ignore: [ 'static/*' ] }),
-  new CopyWebpackPlugin([
-
-  ], { ignore: [ 'static/*' ] }),
+    {
+      from: 'sections/**/*',
+      to: '../sections/',
+      flatten: true,
+      ignore: [ `${sectionsBase}/*` ],
+    },
+    {
+      from: 'snippets/**/*',
+      to: '../snippets/',
+      flatten: true,
+      ignore: [ `${snippetsBase}/*` ],
+    }
+  ]),
 ];
 
 const alias = {
@@ -51,12 +47,25 @@ const alias = {
 
 module.exports = {
   'eslint.config': '.eslintrc.js',
-  'cssVarLoader.liquidPath': ['src/snippets/api/css-variables.liquid'],
-  'paths.theme.src.snippets': 'snippets/static',
-  'paths.theme.src.sections': 'sections/static',
+  'cssVarLoader.liquidPath': ['src/snippets/api/css/css-variables.liquid'],
+  'paths.theme.src.sections': `sections/${sectionsBase}`,
+  'paths.theme.src.snippets': `snippets/${snippetsBase}`,
   'webpack.extend': {
     externals,
     plugins,
     resolve: { alias },
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/](pubsub-js)[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+            enforce: true,
+          }
+        },
+      },
+    },
   },
 };

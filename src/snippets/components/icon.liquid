@@ -10,7 +10,13 @@
 {%- endcomment -%}
 
 
-<div class="oo-icon icon-{{- name }} {{ classes -}}" {{ attrs -}}>
+<div class="oo-icon icon-{{- name }} {{ classes -}}"
+  {%- if height != blank or width != blank -%}
+    style="
+      {%- if height != blank -%}height: {{- height -}};{%- endif -%}
+      {%- if width != blank -%}width: {{- width -}};{%- endif -%}"
+  {%- endif -%}
+  {{ attrs -}}>
 
   {%- assign icon_name = name | remove_first: 'icon-' | prepend: 'icon-' -%}
 

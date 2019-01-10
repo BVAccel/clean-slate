@@ -1,8 +1,9 @@
 {%- include 'product',
   _product: product,
   product_images_has_nav: section.settings.product_images_has_nav,
-  product_images_filter_group_option: section.settings.product_images_filter_group_option,
-  product_images_filter_attr: section.settings.product_images_filter_attr,
+  product_images_filter_images: section.settings.product_images_filter_images,
+  product_images_filter_group_options: section.settings.product_images_filter_group_options,
+  product_images_alt_tag_delimiter: section.settings.product_images_alt_tag_delimiter,
   product_info_show_compare_at_price: section.settings.product_info_show_compare_at_price,
   product_info_show_option_name: section.settings.product_info_show_option_name,
   product_info_show_selected_value: section.settings.product_info_show_selected_value,
@@ -24,18 +25,24 @@
         "default": true
       },
       {
-        "id": "product_images_filter_group_option",
+        "id": "product_images_filter_images",
+        "type": "checkbox",
+        "label": "Group  and filter images?",
+        "default": true
+      },
+      {
+        "id": "product_images_filter_group_options",
         "type": "text",
-        "label": "Option to group images by",
+        "label": "Possible Options to group images by",
         "placeholder": "Optional",
         "info": "(navigation must be enabled)"
       },
       {
-        "id": "product_images_filter_attr",
+        "id": "product_images_alt_tag_delimiter",
         "type": "text",
-        "label": "Slide attribute with value to filter on",
+        "label": "String to split alt attribute on for filter value",
         "placeholder": "Optional",
-        "info": "(navigation must be enabled)"
+        "info": "alt tag will be split on this value and the value to the left of the delimiter will be the new alt tag and the value to the right will be the value that's used to filter by"
       },
       {
         "type": "header",

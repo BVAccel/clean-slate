@@ -12,47 +12,45 @@
 */
 
 export default {
-  toggle: 'BVA.TOGGLE',
+  animationEnd:           'BVA.ANIMATION.END',
+  animationStart:         'BVA.ANIMATION.START',
 
-  showOverlay: 'BVA.OVERLAY.SHOW',
-  hideOverlay: 'BVA.OVERLAY.HIDE',
+  addToCart:              'BVA.CART.ADD',
+  removeFromCart:         'BVA.CART.REMOVE',
+  updateCart:             'BVA.CART.UPDATE',
+  cartRequestError:       'BVA.CART.REQUEST.ERROR',
+  cartRequestSuccess:     'BVA.CART.REQUEST.SUCCESS',
 
-  openModal: 'BVA.MODAL.OPEN',
-  closeModal: 'BVA.MODAL.CLOSE',
-  toggleModal: 'BVA.MODAL.TOGGLE',
+  openInlineCart:         'BVA.INLINE_CART.OPEN',
+  closeInlineCart:        'BVA.INLINE_CART.CLOSE',
+  toggleInlineCart:       'BVA.INLINE_CART.TOGGLE',
+  updateInlineCartUI:     'BVA.INLINE_CART.UPDATE',
 
-  openInlineCart: 'BVA.INLINE_CART.OPEN',
-  closeInlineCart: 'BVA.INLINE_CART.CLOSE',
-  toggleInlineCart: 'BVA.INLINE_CART.TOGGLE',
-  updateInlineCartUI: 'BVA.INLINE_CART.UPDATE_UI',
+  updateInventory:        'BVA.INVENTORY.UPDATE',
 
-  addToCart: 'BVA.CART.ADD',
-  removeFromCart: 'BVA.CART.REMOVE',
-  updateCart: 'BVA.CART.REMOVE',
-  cartRequestSuccess: 'BVA.CART.REQUEST.SUCCESS',
-  cartRequestError: 'BVA.CART.REQUEST.ERROR',
+  hideModal:              'BVA.MODAL.HIDE',
+  showModal:              'BVA.MODAL.SHOW',
+  openModal:              'BVA.MODAL.OPEN',
+  closeModal:             'BVA.MODAL.CLOSE',
+  toggleModal:            'BVA.MODAL.TOGGLE',
 
-  animationStart: 'BVA.ANIMATION.START',
-  animationEnd: 'BVA.ANIMATION.END',
+  showOverlay:            'BVA.OVERLAY.SHOW',
+  hideOverlay:            'BVA.OVERLAY.HIDE',
 
-  updateCart: 'BVA.STATE.CART.UPDATE',
-  updateState: 'BVA.STATE.UPDATE',
-  updateStatePrice: 'BVA.STATE.UPDATE.PRICE',
-  updateStateOption: 'BVA.STATE.UPDATE.OPTION',
+  updateOptionGroupValue: 'BVA.OPTION_GROUP.UPDATE',
 
-  updateProductsState: 'BVA.STATE.PRODUCTS.UPDATE',
+  updatePrice:            'BVA.PRICE.UPDATE',
 
-  updateOptionGroupValue: 'BVA.OPTION_GROUP.VALUE_CHANGE',
-
-  updateQuantity: 'BVA.QUANTITY.UPDATE',
+  updateQuantity:         'BVA.QUANTITY.UPDATE',
+  updateProductQuantity:  'BVA.QUANTITY.UPDATE.PRODUCT',
   updateLineItemQuantity: 'BVA.QUANTITY.UPDATE.LINE_ITEM',
-  updateProductQuantity: 'BVA.QUANTITY.UPDATE.PRODUCT',
 
-  updateVariant: 'BVA.VARIANT.UPDATE',
-  updateInventory: 'BVA.INVENTORY.UPDATE',
-  updateVariantId: 'BVA.VARIANT_ID.UPDATE',
-  updatePrice: 'BVA.PRICE.UPDATE',
+  updateState:            'BVA.STATE.UPDATE',
+  updateCart:             'BVA.STATE.UPDATE.CART',
+  updateStatePrice:       'BVA.STATE.UPDATE.PRODUCT.PRICE',
 
-  showModal: 'BVA.MODAL.SHOW',
-  hideModal: 'BVA.MODAL.HIDE',
+  toggle:                 'BVA.TOGGLE',
+
+  updateVariant:          'BVA.VARIANT.UPDATE',
+  updateVariantId:        'BVA.VARIANT.UPDATE.ID',
 };

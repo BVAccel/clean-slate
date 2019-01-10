@@ -1,0 +1,35 @@
+{%- for block in section.blocks -%}
+
+  {%- if block.settings.group_name != blank -%}
+    {%- assign group_name = block.settings.group_name -%}
+    {%- assign groups = groups | append: group_name | append: '--' | append: block.type -%}
+    {%- assign group_names = group_names | append: group_name | append: ',' -%}
+
+  {%- else -%}
+
+    {%- include 'global-header-case-statement' -%}
+
+  {%- endif -%}
+
+{%- endfor -%}
+
+
+{%- assign groups = groups | split: ',' | sort -%}
+{%- assign group_names = group_names | split: ',' | uniq -%}
+
+
+{%- for group_name in group_names -%}
+  <div class="global-header--block-group {{ group_name -}}">
+
+    {%- for block in section.blocks -%}
+      {%- for group in groups -%}
+        {%- if group contains block.type and group contains group_name -%}
+
+          {%- include 'global-header-case-statement' -%}
+
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+  </div>
+{%- endfor -%}

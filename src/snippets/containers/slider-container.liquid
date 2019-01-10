@@ -5,8 +5,10 @@
   - slides
 
   Optional arguments:
-  - filter_group_option
+  - group_slides
+  - filter_group_options
   - filter_attr
+  - with_nav
   - classes
   - attrs
 
@@ -17,18 +19,41 @@
 {%- endcapture -%}
 
 <div
-  class="oo-slider slider--{{- name }} {{ classes -}}"
-  data-slider="{{- name -}}"
+  class="oo-slider slider--{{- name | handle }} swiper-container {{ classes -}}"
   data-container="slider"
   data-container-name="{{- name -}}"
   data-container-id="{{- id -}}"
-  {%- if filter_group_option -%}
-    data-filter-group-option="{{- filter_group_option -}}"
-    data-filter-attr="{{- filter_attr -}}"
-  {%- endif -%}
-  {% comment %}{%- if with_nav == true -%}data-has-nav{%- endif -%}{% endcomment %}
+  {%- if nav_for != blank -%}data-nav-for="{{- nav_for -}}"{%- endif -%}
+  {%- if has_nav != blank -%}data-has-nav="{{- has_nav -}}"{%- endif %}
+  {%- if group_slides == true -%}data-filter-group-options="{{- filter_group_options -}}"{%- endif -%}
+  {%- if filter_attr != blank -%}data-filter-attr="{{- filter_attr -}}"{%- endif -%}
   {{ attrs -}}>
 
-  {{- slides -}}
+  <div class="swiper-wrapper">
+
+    {{- slides -}}
+
+  </div>
+
+  {%- if pagination == true -%}
+
+    <div class="swiper-pagination"></div>
+
+  {%- endif -%}
+
+
+  {%- if navigation == true -%}
+
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+  {%- endif -%}
+
+
+  {%- if scrollbar == true -%}
+
+    <div class="swiper-scrollbar"></div>
+
+  {%- endif -%}
 
 </div>

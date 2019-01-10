@@ -1,0 +1,18 @@
+{%- capture collection_grid_contents -%}
+  {%- for _product in collection.products -%}
+
+    {%- capture product_item_content -%}
+      {%- include 'product-item', _product: _product -%}
+    {%- endcapture -%}
+
+    {%- include 'product-container',
+      name: 'product-grid-item',
+      _product: _product,
+      content: product_item_content,
+      classes: 'oo-product-item' -%}
+
+  {%- endfor -%}
+{%- endcapture -%}
+
+
+{%- include 'grid-container', content: collection_grid_contents -%}

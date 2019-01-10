@@ -31,7 +31,11 @@ export const setState = data => {
     state[container] = newState;
   }
 
-  PubSub.publish(`${bva.updateState}.${change}`, { id, data, state: newState });
+  const topic = (container === change)
+    ? `${bva.updateState}.${container.toUpperCase()}`
+    : `${bva.updateState}.${container.toUpperCase()}.${change.toUpperCase()}`;
+
+  PubSub.publish(topic, { id, data, state: newState });
 
   return newState;
 };

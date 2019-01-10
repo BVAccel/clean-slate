@@ -1,8 +1,10 @@
 {%- capture product_main -%}
+
   {%- include 'product-images',
-    with_nav: product_images_has_nav,
-    filter_group_option: product_images_filter_group_option,
-    filter_attr: product_images_filter_attr -%}
+    with_thumbs: product_images_has_nav,
+    group_images: product_images_filter_images,
+    filter_group_options: product_images_filter_group_options,
+    alt_tag_delimiter: product_images_alt_tag_delimiter -%}
 
   {%- include 'product-info',
     show_compare_at_price: product_info_show_compare_at_price,
@@ -10,11 +12,11 @@
     show_selected_value: product_info_show_selected_value,
     add_to_cart_button_text: product_info_add_to_cart_button_text,
     add_to_cart_button_classes: product_info_add_to_cart_button_classes -%}
+
 {%- endcapture -%}
 
 
 {%- include 'product-container',
-  name: 'product-main',
+  name: 'product-template',
   content: product_main,
-  classes: 'product-main' -%}
-
+  classes: 'product-template' -%}

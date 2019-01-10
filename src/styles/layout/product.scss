@@ -1,4 +1,4 @@
-.product-main {
+.product-template {
   display: flex;
   flex-wrap: wrap;
 }
@@ -7,7 +7,26 @@
   width: 50%;
   max-width: 50%;
   flex-basis: 50%;
+
+  display: flex;
 }
+
+.product-images--navigation {
+  flex-basis: 90px;
+  padding-right: 10px;
+}
+
+.thumb-slide {
+  height: auto !important;
+}
+
+.product-images--gallery {
+  flex: 1;
+  // width: 80%;
+  // max-width: 80%;
+  // flex-basis: 80%;
+}
+
 
 .product-info {
   width: 50%;

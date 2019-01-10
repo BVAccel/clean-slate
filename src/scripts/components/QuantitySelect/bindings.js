@@ -11,12 +11,20 @@ const handleQuantityChangeClick = ({ currentTarget: self, ...rest }) => {
   const newQuantity = oldQuantity + change;
 
   if (newQuantity > inventory) {
-    const name = 'not-enough-inventory';
-    const data = { newQuantity, inventory };
-    PubSub.publish(bva.showModal, { name, data });
+    const topic = bva.showModal;
+    const data = { name: 'not-enough-inventory', data: { newQuantity, inventory }};
+
+    PubSub.publish(topic, data);
   } else if (newQuantity >= 1) {
     const topic = `${bva.updateQuantity}.${type.toUpperCase().replace('-', '_')}`;
-    PubSub.publish(topic, { id, key, quantity: newQuantity });
+    const data = { id, key, quantity: newQuantity };
+
+    PubSub.publish(topic, data);
+  } else if (newQuantity === 0 && type === 'line-item') {
+    const topic = bva.removeFromCart;
+    const data = { id, key };
+
+    PubSub.publish(topic, data);
   }
 
   return false;

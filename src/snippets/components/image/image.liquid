@@ -4,6 +4,7 @@
   - resource
 
   Optional arguments:
+  - alt
   - size
   - crop
   - scale
@@ -69,8 +70,10 @@
   {%- else -%}
 
     <img
-      class="oo-image {% unless lazyload == false -%}lazyload{%- endunless %}"
-      alt="{{- resource.alt -}}"
+      class="oo-image
+        {% unless lazyload == false -%}lazyload{%- endunless %}
+        {% if wrapper == false -%}{{ classes -}}{%- endif -%}"
+      alt="{%- if alt != blank -%}{{- alt -}}{%- else -%}{{- resource.alt -}}{%- endif -%}"
       {%- if lazyload != false -%}
         data-src="{{- _src -}}"
         data-srcset="{{- _srcset -}}"
@@ -83,7 +86,6 @@
       {%- if wrapper == false -%}{{ attrs -}}{%- endif -%}>
 
   {%- endif -%}
-
 
 {%- unless wrapper == false -%}
   </{{- tag -}}>

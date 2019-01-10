@@ -6,7 +6,7 @@ import State from 'state';
 
 const getVariant = id => {
   const state = State.get(id);
-  const { options, variants } = state.data;
+  const { options, variants } = state._data;
   const selectedOptions = options
     .map(option => option.name)
     .map(name => state[name]);
@@ -36,7 +36,7 @@ const getProductContainerData = () => {
     return {
       _data: { options, variants },
       id,
-      change: 'PRODUCT',
+      change: 'product',
       container: 'product',
       ...initialOptionValues,
       ...initialVariantData,
@@ -47,7 +47,7 @@ const getProductContainerData = () => {
 
 export const updateVariant = data => {
   const { variant: { id: variantId }} = getVariant(data.id);
-  const change = 'VARIANT';
+  const change = 'variant';
   const container = 'product';
 
   State.set({ ...data, variantId, change, container });
@@ -58,7 +58,7 @@ export const updateVariant = data => {
 
 export const updateInventory = data => {
   const { inventory } = getVariant(data.id);
-  const change = 'INVENTORY';
+  const change = 'inventory';
   const container = 'product';
 
   State.set({ ...data, inventory, change, container });
@@ -66,24 +66,25 @@ export const updateInventory = data => {
 
 export const updatePrice = data => {
   const { variant: { price, compare_at_price }} = getVariant(data.id);
-  const change = 'PRICE';
+  const change = 'price';
   const container = 'product';
 
   State.set({ ...data, price, compare_at_price, change, container });
 };
 
 export const updateProductQuantity = data => {
-  const change = 'QUANTITY';
+  const change = 'quantity';
   const container = 'product';
 
   State.set({ ...data, change, container });
 };
 
 export const updateOptionGroupValue = data => {
-  const change = 'OPTION';
+  const { id, name, value } = data;
+  const change = name;
   const container = 'product';
 
-  State.set({ ...data, change, container });
+  State.set({ id, change, container, [name]: value });
   PubSub.publish(bva.updateVariant, data);
 };
 
