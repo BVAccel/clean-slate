@@ -1,0 +1,24 @@
+{%- capture upsell_row_contents -%}
+
+  {%- for _product in collections.underwear.products limit: 4 -%}
+
+    {%- capture product_container_upsell -%}
+
+      {%- include 'product-item',
+        _product: _product  -%}
+
+    {%- endcapture -%}
+
+    {%- include 'product-container',
+      name: 'product-page-upsell',
+      _product: _product,
+      content: product_container_upsell,
+      classes: 'flex-3-grid'  -%}
+
+  {%- endfor -%}
+
+
+{%- endcapture -%}
+
+
+{%- include 'grid-container', content: upsell_row_contents -%}
