@@ -1,11 +1,12 @@
 {%- capture upsell_row_contents -%}
 
-  {%- for _product in collections.underwear.products limit: 4 -%}
+  {%- for _product in collections.all.products limit: 4 -%}
 
     {%- capture product_container_upsell -%}
 
       {%- include 'product-item',
-        _product: _product  -%}
+        _product: _product,
+        with_quickshop: false,  -%}
 
     {%- endcapture -%}
 

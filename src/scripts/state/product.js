@@ -25,14 +25,15 @@ const getInitialVariantData = variants => {
   return { variantId, inventory, price, compare_at_price };
 };
 
-const getProductContainerData = () => {
-  return $(dom.productContainer).get().map(productContainer => {
+export const getProductContainerData = container => {
+  const containerSelector = (container) ? container : dom.productContainer;
+  const containerData = $(containerSelector).get().map(productContainer => {
     const id = productContainer.dataset.containerId;
     const { data: options } = JSON.parse($(productContainer).find(dom.optionData).text());
     const { data: variants } = JSON.parse($(productContainer).find(dom.variantData).text());
     const initialOptionValues = getInitialOptionValues(options);
     const initialVariantData = getInitialVariantData(variants);
-    const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10);
+    const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10) || null;
     return {
       _data: { options, variants },
       id,
@@ -43,6 +44,8 @@ const getProductContainerData = () => {
       quantity,
     };
   });
+
+  return (containerData.length == 1) ? containerData[0] : containerData;
 };
 
 export const updateVariant = data => {

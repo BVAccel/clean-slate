@@ -47,11 +47,12 @@ const getFilterGroup = (parentState, filterGroupOptions) => {
 };
 
 const initSlider = (slider, sliderSettings) => {
-  const { hasNav } = slider.dataset;
+  const { containerId, hasNav } = slider.dataset;
   const parentContainer = dom.getParentContainer(slider);
+  const selector = `[data-container-id="${containerId}"]`;
 
   if (!parentContainer) {
-    const swiper = new Swiper(slider, sliderSettings);
+    const swiper = new Swiper(selector, sliderSettings);
     return { swiper, parentContainer };
   }
 
@@ -61,7 +62,7 @@ const initSlider = (slider, sliderSettings) => {
     sliderSettings.thumbs = { swiper: navSlider };
   }
 
-  const swiper = new Swiper(slider, sliderSettings);
+  const swiper = new Swiper(selector, sliderSettings);
   return { swiper, parentContainer };
 };
 

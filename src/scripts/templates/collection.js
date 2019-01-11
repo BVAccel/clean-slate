@@ -1,7 +1,14 @@
 import 'styles/templates/collection.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+import Quickshop from 'components/Quickshop';
+import Modal from 'components/Modal';
 
+Quickshop.initSubscribers();
+Modal.initSubscribers();
+
+document.addEventListener('DOMContentLoaded', () => {
+  Quickshop.bindActions();
+  Modal.bindActions();
 });
 
 window.addEventListener('load', () => {

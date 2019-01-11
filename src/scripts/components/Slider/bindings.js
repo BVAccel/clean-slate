@@ -6,9 +6,9 @@ import bva from 'common/Constants';
 import State from 'state';
 
 const sliderThumbClick = ({ currentTarget: self }) => {
-  const { filterValue } = self.dataset;
+  const { filterValue, slideIndex } = self.dataset;
   const { containerId: sliderId } = dom.getParentContainer(self).dataset;
-  const { filterGroup, parentId } = State.get(sliderId);
+  const { filterGroup, parentId, slider } = State.get(sliderId);
   const parentState = State.get(parentId);
   const option = parentState._data.options.find(option => option.name === filterGroup);
   const parentHasValue = option.values.includes(filterValue);
@@ -19,8 +19,14 @@ const sliderThumbClick = ({ currentTarget: self }) => {
 
     PubSub.publish(topic, data);
   }
+
+  console.log(slider);
+
+  slider.slideTo(slideIndex);
+
+  return false;
 };
 
 export const bindActions = () => {
-  $(document).on('click', dom.galleryThumb, sliderThumbClick)
+  $(document).on('click', dom.galleryThumb, sliderThumbClick);
 };

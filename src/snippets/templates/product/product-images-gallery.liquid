@@ -7,7 +7,9 @@
       {%- assign filter_value = alt_parts[1] | strip -%}
 
       {%- capture slide_attrs -%}
-        data-galley-slide data-filter-value="{{ filter_value }}"
+        data-galley-slide
+        data-filter-value="{{ filter_value }}"
+        data-slide-index="{{ forloop.index0 }}"
       {%- endcapture -%}
     {%- endif -%}
 
@@ -30,5 +32,6 @@
   group_slides: group_images,
   filter_group_options: filter_group_options,
   filter_attr: 'data-filter-value',
+  navigation: true,
   has_nav: 'product-gallery-thumbs',
   classes: 'product-images--gallery' -%}

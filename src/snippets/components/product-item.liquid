@@ -4,6 +4,7 @@
   - _product
 
   Optional arguments:
+  - with_quickshop
   - classes
   - attrs
 
@@ -33,12 +34,18 @@
   _price: _product.price,
   type: 'price' -%}
 
-{%- include 'button',
-  content: 'Add To Cart',
-  classes: 'button--primary-alt flex-6-grid u-push-down' -%}
+{%- if with_quickshop == true -%}
 
-{%- include 'button',
-  content: 'Quickview',
-  icon: 'icon-add',
-  height: '18px';
-  classes: 'button--primary-alt flex-6-grid u-push-down' -%}
+  {%- include 'button',
+    content: 'Add To Cart',
+    classes: 'button--primary-alt flex-6-grid u-push-down' -%}
+
+  {%- include 'button',
+    content: 'Quickview',
+    icon: 'icon-add',
+    height: '18px';
+    classes: 'button--primary-alt flex-6-grid u-push-down',
+    attrs: 'data-open-quickshop' -%}
+
+
+{%- endif -%}

@@ -25,6 +25,15 @@ const notEnoughInventory = data => {
   `;
 };
 
+const quickshop = data => {
+  console.log(data);
+
+
+};
+
+
+
 export default {
   ['not-enough-inventory']: notEnoughInventory,
+  quickshop,
 };

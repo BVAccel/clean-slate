@@ -40,7 +40,7 @@ window.addEventListener('load', () => {
 
 });
 
-PubSub.subscribe('BVA', (message, data) => console.log(message, data));
+// PubSub.subscribe('BVA', (message, data) => console.log(message, data));
 
 // HMR
 // if (module.hot) {

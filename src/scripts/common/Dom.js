@@ -89,6 +89,8 @@ const dom = {
 
   galleryThumb: '[data-gallery-thumb]',
   gallerySlide: '[data-gallery-slide]',
+
+  openQuickshop: '[data-open-quickshop]',
 };
 
 export default dom;

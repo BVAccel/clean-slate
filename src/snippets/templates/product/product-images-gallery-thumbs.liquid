@@ -7,7 +7,9 @@
       {%- assign filter_value = alt_parts[1] | strip -%}
 
       {%- capture slide_attrs -%}
-        data-gallery-thumb data-filter-value="{{ filter_value }}"
+        data-gallery-thumb
+        data-filter-value="{{ filter_value }}"
+        data-slide-index="{{ forloop.index0 }}"
       {%- endcapture -%}
     {%- endif -%}
 

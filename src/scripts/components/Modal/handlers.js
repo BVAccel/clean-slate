@@ -29,6 +29,7 @@ const closeModal = () => {
 };
 
 export const showModal = data => {
+  console.log(data);
   const modalContents = generateModalMarkup(data);
   $(dom.modalContents).html(modalContents);
   return displayModal();

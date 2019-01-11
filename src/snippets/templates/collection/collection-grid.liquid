@@ -2,7 +2,9 @@
   {%- for _product in collection.products -%}
 
     {%- capture product_item_content -%}
-      {%- include 'product-item', _product: _product -%}
+      {%- include 'product-item',
+        _product: _product,
+        with_quickshop: true -%}
     {%- endcapture -%}
 
     {%- include 'product-container',

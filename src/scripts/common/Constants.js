@@ -53,4 +53,8 @@ export default {
 
   updateVariant:          'BVA.VARIANT.UPDATE',
   updateVariantId:        'BVA.VARIANT.UPDATE.ID',
+
+  openQuickshop:           'BVA.QUICKSHOP.OPEN',
+  closeQuickshop:          'BVA.QUICKSHOP.CLOSE',
+  toggleQuickshop:         'BVA.QUICKSHOP.TOGGLE',
 };
