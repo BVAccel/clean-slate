@@ -7,22 +7,18 @@ import State from 'state';
 
 const sliderThumbClick = ({ currentTarget: self }) => {
   const { filterValue, slideIndex } = self.dataset;
-  const { containerId: sliderId } = dom.getParentContainer(self).dataset;
-  const { filterGroup, parentId, slider } = State.get(sliderId);
-  const parentState = State.get(parentId);
-  const option = parentState._data.options.find(option => option.name === filterGroup);
+  const { parent, navFor, filterGroup } = State.get(self);
+  const option = parent._data.options.find(option => option.name === filterGroup) || [];
   const parentHasValue = option.values.includes(filterValue);
 
-  if (parentState[filterGroup] && parentHasValue) {
+  if (parent[filterGroup] && parentHasValue) {
     const topic = `${bva.updateOptionGroupValue}.${filterGroup.toUpperCase()}`;
-    const data = { id: parentId, name: filterGroup, value: filterValue };
+    const data = { id: parent.id, name: filterGroup, value: filterValue };
 
     PubSub.publish(topic, data);
   }
 
-  console.log(slider);
-
-  slider.slideTo(slideIndex);
+  State.get(navFor).slider.select(slideIndex);
 
   return false;
 };

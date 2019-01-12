@@ -13,12 +13,17 @@
 
 <div class="product-images {{ classes -}}" {{ attrs -}}>
 
-  {%- if with_thumbs == true -%}
+  {%- if has_nav == true -%}
 
-    {%- include 'product-images-gallery-thumbs' -%}
+    {%- include 'product-images-gallery',
+      thumbs: true,
+      classes: '',
+      attrs: '' -%}
 
   {%- endif -%}
 
-  {%- include 'product-images-gallery' -%}
+  {%- include 'product-images-gallery',
+    classes: '',
+    attrs: '' -%}
 
 </div>

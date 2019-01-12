@@ -7,6 +7,7 @@
 
   Optional arguments:
   - tag
+  - type
   - classes
   - attrs
 
@@ -19,8 +20,8 @@
 
 
 <{%- if tag != blank -%}{{- tag }}{%- else -%}section{%- endif %}
-  class="oo-product-container {{ classes -}}"
-  data-container="product"
+  class="oo-product-container vv-{{ name | handle }} {{ classes -}}"
+  data-container="{%- if type != blank -%}{{- type -}}{% else %}product{%- endif -%}"
   data-container-name="{{- name -}}"
   data-container-id="{{- id -}}"
   {{ attrs -}}>

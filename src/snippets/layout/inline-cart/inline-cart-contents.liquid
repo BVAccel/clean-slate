@@ -7,6 +7,9 @@
 
   {% endcomment %}
 
-  {% include 'inline-cart-line-item', line_item: line_item %}
+  {% include 'inline-cart-line-item',
+    line_item: line_item,
+    classes: '',
+    attrs: '' %}
 
 {% endfor %}

@@ -2,14 +2,14 @@
 @import '../helpers/index';
 
 // Vendor
-// @import '../vendor/slick/index';
-@import '../vendor/swiper/index';
+@import '../vendor/flickity/index';
 
 // Components
 @import '../components/button';
 
 // Layout
 @import '../layout/product';
+@import '../layout/product-main';
 
 // Overrides
 @import '../pages/product';

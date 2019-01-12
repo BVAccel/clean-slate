@@ -9,20 +9,27 @@
 
 
 {%- capture form_add_to_cart_content -%}
+
   {%- include 'input',
     type: 'hidden',
     name: 'id',
-    value: _product.selected_or_first_available_variant.id -%}
+    value: _product.selected_or_first_available_variant.id,
+    classes: '',
+    attrs: '' -%}
 
   {%- include 'input',
     type: 'hidden',
     name: 'form_type',
-    value: 'product' -%}
+    value: 'product',
+    classes: '',
+    attrs: '' -%}
 
   {%- include 'input',
     type: 'hidden',
     name: 'utf8',
-    value: '✓' -%}
+    value: '✓',
+    classes: '',
+    attrs: '' -%}
 
 
   {%- for option in _product.options_with_values -%}
@@ -30,7 +37,9 @@
     {%- include 'option-group',
       option: option,
       show_option_name: show_option_name,
-      show_selected_value: show_selected_value -%}
+      show_selected_value: show_selected_value,
+      classes: '',
+      attrs: '' -%}
 
   {%- endfor -%}
 
@@ -42,7 +51,10 @@
     type: 'submit',
     content: add_to_cart_button_text,
     classes: add_to_cart_button_classes,
-    attrs: 'data-add-to-cart' -%}
+    attrs: 'data-add-to-cart',
+    classes: '',
+    attrs: '' -%}
+
 {%- endcapture -%}
 
 
@@ -56,7 +68,9 @@
   method: 'post',
   action: '/cart/add',
   content: form_add_to_cart_content,
-  attrs: form_add_to_cart_attrs -%}
+  attrs: form_add_to_cart_attrs,
+  classes: '',
+  attrs: '' -%}
 
 {%- assign form_add_to_cart_content = nil -%}
 {%- assign form_add_to_cart_attrs = nil -%}

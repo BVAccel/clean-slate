@@ -15,7 +15,9 @@
 
   {%- include 'header',
     level: 3,
-    title: header -%}
+    title: header,
+    classes: '',
+    attrs: '' -%}
 
   {%- capture footer_newsletter_signup_content -%}
     {%- capture input_placeholder -%}
@@ -25,19 +27,25 @@
     {%- include 'input',
       type: 'email',
       name: 'global-footer-newsletter-signup',
+      classes: '',
       attrs: input_placeholder -%}
 
     {%- include 'button',
       type: 'submit',
       icon: submit_icon,
-      content: submit_text -%}
+      content: submit_text,
+      classes: '',
+      attrs: '' -%}
+
   {%- endcapture -%}
 
   {%- include 'form-container',
     name: 'global-footer-newsletter-signup',
     method: 'post',
     action: '',
-    content: footer_newsletter_signup_content -%}
+    content: footer_newsletter_signup_content,
+    classes: '',
+    attrs: '' -%}
 
   {%- assign footer_newsletter_signup_content = nil -%}
 

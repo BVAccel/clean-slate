@@ -1,5 +1,28 @@
-<div class="oo-grid">
+{%- comment -%}
+
+  Required arguments:
+  - name
+  - content
+
+  Optional arguments:
+  - classes
+  - attrs
+
+{%- endcomment -%}
+
+
+{%- capture id -%}
+  grid-{{- 'now' | date: '%N' | modulo: 999999999 | plus: 1 -}}
+{%- endcapture -%}
+
+
+<section
+  class="oo-grid vv-{{ name | handle}} {{ classes -}}"
+  data-container="grid"
+  data-container-name="{{- name -}}"
+  data-container-id="{{- id -}}"
+  {{ attrs -}}>
 
   {{- content -}}
 
-</div>
+</section>

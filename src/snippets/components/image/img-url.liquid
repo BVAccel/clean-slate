@@ -1,17 +1,21 @@
-{% assign _descriptor = descriptor -%}
-{%- if descriptor != blank -%}
-  {% assign _descriptor = descriptor | prepend: ' ' -%}
-{%- endif -%}
+{%- unless resource == false -%}
 
-{%- case type -%}
-  {%- when 'file' -%}
-    {{- resource | file_img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
-  {%- when 'asset' -%}
-    {{- resource | asset_img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
-  {%- when 'img' -%}
-    {{- resource | img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
-  {%- else -%}
-    {{- resource | img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
-{%- endcase -%}
+  {% assign _descriptor = descriptor -%}
+  {%- if descriptor != blank -%}
+    {% assign _descriptor = descriptor | prepend: ' ' -%}
+  {%- endif -%}
 
-{%- assign _descriptor = blank -%}
+  {%- case type -%}
+    {%- when 'file' -%}
+      {{- resource | file_img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
+    {%- when 'asset' -%}
+      {{- resource | asset_img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
+    {%- when 'img' -%}
+      {{- resource | img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
+    {%- else -%}
+      {{- resource | img_url: size, crop: crop, scale: scale, format: format }}{{ _descriptor -}}
+  {%- endcase -%}
+
+  {%- assign _descriptor = blank -%}
+
+{%- endunless -%}

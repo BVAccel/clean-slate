@@ -1,20 +1,18 @@
 {%- capture collection_grid_contents -%}
   {%- for _product in collection.products -%}
 
-    {%- capture product_item_content -%}
-      {%- include 'product-item',
-        _product: _product,
-        with_quickshop: true -%}
-    {%- endcapture -%}
-
-    {%- include 'product-container',
-      name: 'product-grid-item',
+    {%- include 'product-item',
       _product: _product,
-      content: product_item_content,
-      classes: 'oo-product-item' -%}
+      with_quickshop: true,
+      classes: '',
+      attrs: '' -%}
 
   {%- endfor -%}
 {%- endcapture -%}
 
 
-{%- include 'grid-container', content: collection_grid_contents -%}
+{%- include 'grid-container',
+  name: 'Collection Grid',
+  content: collection_grid_contents,
+  classes: '',
+  attrs: '' -%}

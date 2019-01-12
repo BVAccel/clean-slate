@@ -1,18 +1,22 @@
-{%- assign sizeses = _sizes | split: ', ' -%}
+{%- unless resource == false -%}
 
-{%- for size in sizeses -%}
-  {%- assign size_parts = size | split: ' ' -%}
+  {%- assign sizeses = _sizes | split: ', ' -%}
 
-  {%- if size_parts.size == 1 -%}
+  {%- for size in sizeses -%}
+    {%- assign size_parts = size | split: ' ' -%}
 
-    {{- size_parts[0] -}}
+    {%- if size_parts.size == 1 -%}
 
-  {%- else -%}
+      {{- size_parts[0] -}}
 
-    ({{- size_parts[0] -}}-width: {{ size_parts[1] }}) {{ size_parts[2] -}}{%- unless forloop.last -%}, {% endunless -%}
+    {%- else -%}
 
-  {%- endif -%}
-{%- endfor -%}
+      ({{- size_parts[0] -}}-width: {{ size_parts[1] }}) {{ size_parts[2] -}}{%- unless forloop.last -%}, {% endunless -%}
 
-{%- assign sizeses = blank -%}
-{%- assign size_parts = blank -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign sizeses = blank -%}
+  {%- assign size_parts = blank -%}
+
+{%- endunless -%}

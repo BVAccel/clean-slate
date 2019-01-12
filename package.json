@@ -29,11 +29,14 @@
     "@shopify/theme-rte": "^1.0.0-alpha.7",
     "@shopify/theme-sections": "^1.1.0",
     "@shopify/theme-variants": "^1.0.0-alpha.8",
+    "flickity": "^2.1.2",
+    "flickity-as-nav-for": "^2.0.1",
+    "flickity-fullscreen": "^1.1.1",
+    "flickity-hash": "^1.0.3",
+    "flickity-imagesloaded": "^2.0.0",
     "lazysizes": "^4.1.5",
     "normalize.css": "^7.0.0",
-    "pubsub-js": "^1.7.0",
-    "slick-carousel": "^1.8.1",
-    "swiper": "^4.4.6"
+    "pubsub-js": "^1.7.0"
   },
   "scripts": {
     "dev": "slate-tools start --skipPrompts",

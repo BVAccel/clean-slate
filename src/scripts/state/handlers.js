@@ -5,6 +5,11 @@ import { setSearchParm } from 'common/Helpers';
 import { state } from 'state';
 
 export const getState = key => {
+  if (key instanceof Element) {
+    const { containerId } = dom.getContainer(key).dataset;
+    return getState(containerId);
+  }
+
   const { cart, ...states } = state;
   const ids = Object.entries(states).reduce((allState, [name, values]) => ({ ...allState, ...values }), {});
 
@@ -12,9 +17,9 @@ export const getState = key => {
     return state[key];
   } else if (ids[key]) {
     return ids[key];
-  } else {
-    return state
   }
+
+  return;
 };
 
 export const setState = data => {
@@ -23,7 +28,7 @@ export const setState = data => {
 
   if (id && container) {
     const oldState = state[container][id];
-    newState = { ...oldState, ...stateChange };
+    newState = { ...oldState, ...stateChange, id };
     state[container][id] = newState;
   } else if (container) {
     const oldState = state[container];

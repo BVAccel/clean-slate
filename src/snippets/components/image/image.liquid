@@ -70,9 +70,8 @@
   {%- else -%}
 
     <img
-      class="oo-image
-        {% unless lazyload == false -%}lazyload{%- endunless %}
-        {% if wrapper == false -%}{{ classes -}}{%- endif -%}"
+      class="oo-image {% unless lazyload == false -%} lazyload {%- endunless -%}
+        {%- if wrapper == false -%} {{ classes -}} {%- endif -%}"
       alt="{%- if alt != blank -%}{{- alt -}}{%- else -%}{{- resource.alt -}}{%- endif -%}"
       {%- if lazyload != false -%}
         data-src="{{- _src -}}"

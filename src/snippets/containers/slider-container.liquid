@@ -19,41 +19,17 @@
 {%- endcapture -%}
 
 <div
-  class="oo-slider slider--{{- name | handle }} swiper-container {{ classes -}}"
+  class="oo-slider vv-{{ name | handle }} {{ classes -}}"
   data-container="slider"
   data-container-name="{{- name -}}"
   data-container-id="{{- id -}}"
   {%- if nav_for != blank -%}data-nav-for="{{- nav_for -}}"{%- endif -%}
-  {%- if has_nav != blank -%}data-has-nav="{{- has_nav -}}"{%- endif %}
-  {%- if group_slides == true -%}data-filter-group-options="{{- filter_group_options -}}"{%- endif -%}
-  {%- if filter_attr != blank -%}data-filter-attr="{{- filter_attr -}}"{%- endif -%}
+  {%- if group_slides == true -%}
+    data-filter-group-options="{{- filter_group_options -}}"
+    data-filter-attr="{{- filter_attr -}}"
+  {%- endif -%}
   {{ attrs -}}>
 
-  <div class="swiper-wrapper">
-
-    {{- slides -}}
-
-  </div>
-
-  {%- if pagination == true -%}
-
-    <div class="swiper-pagination"></div>
-
-  {%- endif -%}
-
-
-  {%- if navigation == true -%}
-
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-
-  {%- endif -%}
-
-
-  {%- if scrollbar == true -%}
-
-    <div class="swiper-scrollbar"></div>
-
-  {%- endif -%}
+  {{- slides -}}
 
 </div>

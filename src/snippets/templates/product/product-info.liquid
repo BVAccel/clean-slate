@@ -16,19 +16,26 @@
 
 <div class="product-info {{ classes -}}" {{ attrs -}}>
 
-  {%- include 'header', title: _product.title -%}
+  {%- include 'header',
+    title: _product.title,
+    classes: '',
+    attrs: '' -%}
 
   <div class="product-prices">
 
     {%- include 'price',
       _price: _variant.price,
-      type: 'price' -%}
+      type: 'price',
+      classes: '',
+      attrs: '' -%}
 
     {%- if show_compare_at_price == true -%}
 
       {%- include 'price',
         _price: _variant.compare_at_price,
-        type: 'compare_at_price' -%}
+        type: 'compare_at_price',
+        classes: '',
+        attrs: '' -%}
 
     {%- endif -%}
 
@@ -38,7 +45,9 @@
 
     {%- include 'text',
       content: _product.description,
-      rte: true -%}
+      rte: true,
+      classes: '',
+      attrs: '' -%}
 
   </div>
 
@@ -46,7 +55,9 @@
     show_option_name: show_option_name,
     show_selected_value: show_selected_value,
     add_to_cart_button_text: add_to_cart_button_text
-    add_to_cart_button_classes: add_to_cart_button_classes -%}
+    add_to_cart_button_classes: add_to_cart_button_classes,
+    classes: '',
+    attrs: '' -%}
 
 </div>
 

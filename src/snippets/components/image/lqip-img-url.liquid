@@ -1,25 +1,29 @@
-{%- assign size_parts = size | split: 'x' -%}
-{%- assign width = size_parts | first -%}
-{%- assign height = size_parts | last -%}
+{%- unless resource == false -%}
 
-{%- if size_parts.size == 1 -%}
-  {%- assign lqip_size = width | divided_by: 10 | round | append: 'x' -%}
-{%- elsif size_parts.size == 2 and width == blank -%}
-  {%- assign lqip_size = height | divided_by: 10 | round | prepend: 'x' -%}
-{%- elsif size_parts.size == 2 -%}
-  {%- capture lqip_size -%}
-    {{- width | divided_by: 10 | round -}}x{{- height | divided_by: 10 | round -}}
-  {%- endcapture -%}
-{%- endif -%}
+  {%- assign size_parts = size | split: 'x' -%}
+  {%- assign width = size_parts | first -%}
+  {%- assign height = size_parts | last -%}
 
-{%- include 'img-url',
-  resoure: resource,
-  size: lqip_size,
-  crop: crop,
-  scale: scale,
-  format: format -%}
+  {%- if size_parts.size == 1 -%}
+    {%- assign lqip_size = width | divided_by: 10 | round | append: 'x' -%}
+  {%- elsif size_parts.size == 2 and width == blank -%}
+    {%- assign lqip_size = height | divided_by: 10 | round | prepend: 'x' -%}
+  {%- elsif size_parts.size == 2 -%}
+    {%- capture lqip_size -%}
+      {{- width | divided_by: 10 | round -}}x{{- height | divided_by: 10 | round -}}
+    {%- endcapture -%}
+  {%- endif -%}
 
-{%- assign size_parts = nil -%}
-{%- assign width = nil -%}
-{%- assign height = nil -%}
-{%- assign lqip_size = nil -%}
+  {%- include 'img-url',
+    resoure: resource,
+    size: lqip_size,
+    crop: crop,
+    scale: scale,
+    format: format -%}
+
+  {%- assign size_parts = nil -%}
+  {%- assign width = nil -%}
+  {%- assign height = nil -%}
+  {%- assign lqip_size = nil -%}
+
+{%- endunless -%}

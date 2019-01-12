@@ -3,35 +3,66 @@
   flex-wrap: wrap;
 }
 
-.flex-full-grid,
-.flex-12-grid {
-  flex-basis: 74%;
+@for $i from $columns through 1 {
+  $width: ($i/$columns);
+  $named-width: map-get($named-widths, decimal-round($width, 3, floor));
+  $values: ($i);
+
+  @if $named-width != null {
+    $values: append($values, $named-width);
+  }
+
+  @each $value in $values {
+    $selector: flex-#{$value};
+
+    .#{$selector} {
+      flex-basis: percentage($width);
+    }
+
+    @each $breakpoint in $breakpoints {
+      $screen-width: nth($breakpoint, 1);
+
+      @each $size in $breakpoint {
+        @if type-of($size) == string {
+          .#{$size}-#{$selector} {
+            @include mq($screen-width) {
+              flex-basis: percentage($width);
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-.flex-9-grid {
-  flex-basis: 74%;
-}
+// .flex-full-grid,
+// .flex-12-grid {
+//   flex-basis: 74%;
+// }
 
-.flex-8-grid {
-  flex-basis: 66.66%;
-}
+// .flex-9-grid {
+//   flex-basis: 74%;
+// }
 
-.flex-half-grid,
-.flex-6-grid {
-  flex-basis: 50%;
-}
+// .flex-8-grid {
+//   flex-basis: 66.66%;
+// }
 
-.flex-third-grid,
-.flex-4-grid {
-  flex-basis: 33.33%;
-}
+// .flex-half-grid,
+// .flex-6-grid {
+//   flex-basis: 50%;
+// }
 
-.flex-quarter-grid,
-.flex-3-grid {
-  flex-basis: 25%;
-}
+// .flex-third-grid,
+// .flex-4-grid {
+//   flex-basis: 33.33%;
+// }
 
-.flex-2-grid {
-  flex-basis: 16.66%;
-}
+// .flex-quarter-grid,
+// .flex-3-grid {
+//   flex-basis: 25%;
+// }
 
+// .flex-2-grid {
+//   flex-basis: 16.66%;
+// }

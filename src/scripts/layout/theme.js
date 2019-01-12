@@ -21,11 +21,12 @@ focusHash();
 bindInPageLinks();
 
 State.init();
+
 State.initSubscribers();
-CartControls.initSubscribers();
 Toggle.initSubscribers();
 Overlay.initSubscribers();
 InlineCart.initSubscribers();
+CartControls.initSubscribers();
 QuantitySelect.initSubscribers();
 
 document.addEventListener('DOMContentLoaded', () => {

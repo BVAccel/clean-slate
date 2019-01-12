@@ -10,42 +10,54 @@
 
 {%- endcomment -%}
 
+{%- capture product_item_content -%}
+  {%- capture product_image_href -%}
+    href="{{ _product.url | within: collection }}"
+  {%- endcapture -%}
 
-{%- capture product_image_href -%}
-  href="{{ _product.url | within: collection }}"
+  {%- include 'image',
+    resource: _product.featured_image,
+    size: '400x',
+    wrapper_tag: 'a',
+    attrs: product_image_href,
+    classes: '' -%}
+
+  {%- capture subheading -%}
+    {%- include 'text',
+      content: _product.vendor,
+      classes: '' -%}
+  {%- endcapture -%}
+
+  {%- include 'header',
+    level: 2,
+    title: _product.title,
+    content: subheading,
+    classes: '' -%}
+
+  {%- include 'price',
+    _price: _product.price,
+    type: 'price',
+    classes: '' -%}
+
+  {%- if with_quickshop == true -%}
+
+    {%- include 'button',
+      content: 'Add To Cart',
+      classes: 'button--primary-alt flex-6-grid u-push-down' -%}
+
+    {%- include 'button',
+      content: 'Quickview',
+      icon: 'icon-add',
+      height: '18px';
+      classes: 'button--primary-alt flex-6-grid u-push-down',
+      attrs: 'data-open-quickshop' -%}
+
+  {%- endif -%}
 {%- endcapture -%}
 
-{%- include 'image',
-  resource: _product.featured_image,
-  size: '400x',
-  wrapper_tag: 'a',
-  attrs: product_image_href -%}
-
-{%- capture subheading -%}
-  {%- include 'text', content: _product.vendor -%}
-{%- endcapture -%}
-
-{%- include 'header',
-  level: 2,
-  title: _product.title,
-  content: subheading -%}
-
-{%- include 'price',
-  _price: _product.price,
-  type: 'price' -%}
-
-{%- if with_quickshop == true -%}
-
-  {%- include 'button',
-    content: 'Add To Cart',
-    classes: 'button--primary-alt flex-6-grid u-push-down' -%}
-
-  {%- include 'button',
-    content: 'Quickview',
-    icon: 'icon-add',
-    height: '18px';
-    classes: 'button--primary-alt flex-6-grid u-push-down',
-    attrs: 'data-open-quickshop' -%}
-
-
-{%- endif -%}
+{%- include 'product-container',
+  name: 'Product Item',
+  type: 'product-item'
+  _product: _product,
+  content: product_item_content,
+  classes: classes -%}

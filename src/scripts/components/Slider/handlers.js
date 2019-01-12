@@ -1,4 +1,8 @@
-import Swiper from 'swiper';
+import Flickity from 'flickity';
+import 'flickity-as-nav-for';
+import 'flickity-imagesloaded';
+// import 'flickity-fullscreen';
+// import 'flickity-hash';
 
 import dom from 'common/Dom';
 import bva from 'common/Constants';
@@ -8,22 +12,27 @@ import settings from './settings';
 
 import State from 'state';
 
-const filterSlider = swiper => {
-  const sliderState= State.get(swiper.el.dataset.containerId);
-
+const filterSlider = slider => {
+  const sliderState = State.get(slider.element);
+  const parentState = State.get(sliderState.parent.id);
   if (!sliderState.isFilterable) return;
-
-  const parentState = State.get(sliderState.parentId);
   const filterValue = parentState[sliderState.filterGroup];
   const newSlides = sliderState.slides.filter(slide => slide.dataset.filterValue == filterValue);
+  const allSlides = [ ...sliderState.slides ];
 
-  swiper.removeAllSlides();
-  swiper.addSlide(0, newSlides);
+  if (sliderState.slider.constructor.name === 'Flickity') {
+    sliderState.slider.remove(sliderState.slides);
+    sliderState.slider.append(newSlides);
+    sliderState.slider.select(0);
+  } else {
+    $(slider).empty();
+    $(slider).html(newSlides);
+  }
 };
 
 const checkiFFilterable = (slider, option) => {
-  const { filterAttr } = slider.el.dataset;
-  const possibleFilterValues = Array.from(slider.slides).map(slide => $(slide).attr(filterAttr));
+  const { slides, filterAttr } = State.get(slider.element);
+  const possibleFilterValues = slides.map(slide => $(slide).attr(filterAttr));
   const uniquePossibleFilterValues = unique(possibleFilterValues);
 
   const everyValuePresent = option.values.every(value => uniquePossibleFilterValues.includes(value));
@@ -36,10 +45,12 @@ const checkiFFilterable = (slider, option) => {
 };
 
 const getOption = (parentState, filterGroup) => {
+  if (!parentState || !filterGroup) return;
   return parentState._data.options.find(option => option.name === filterGroup);
 };
 
 const getFilterGroup = (parentState, filterGroupOptions) => {
+  if (!filterGroupOptions) return;
   const parentOptionNames = parentState._data.options.map(option => option.name);
   return filterGroupOptions
     .split('|')
@@ -47,56 +58,45 @@ const getFilterGroup = (parentState, filterGroupOptions) => {
 };
 
 const initSlider = (slider, sliderSettings) => {
-  const { containerId, hasNav } = slider.dataset;
-  const parentContainer = dom.getParentContainer(slider);
-  const selector = `[data-container-id="${containerId}"]`;
-
-  if (!parentContainer) {
-    const swiper = new Swiper(selector, sliderSettings);
-    return { swiper, parentContainer };
+  if (sliderSettings.init == false) {
+    slider.element = slider;
+    return slider;
   }
 
-  if (hasNav) {
-    const sliders = State.get('slider');
-    const navSlider = Object.values(sliders).find(slider => slider.name === hasNav).slider;
-    sliderSettings.thumbs = { swiper: navSlider };
-  }
-
-  const swiper = new Swiper(selector, sliderSettings);
-  return { swiper, parentContainer };
+  return new Flickity(slider, sliderSettings);
 };
 
 export const initSliders = () => {
   const promises = dom.getContainers('slider').map(slider => {
-    const { containerId: id, container, filterGroupOptions, containerName: name } = slider.dataset;
+    const { containerId: id, container, filterGroupOptions, containerName: name, filterAttr, navFor } = slider.dataset;
+    const slides = [ ...Array.from(slider.children) ];
+
+    State.set({ id, container, change: 'slider', name, slides, filterAttr, navFor: dom.getContainer(navFor) });
+
     const sliderSettings = settings[name] || settings.default;
-    const { swiper, parentContainer } = initSlider(slider, sliderSettings);
-    const parentId = (parentContainer) ? parentContainer.dataset.containerId : undefined;
-    const slides = [ ...Array.from(swiper.slides) ];
-    let isFilterable = false;
-    let filterGroup;
+    const flickity = initSlider(slider, sliderSettings);
 
-    if (filterGroupOptions) {
-      const parentState = State.get(parentId);
-      filterGroup = getFilterGroup(parentState, filterGroupOptions);
-      const option = getOption(parentState, filterGroup);
-      isFilterable = checkiFFilterable(swiper, option)
+    State.set({ id, container, change: 'slider', slider: flickity });
 
-      if (filterGroup && option && isFilterable) {
-        const parentContainerType = parentContainer.dataset.container;
-        const filterGroupStateName = filterGroup.replace(' ', '_').toUpperCase();
-        const topic = `${bva.updateState}.${parentContainerType.toUpperCase()}.${filterGroupStateName}`;
+    const parentContainer = dom.getParentContainer(slider);
+    const parent = State.get(parentContainer);
+    const filterGroup = getFilterGroup(parent, filterGroupOptions);
+    const option = getOption(parent, filterGroup);
+    const isFilterable = checkiFFilterable(flickity, option);
 
-        PubSub.subscribe(topic, (message, data) => {
-          if (data.id === parentId) {
-            filterSlider(swiper);
-          }
-        });
-      }
+    State.set({ id, container, change: 'slider', parent, filterGroup, isFilterable });
+
+    if (isFilterable) {
+      const parentType = parentContainer.dataset.container.toUpperCase();
+      const changeType = filterGroup.replace(' ', '_').toUpperCase();
+      const topic = `${bva.updateState}.${parentType}.${changeType}`;
+
+      PubSub.subscribe(topic, (message, data) => {
+        if (data.id === parent.id) {
+          filterSlider(flickity);
+        }
+      });
     }
-
-    State.set({ id, change: 'slider', container, name, slider: swiper, slides, filterGroup, parentId, isFilterable});
-
     return Promise.resolve();
   });
 

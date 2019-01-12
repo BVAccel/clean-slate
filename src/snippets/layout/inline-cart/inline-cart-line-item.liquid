@@ -31,11 +31,15 @@
 
     {%- include 'header',
       title: line_item.product.title,
-      level: 3 -%}
+      level: 3,
+      classes: '',
+      attrs: '' -%}
 
     {%- include 'price',
       _price: line_item.price,
-      type: 'line_item.price' -%}
+      type: 'line_item.price',
+      classes: '',
+      attrs: '' -%}
 
     {%- include 'button',
       content: 'remove',
@@ -46,7 +50,10 @@
 
   <div class="oo-line-item--quantity">
 
-    {%- include 'quantity-select', quantity: line_item.quantity -%}
+    {%- include 'quantity-select',
+      quantity: line_item.quantity,
+      classes: '',
+      attrs: '' -%}
 
   </div>
 
@@ -54,8 +61,10 @@
 
 
 {%- include 'line-item-container',
-  name: 'inline-cart',
+  name: 'Inline Cart Line Item',
   line_item: line_item,
-  content: line_item_inline_cart_content -%}
+  content: line_item_inline_cart_content,
+  classes: '',
+  attrs: '' -%}
 
 {%- assign line_item_inline_cart_content = nil -%}

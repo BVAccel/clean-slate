@@ -1,25 +1,18 @@
 {%- capture upsell_row_contents -%}
-
   {%- for _product in collections.all.products limit: 4 -%}
 
-    {%- capture product_container_upsell -%}
-
-      {%- include 'product-item',
-        _product: _product,
-        with_quickshop: false,  -%}
-
-    {%- endcapture -%}
-
-    {%- include 'product-container',
-      name: 'product-page-upsell',
+    {%- include 'product-item',
       _product: _product,
-      content: product_container_upsell,
-      classes: 'flex-3-grid'  -%}
+      with_quickshop: false,
+      classes: 'xs-flex-12 s-flex-6 m-flex-3',
+      attrs: ''  -%}
 
   {%- endfor -%}
-
-
 {%- endcapture -%}
 
 
-{%- include 'grid-container', content: upsell_row_contents -%}
+{%- include 'grid-container',
+  name: 'Product Page Upsell',
+  content: upsell_row_contents,
+  classes: '',
+  attrs: '' -%}

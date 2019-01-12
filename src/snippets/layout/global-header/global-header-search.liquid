@@ -18,11 +18,15 @@
   {%- include 'input',
     type: 'search',
     name: 'global-header-search',
+    classes: '',
     attrs: input_placeholder -%}
 
   {%- include 'button',
     type: 'submit',
-    icon: icon -%}
+    icon: icon,
+    classes: '',
+    attrs: '' -%}
+
 {%- endcapture -%}
 
 
@@ -31,6 +35,7 @@
   method: 'post',
   action: '/search',
   content: search_form_content,
-  classes: 'global-header--search' -%}
+  classes: 'global-header--search',
+  attrs: '' -%}
 
 {%- assign search_form_content = nil -%}

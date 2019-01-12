@@ -3,51 +3,35 @@ import State from 'state';
 import { loadImage, imageSize, removeProtocol } from '@shopify/theme-images';
 
 const defaultSettings = {
-  watchSlidesProgress: true,
-  watchSlidesVisibility: true,
-};
-
-const productGallerySettings = {
-  ...defaultSettings,
-  autoHeight: true,
-  // preventClicks: false,
-  // preventClicksPropagation: false,
-  slideClass: 'gallery-slide',
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  // treshold: 1000,
+  // adaptiveHeight: true,
 };
 
 const productGalleryThumbsSettings = {
   ...defaultSettings,
-  slidesPerView: 'auto',
-  direction: 'vertical',
-  spaceBetween: 10,
-  allowTouchMove: false,
-  slideClass: 'thumb-slide',
-  preventClicks: false,
-  preventClicksPropagation: false,
-  slideToClickedSlide: true,
+  init: false,
+  contain: true,
+  pageDots: false,
+  prevNextButtons: false,
+  groupCells: true,
+};
 
-  // touchRatio: 0.2,
-  // watchOverflow: true,
-  threshold: 1000,
-  // followFinger: true,
+const productGallerySettings = {
+  ...defaultSettings,
+  pageDots: false,
+  lazyLoad: true,
+  // imagesLoaded: true,
+  // setGallerySize: false,
 };
 
 const homepageHeroSettings = {
   ...defaultSettings,
-  // slidesPerView: 1,
   autoplay: true,
-  // slideClass: 'oo-hero',
-  loop: true,
+  wrapAround: true,
 };
 
 export default {
   default: defaultSettings,
-  ['product-gallery']: productGallerySettings,
-  ['product-gallery-thumbs']: productGalleryThumbsSettings,
+  ['Product Gallery']: productGallerySettings,
+  ['Product Gallery Thumbs']: productGalleryThumbsSettings,
   ['Homepage Hero']: homepageHeroSettings,
 };

@@ -13,10 +13,12 @@ Modal.initSubscribers();
 document.addEventListener('DOMContentLoaded', () => {
   OptionGroup.bindActions();
   Modal.bindActions();
-});
 
-window.addEventListener('load', () => {
   Slider.initSliders()
     .then(sliders => Slider.filterSliders())
     .then(sliders => Slider.bindActions());
+});
+
+window.addEventListener('load', () => {
+
 });

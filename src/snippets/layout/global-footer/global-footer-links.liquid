@@ -16,7 +16,8 @@
     {%- include 'header',
       level: 3,
       title: parent.title,
-      classes: 'global-footer--links-header' -%}
+      classes: 'global-footer--links-header',
+      attrs: '' -%}
 
       {% comment %}<div class="footer--links">{% endcomment %}
 
@@ -35,7 +36,8 @@
           href: child.url,
           content: child.title,
           icon: icon,
-          classes: 'global-footer--link' -%}
+          classes: 'global-footer--link',
+          attrs: '' -%}
 
       {%- endfor -%}
 

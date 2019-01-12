@@ -16,19 +16,20 @@
 
 
 {%- capture inline_cart_header_content -%}
+
   {%- include 'button',
     icon: inline_cart_close_icon,
     classes: 'button--reset',
     attrs: 'data-close-inline-cart' -%}
+
 {%- endcapture -%}
 
 {%- include 'header',
   title: inline_cart_heading,
   level: 3,
-  content: inline_cart_header_content %}
-
-{% assign inline_cart_header_content = nil %}
-
+  content: inline_cart_header_content,
+  classes: '',
+  attrs: '' %}
 
 <div class="oo-inline-cart--contents" data-inline-cart-contents>
 
@@ -43,11 +44,15 @@
 
     {%- include 'heading',
       title: 'Subtotal:',
-      level: 3 -%}
+      level: 3,
+      classes: '',
+      attrs: '' -%}
 
     {%- include 'price',
       _price: cart.total_price,
-      type: 'cart.total_price' -%}
+      type: 'cart.total_price',
+      classes: '',
+      attrs: '' -%}
 
   </div>
 
@@ -58,7 +63,8 @@
       content: inline_cart_button_one_text,
       button: true,
       href: inline_cart_button_one_href,
-      classes: inline_cart_button_one_classes -%}
+      classes: inline_cart_button_one_classes,
+      attrs: '' -%}
 
   {%- endif -%}
 
@@ -69,7 +75,8 @@
       content: inline_cart_button_two_text,
       button: true,
       href: inline_cart_button_two_href,
-      classes: inline_cart_button_two_classes -%}
+      classes: inline_cart_button_two_classes,
+      attrs: '' -%}
 
   {%- endif -%}
 </footer>

@@ -7,31 +7,37 @@
 
 
 <nav class="global-header--primary-navigation">
-
   {%- for parent in linklists[menu].links -%}
     <div class="parent-link {% if parent.levels > 0 -%}with-children{%- endif -%}">
+
       {%- include 'link',
         href: parent.url,
         content: parent.title,
-        classes: 'header--parent-link' -%}
+        classes: 'header--parent-link',
+        attrs: '' -%}
 
       {%- if parent.levels > 0 -%}
 
         {%- for child in parent.links -%}
           <div class="child-link {% if child.levels > 0 -%}with-grandchildren{%- endif -%}">
+
             {%- include 'link',
               href: child.url,
               content: child.title,
-              classes: 'header--child-link' -%}
+              classes: 'header--child-link',
+              attrs: '' -%}
 
             {%- if child.levels > 0 -%}
 
               <div class="grandchildren-links">
                 {%- for grandchild in child.links -%}
+
                   {%- include 'link',
                     href: grandchild.url,
                     content: grandchild.title,
-                    classes: 'header--grandchild-link' -%}
+                    classes: 'header--grandchild-link',
+                    attrs: '' -%}
+
                 {%- endfor -%}
               </div>
 
@@ -42,5 +48,4 @@
       {%- endif -%}
     </div>
   {%- endfor -%}
-
 </nav>

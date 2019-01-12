@@ -3,10 +3,6 @@
   {%- capture hero_slides -%}
     {%- for block in section.blocks -%}
 
-      {%- capture classes -%}
-        swiper-slide {{ block.settings.classes }}
-      {%- endcapture -%}
-
       {%- include 'hero',
         primary_image: block.settings.primary_image,
         primary_image_size: block.settings.primary_image_size,
@@ -28,7 +24,7 @@
         button_two_text: block.settings.button_two_text,
         button_two_href: block.settings.button_two_href,
         button_two_classes: block.settings.button_two_classes,
-        classes: classes -%}
+        classes: block.settings.classes -%}
 
       {%- assign classes = nil -%}
 

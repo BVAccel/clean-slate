@@ -25,27 +25,26 @@ const getInitialVariantData = variants => {
   return { variantId, inventory, price, compare_at_price };
 };
 
-export const getProductContainerData = container => {
-  const containerSelector = (container) ? container : dom.productContainer;
-  const containerData = $(containerSelector).get().map(productContainer => {
-    const id = productContainer.dataset.containerId;
-    const { data: options } = JSON.parse($(productContainer).find(dom.optionData).text());
-    const { data: variants } = JSON.parse($(productContainer).find(dom.variantData).text());
-    const initialOptionValues = getInitialOptionValues(options);
-    const initialVariantData = getInitialVariantData(variants);
-    const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10) || null;
-    return {
-      _data: { options, variants },
-      id,
-      change: 'product',
-      container: 'product',
-      ...initialOptionValues,
-      ...initialVariantData,
-      quantity,
-    };
-  });
+export const getProductContainerData = productContainer => {
+  const id = productContainer.dataset.containerId;
+  const { data: options } = JSON.parse($(productContainer).find(dom.optionData).text());
+  const { data: variants } = JSON.parse($(productContainer).find(dom.variantData).text());
+  const initialOptionValues = getInitialOptionValues(options);
+  const initialVariantData = getInitialVariantData(variants);
+  const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10) || null;
+  return {
+    _data: { options, variants },
+    id,
+    change: 'product',
+    container: 'product',
+    ...initialOptionValues,
+    ...initialVariantData,
+    quantity,
+  };
+};
 
-  return (containerData.length == 1) ? containerData[0] : containerData;
+const getAllProductContainerData = () => {
+  return $(dom.productContainer).get().map(getProductContainerData);
 };
 
 export const updateVariant = data => {
@@ -92,6 +91,6 @@ export const updateOptionGroupValue = data => {
 };
 
 export const initProductContainers = data => {
-  return getProductContainerData()
+  return getAllProductContainerData()
     .map(item => State.set(item));
 };

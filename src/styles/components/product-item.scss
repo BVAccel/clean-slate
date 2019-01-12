@@ -1,4 +1,4 @@
-.oo-product-item {
+.vv-product-item {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -25,21 +25,4 @@
   > * {
     flex-basis: 100%;
   }
-
-  @include mq('s') {
-    flex-basis: 100%;
-  }
-
-  @include mq('m') {
-    flex-basis: 50%;
-  }
-
-  @include mq('l') {
-    flex-basis: 33.33%;
-  }
-
-  @include mq('xl') {
-    flex-basis: 25%;
-  }
-
 }

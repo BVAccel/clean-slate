@@ -1,0 +1,23 @@
+.vv-product-main {
+  display: flex;
+}
+
+.product-images {
+  display: flex;
+}
+
+.vv-product-gallery {
+  flex: 1;
+};
+
+.vv-product-gallery-thumbs {
+  // order: -1;
+  flex-direction: column;
+  flex-basis: 90px;
+  width: 90px;
+  padding-right: 10px;
+}
+
+.product-info {
+
+}

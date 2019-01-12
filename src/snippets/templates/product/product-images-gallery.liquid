@@ -1,37 +1,89 @@
 {%- capture product_gallery_slides -%}
   {%- for image in _product.images -%}
+    {%- assign _resource = false -%}
+    {% comment %}{%- assign _resource = image -%}{% endcomment %}
+    {%- assign _size = '1440x' -%}
+    {%- assign _classes = 'gallery-slide' -%}
+    {%- assign _name = 'Product Gallery' -%}
+    {%- assign _nav_for = nil -%}
+    {%- assign _alt = image.alt -%}
+
+    {%- if thumbs == true -%}
+      {%- assign _resource = image -%}
+      {%- assign _size = '280x' -%}
+      {%- assign _classes = _classes | append: '-thumb' -%}
+      {%- assign _name = _name | append: ' Thumbs' -%}
+      {%- assign _nav_for = 'Product Gallery' -%}
+    {%- endif -%}
+
 
     {%- if group_images != blank -%}
       {%- assign alt_parts = image.alt | split: alt_tag_delimiter -%}
       {%- assign _alt = alt_parts | first -%}
-      {%- assign filter_value = alt_parts[1] | strip -%}
 
       {%- capture slide_attrs -%}
-        data-galley-slide
-        data-filter-value="{{ filter_value }}"
+        data-filter-value="{{ alt_parts | last | strip }}"
         data-slide-index="{{ forloop.index0 }}"
+        {%- if thumbs != true -%}
+          data-flickity-lazyload="{{ image.src | img_url: _size }}"
+        {%- else -%}
+          data-gallery-thumb
+        {%- endif -%}
       {%- endcapture -%}
     {%- endif -%}
 
     {%- include 'image',
-      resource: image,
+      resource: _resource,
       alt: _alt,
-      size: '1440x',
+      size: _size,
       lazyload: false,
       wrapper: false,
       format: 'pjpg',
-      classes: 'gallery-slide swiper-slide',
+      classes: _classes,
       attrs: slide_attrs  -%}
+
+    {%- assign slide_attrs = nil -%}
 
   {%- endfor -%}
 {%- endcapture -%}
 
 {%- include 'slider-container',
-  name: 'product-gallery',
+  name: _name,
   slides: product_gallery_slides,
   group_slides: group_images,
   filter_group_options: filter_group_options,
   filter_attr: 'data-filter-value',
-  navigation: true,
-  has_nav: 'product-gallery-thumbs',
-  classes: 'product-images--gallery' -%}
+  nav_for: _nav_for,
+  classes: '',
+  attrs: '' -%}
+
+{% comment %}
+{%- if thumbs == true -%}
+
+  {%- include 'grid-container',
+    name: _name,
+    content: product_gallery_slides,
+    classes: '',
+    attrs: '' -%}
+
+{%- else -%}
+
+  {%- include 'slider-container',
+    name: _name,
+    slides: product_gallery_slides,
+    group_slides: group_images,
+    filter_group_options: filter_group_options,
+    filter_attr: 'data-filter-value',
+    nav_for: _nav_for,
+    classes: '',
+    attrs: '' -%}
+
+{%- endif -%}
+{% endcomment %}
+
+{%- assign _resource = nil -%}
+{%- assign _alt = nil -%}
+{%- assign _size = nil -%}
+{%- assign _classes = nil -%}
+{%- assign _name = nil -%}
+{%- assign _nav_for = nil -%}

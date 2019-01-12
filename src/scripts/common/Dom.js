@@ -18,16 +18,26 @@
 
 */
 const dom = {
-  getContainer: key => {
-    return (key instanceof Element)
-      ? $(key).closest(dom.container)[0]
-      : $(`[data-container-id="${key}"]`)[0]
-  },
+  getContainer: (key, asjQuery = false) => {
+    if (key instanceof Element) {
+      return (asjQuery)
+        ? $(key).closest(dom.container)
+        : $(key).closest(dom.container)[0];
+    } else if ($(`[data-container-id="${key}"]`).length) {
+      return (asjQuery)
+        ? $(`[data-container-id="${key}"]`)
+        : $(`[data-container-id="${key}"]`)[0];
+    } else if ($(`[data-container-name="${key}"]`).length) {
+      return (asjQuery)
+        ? $(`[data-container-name="${key}"]`)
+        : $(`[data-container-name="${key}"]`)[0];
+    } else if ($(`[data-container="${key}"]`).length) {
+      return (asjQuery)
+        ? $(`[data-container="${key}"]`)
+        : $(`[data-container="${key}"]`);
+    }
 
-  $getContainer: key => {
-    return (key instanceof Element)
-      ? $(key).closest(dom.container)
-      : $(`[data-container-id="${key}"]`)
+    return;
   },
 
   getContainers: type => $(`[data-container="${type}"]`).get(),
@@ -36,8 +46,15 @@ const dom = {
   getSelf: self => $(self).closest(dom.container)[0],
   $getSelf: self => $(self).closest(dom.container),
 
-  getParentContainer: self => $(self).parent().closest(dom.container)[0],
-  $getParentContainer: self => $(self).parent().closest(dom.container),
+  getParentContainer: (self, levels = 1, asjQuery = false) => {
+    if (levels !== 0) {
+      const parentContainer = dom.getContainer($(self).parent()[0]);
+      return dom.getParentContainer(parentContainer, levels - 1);
+    }
+    return (asjQuery)
+      ? dom.getContainer(self, true)
+      : dom.getContainer(self);
+  },
 
   priceString: (strings, priceInCents) => `$${(priceInCents / 100).toFixed(2)}`,
 
@@ -92,5 +109,6 @@ const dom = {
 
   openQuickshop: '[data-open-quickshop]',
 };
+window.a = dom.getParentContainer;
 
 export default dom;
