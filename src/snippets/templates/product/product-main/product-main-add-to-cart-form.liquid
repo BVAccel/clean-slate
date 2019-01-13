@@ -51,9 +51,7 @@
     type: 'submit',
     content: add_to_cart_button_text,
     classes: add_to_cart_button_classes,
-    attrs: 'data-add-to-cart',
-    classes: '',
-    attrs: '' -%}
+    attrs: 'data-add-to-cart', -%}
 
 {%- endcapture -%}
 
@@ -63,14 +61,13 @@
   enctype="multipart/form-data"
 {%- endcapture -%}
 
-{%- include 'form-container',
+{%- include 'container-form',
   name: 'add-to-cart',
   method: 'post',
   action: '/cart/add',
   content: form_add_to_cart_content,
-  attrs: form_add_to_cart_attrs,
   classes: '',
-  attrs: '' -%}
+  attrs: form_add_to_cart_attrs, -%}
 
 {%- assign form_add_to_cart_content = nil -%}
 {%- assign form_add_to_cart_attrs = nil -%}

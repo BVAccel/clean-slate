@@ -1,10 +1,10 @@
 import { bindActions } from './bindings';
-import { initSliders, filterSliders } from './handlers';
+import { initSliders, filterSlides } from './handlers';
 import { initSubscribers } from './subscribers';
 
 export default {
   bindActions,
   initSubscribers,
   initSliders,
-  filterSliders,
+  filterSlides,
 };

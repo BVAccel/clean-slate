@@ -47,7 +47,7 @@
   {%- endfor -%}
 {%- endcapture -%}
 
-{%- include 'slider-container',
+{%- include 'container-slider',
   name: _name,
   slides: product_gallery_slides,
   group_slides: group_images,
@@ -56,30 +56,6 @@
   nav_for: _nav_for,
   classes: '',
   attrs: '' -%}
-
-{% comment %}
-{%- if thumbs == true -%}
-
-  {%- include 'grid-container',
-    name: _name,
-    content: product_gallery_slides,
-    classes: '',
-    attrs: '' -%}
-
-{%- else -%}
-
-  {%- include 'slider-container',
-    name: _name,
-    slides: product_gallery_slides,
-    group_slides: group_images,
-    filter_group_options: filter_group_options,
-    filter_attr: 'data-filter-value',
-    nav_for: _nav_for,
-    classes: '',
-    attrs: '' -%}
-
-{%- endif -%}
-{% endcomment %}
 
 {%- assign _resource = nil -%}
 {%- assign _alt = nil -%}

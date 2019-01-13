@@ -19,14 +19,17 @@ const productGallerySettings = {
   ...defaultSettings,
   pageDots: false,
   lazyLoad: true,
-  // imagesLoaded: true,
+  imagesLoaded: true,
   // setGallerySize: false,
 };
 
 const homepageHeroSettings = {
   ...defaultSettings,
+  adaptiveHeight: true,
   autoplay: true,
   wrapAround: true,
+  lazyLoad: true,
+  imagesLoaded: true,
 };
 
 export default {

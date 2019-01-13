@@ -23,18 +23,30 @@
   - button_two_text
   - button_two_href
   - button_two_classes
+  - is_slider
 
   - lazyload
   - classes
 
 {%- endcomment -%}
 
+<div class="oo-hero {{ name | handle }}  {{ classes -}}" {{ attrs -}}>
 
-<div class="oo-hero {{ classes -}}" {{ attrs -}}>
+  {% comment %}
+
+    can also use `is_slider` - if hero has more than one slide is_slider == true
+
+    e.g.
+
+    {%- if is_slider == false and second_image != blank or third_image != blank -%}
+
+  {% endcomment %}
+
 
   {%- if second_image != blank or third_image != blank -%}
 
     {%- capture sources -%}
+
       {%- include 'source',
         resource: primary_image,
         srcset: primary_image_srcset,
@@ -60,15 +72,20 @@
       {%- endif -%}
 
       {%- include 'image',
-        wrapper: false,
         resource: primary_image,
+        wrapper: false,
         srcset: primary_image_srcset,
-        size: primary_image_size -%}
+        size: primary_image_size,
+        classes: '',
+        attrs: '' -%}
+
     {%- endcapture -%}
 
     {%- include 'image',
       sources: sources,
-      picture: true -%}
+      picture: true,
+      classes: '',
+      attrs: '' -%}
 
   {%- else -%}
 
@@ -77,7 +94,9 @@
       resource: primary_image,
       size: primary_image_size,
       srcset: primary_image_srcset,
-      sizes: primary_image_sizes -%}
+      sizes: primary_image_sizes,
+      classes: '',
+      attrs: '' -%}
 
   {%- endif -%}
 
@@ -92,7 +111,10 @@
   {%- include 'header',
     title: hero_title,
     level: 3,
-    content: heading_content -%}
+    content: heading_content,
+    classes: '',
+    attrs: '' -%}
+
   {%- assign heading_content = nil -%}
 
 
@@ -102,7 +124,8 @@
       button: true,
       href: button_one_href,
       content: button_one_text,
-      classes: button_one_classes -%}
+      classes: button_one_classes,
+      attrs: '' -%}
 
   {%- endif -%}
 
@@ -113,7 +136,8 @@
       button: true,
       href: button_two_href,
       content: button_two_text,
-      classes: button_two_classes -%}
+      classes: button_two_classes,
+      attrs: '' -%}
 
   {%- endif -%}
 </div>

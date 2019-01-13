@@ -1,3 +1,24 @@
+{% comment %}
+{%- include 'product-breadcrumbs' -%}
+{% endcomment %}
+
 {%- include 'product-main' -%}
 
-{%- include 'product-upsell-row' -%}
+{% comment %}
+{%- include 'product-benefits' -%}
+{% endcomment %}
+
+{% comment %}
+{%- include 'product-additional-images' -%}
+{% endcomment %}
+
+{% comment %}
+{%- include 'product-secondary-details' -%}
+{% endcomment %}
+
+{% comment %}
+{%- include 'product-customer-reviews' -%}
+{% endcomment %}
+
+{%- include 'upsell-row',
+  _collection: collection.products -%}

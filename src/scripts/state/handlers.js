@@ -28,7 +28,7 @@ export const setState = data => {
 
   if (id && container) {
     const oldState = state[container][id];
-    newState = { ...oldState, ...stateChange, id };
+    newState = { id, ...oldState, ...stateChange };
     state[container][id] = newState;
   } else if (container) {
     const oldState = state[container];

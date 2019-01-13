@@ -7,8 +7,8 @@ const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const sectionsBase = 'core';
-const snippetsBase = 'core';
+const sectionsBase = 'templates';
+const snippetsBase = 'templates';
 
 const externals = {
   jquery: 'jQuery',

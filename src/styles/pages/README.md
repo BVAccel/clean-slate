@@ -1,1 +1,0 @@
-# this directory is for page specific overrides of component styles. It is not for template specific css. You shouldn't be writing css for specific templates, instead you should be mixing a combination of component styles (`components/`) and layout styles (`layout/`).

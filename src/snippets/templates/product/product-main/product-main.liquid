@@ -1,6 +1,6 @@
 {%- capture product_main -%}
 
-  {%- include 'product-images',
+  {%- include 'product-main-images',
     has_nav: product_images_has_nav,
     group_images: product_images_filter_images,
     filter_group_options: product_images_filter_group_options,
@@ -8,7 +8,7 @@
     classes: 'xs-flex-full s-flex-half',
     attrs: '' -%}
 
-  {%- include 'product-info',
+  {%- include 'product-main-info',
     show_compare_at_price: product_info_show_compare_at_price,
     show_option_name: product_info_show_option_name,
     show_selected_value: product_info_show_selected_value,
@@ -20,7 +20,7 @@
 {%- endcapture -%}
 
 
-{%- include 'product-container',
+{%- include 'container-product',
   name: 'Product Main',
   content: product_main,
   classes: '',

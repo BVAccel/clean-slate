@@ -1,1 +1,5 @@
-@import '~flickity/dist/flickity.min.css'
+@import '~flickity/dist/flickity.min.css';
+
+.flickity-viewport {
+  transition: height 0.2s;
+}

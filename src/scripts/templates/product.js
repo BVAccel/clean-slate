@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Modal.bindActions();
 
   Slider.initSliders()
-    .then(sliders => Slider.filterSliders())
+    .then(sliders => Slider.filterSlides())
     .then(sliders => Slider.bindActions());
 });
 

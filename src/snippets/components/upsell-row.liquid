@@ -1,5 +1,20 @@
+{% comment %}
+
+  Required arguments:
+  - _collection
+
+  Optional arguments:
+  - limit
+
+{% endcomment %}
+
+{%- assign _limit = 4 -%}
+{%- if limit != blank -%}
+  {%- assign _limit = limit -%}
+{%- endif -%}
+
 {%- capture upsell_row_contents -%}
-  {%- for _product in collections.all.products limit: 4 -%}
+  {%- for _product in _collection limit: limit -%}
 
     {%- include 'product-item',
       _product: _product,
@@ -11,8 +26,11 @@
 {%- endcapture -%}
 
 
-{%- include 'grid-container',
+{%- include 'container-grid',
   name: 'Product Page Upsell',
   content: upsell_row_contents,
   classes: '',
   attrs: '' -%}
+
+
+{%- assign _limit = nil -%}

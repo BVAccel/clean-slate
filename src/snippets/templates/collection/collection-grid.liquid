@@ -4,14 +4,14 @@
     {%- include 'product-item',
       _product: _product,
       with_quickshop: true,
-      classes: '',
+      classes: 's-flex-6 m-flex-4 l-flex-3',
       attrs: '' -%}
 
   {%- endfor -%}
 {%- endcapture -%}
 
 
-{%- include 'grid-container',
+{%- include 'container-grid',
   name: 'Collection Grid',
   content: collection_grid_contents,
   classes: '',

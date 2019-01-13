@@ -5,24 +5,37 @@ import bva from 'common/Constants';
 
 import State from 'state';
 
-const sliderThumbClick = ({ currentTarget: self }) => {
-  const { filterValue, slideIndex } = self.dataset;
-  const { parent, navFor, filterGroup } = State.get(self);
-  const option = parent._data.options.find(option => option.name === filterGroup) || [];
-  const parentHasValue = option.values.includes(filterValue);
+const updateParentOptionValue = (parent, filterGroup, filterValue) => {
+  if (!parent || !filterGroup || !filterValue) return false;
+  const parentState = State.get(parent);
+  const option = parentState._data.options.find(option => option.name === filterGroup);
 
-  if (parent[filterGroup] && parentHasValue) {
+  if (option && option.values.includes(filterValue) && parentState[filterGroup] !== filterValue) {
     const topic = `${bva.updateOptionGroupValue}.${filterGroup.toUpperCase()}`;
-    const data = { id: parent.id, name: filterGroup, value: filterValue };
+    const data = { id: parentState.id, name: filterGroup, value: filterValue };
 
     PubSub.publish(topic, data);
   }
+};
 
-  State.get(navFor).slider.select(slideIndex);
+const updateSiblingSlider = (navFor, index) => {
+  const siblingSlider = State.get(navFor).slider;
+  const siblingSliderSlides = Array.from(siblingSlider.slider.children);
+  const slideTo = siblingSliderSlides.findIndex(slide => slide.dataset.slideIndex === index);
+
+  siblingSlider.select(slideTo);
+};
+
+
+const handleSliderThumbClick = ({ currentTarget: self }) => {
+  const { filterValue, slideIndex } = self.dataset;
+  const { navFor, parent, filterGroup } = State.get(self);
+  updateSiblingSlider(navFor, slideIndex);
+  updateParentOptionValue(parent, filterGroup, filterValue);
 
   return false;
 };
 
 export const bindActions = () => {
-  $(document).on('click', dom.galleryThumb, sliderThumbClick);
+  $(document).on('click', dom.galleryThumb, handleSliderThumbClick);
 };

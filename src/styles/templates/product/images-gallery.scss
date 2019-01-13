@@ -1,0 +1,9 @@
+.gallery-slide {
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.gallery-slide.flickity-lazyloaded,
+.gallery-slide.flickity-lazyerror {
+  opacity: 1;
+}
