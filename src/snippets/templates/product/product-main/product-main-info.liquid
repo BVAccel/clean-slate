@@ -18,7 +18,7 @@
 
   {%- include 'header',
     title: _product.title,
-    classes: '',
+    classes: 'product-title',
     attrs: '' -%}
 
   <div class="product-prices">
@@ -41,15 +41,11 @@
 
   </div>
 
-  <div class="product-description">
-
-    {%- include 'text',
-      content: _product.description,
-      rte: true,
-      classes: '',
-      attrs: '' -%}
-
-  </div>
+  {%- include 'text',
+    content: _product.description,
+    rte: true,
+    classes: 'product-description',
+    attrs: '' -%}
 
   {%- include 'product-main-add-to-cart-form',
     show_option_name: show_option_name,

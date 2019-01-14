@@ -1,4 +1,4 @@
-import 'styles/templates/product.scss';
+import 'styles/templates/product/index.scss';
 
 import OptionGroup from 'components/OptionGroup';
 import Price from 'components/Price';

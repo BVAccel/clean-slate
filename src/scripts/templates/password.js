@@ -1,4 +1,4 @@
-import 'styles/templates/password.scss';
+import 'styles/templates/password/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
 

@@ -1,4 +1,4 @@
-import 'styles/templates/search.scss';
+import 'styles/templates/search/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
 

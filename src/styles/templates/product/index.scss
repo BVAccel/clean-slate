@@ -1,2 +1,16 @@
-@import './images-gallery';
-@import './upsell-row';
+// Helpers
+@import '../../helpers/index';
+
+// Vendor
+@import '../../vendor/flickity/index';
+
+// Layout
+@import '../../base/grid';
+
+// Components
+@import '../../components/button';
+@import '../../components/upsell-row';
+
+@import 'product-main';
+@import 'product-images';
+@import 'product-add-to-cart-form';

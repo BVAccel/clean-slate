@@ -10,11 +10,13 @@
 @import 'base/index';
 
 // Blocks
-@import 'blocks/global-primary-navigation';
-@import 'blocks/global-secondary-navigation';
-@import 'blocks/global-header-search';
+// @import 'blocks/global-primary-navigation';
+// @import 'blocks/global-secondary-navigation';
+// @import 'blocks/global-header-search';
 
 // Components
+@import 'components/global';
+@import 'components/heading';
 @import 'components/button';
 @import 'components/icon';
 @import 'components/link';
@@ -23,15 +25,13 @@
 @import 'components/hero';
 
 // Layout
-@import 'layout/global';
-@import 'layout/global-header';
+@import 'layout/global-header/index';
+@import 'layout/bottombar';
 @import 'layout/global-footer';
 @import 'layout/topbar';
-@import 'layout/bottombar';
-@import 'layout/grid';
 
 // Shame
-@import 'helpers/shame';
+@import 'base/shame';
 
 #preview-bar-iframe {
   display: none;

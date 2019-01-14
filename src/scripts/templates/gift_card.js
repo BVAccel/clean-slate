@@ -1,4 +1,4 @@
-import 'styles/templates/gift_card.scss';
+import 'styles/templates/gift_card/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
 

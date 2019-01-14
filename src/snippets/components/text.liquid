@@ -13,10 +13,10 @@
 
 {%- assign tag = 'p' -%}
 {%- if rte == true -%}
-  {%- assign classes = classes | append: ' rte'  -%}
+  {%- assign tag = 'div' -%}
 {%- endif -%}
 
-<{{- tag }} class="oo-text {{ classes -}}" {{ attrs -}}>
+<{{- tag }} class="oo-text {% if rte == true %}rte{% endif %} {{ classes -}}" {{ attrs -}}>
 
   {{- content -}}
 

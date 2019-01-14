@@ -3,3 +3,13 @@
 .flickity-viewport {
   transition: height 0.2s;
 }
+
+.oo-slider.is-lazyloaded .flickity-slider > * {
+  transition: opacity 0.4s;
+  opacity: 0;
+
+  &.flickity-lazyloaded,
+  &.flickity-lazyerror {
+    opacity: 1;
+  }
+}

@@ -4,21 +4,11 @@
 }
 
 .product-images {
-  display: flex;
-}
-
-.vv-product-gallery {
-  flex: 1;
-};
-
-.vv-product-gallery-thumbs {
-  // order: -1;
-  flex-direction: column;
-  flex-basis: 90px;
-  width: 90px;
-  padding-right: 10px;
+  flex-basis: 65%;
 }
 
 .product-info {
-
+  flex-basis: 35%;
+  min-width: 350px;
+  margin-left: 1rem;
 }

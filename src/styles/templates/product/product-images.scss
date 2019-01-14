@@ -1,0 +1,14 @@
+.product-images {
+  display: flex;
+}
+
+.vv-product-gallery-thumbs {
+  flex-direction: column;
+  flex-basis: 90px;
+  width: 90px;
+  padding-right: 10px;
+}
+
+.vv-product-gallery {
+  flex: 1;
+};

@@ -1,4 +1,4 @@
-import 'styles/templates/list-collections.scss';
+import 'styles/templates/list-collections/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
 

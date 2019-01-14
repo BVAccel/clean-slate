@@ -1,7 +1,6 @@
 {%- capture product_gallery_slides -%}
   {%- for image in _product.images -%}
     {%- assign _resource = false -%}
-    {% comment %}{%- assign _resource = image -%}{% endcomment %}
     {%- assign _size = '1440x' -%}
     {%- assign _classes = 'gallery-slide' -%}
     {%- assign _name = 'Product Gallery' -%}
@@ -54,7 +53,7 @@
   filter_group_options: filter_group_options,
   filter_attr: 'data-filter-value',
   nav_for: _nav_for,
-  classes: '',
+  classes: classes,
   attrs: '' -%}
 
 {%- assign _resource = nil -%}

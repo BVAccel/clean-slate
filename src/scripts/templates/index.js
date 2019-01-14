@@ -1,4 +1,4 @@
-import 'styles/templates/index.scss';
+import 'styles/templates/index/index.scss';
 
 import Slider from 'components/Slider';
 
