@@ -57,4 +57,8 @@ export default {
   openQuickshop:           'BVA.QUICKSHOP.OPEN',
   closeQuickshop:          'BVA.QUICKSHOP.CLOSE',
   toggleQuickshop:         'BVA.QUICKSHOP.TOGGLE',
+
+  updateSliderSlide:       'BVA.SLIDER.UPDATE',
+
+  updateContainerSliders:  'BVA.CONTAINER.SLIDERS.UPDATE',
 };

@@ -29,7 +29,9 @@
     {%- include 'header',
       title: title,
       level: 3,
-      content: selected_value -%}
+      content: selected_value,
+      classes: 'option-group-header',
+      attrs: '' -%}
   {%- endunless -%}
 
   {%- assign selected_value = nil -%}
@@ -44,6 +46,10 @@
     {%- endif -%}
 
     {%- capture input_group_classes -%}
+
+    {%- endcapture -%}
+
+    {%- capture label_classes -%}
       swatch swatch-{{- value | handle -}}
     {%- endcapture -%}
 
@@ -54,10 +60,13 @@
       hide_input: true,
       input_attrs: input_attrs,
       input_classes: 'u-visually-hidden',
-      classes: input_group_classes -%}
+      label_classes: label_classes,
+      classes: input_group_classes,
+      attrs: '' -%}
 
     {%- assign input_attrs = nil -%}
     {%- assign input_group_classes = nil -%}
+    {%- assign label_group_classes = nil -%}
 
   {%- endfor -%}
 

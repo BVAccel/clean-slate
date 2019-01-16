@@ -3,7 +3,8 @@ import State from 'state';
 import { loadImage, imageSize, removeProtocol } from '@shopify/theme-images';
 
 const defaultSettings = {
-  // adaptiveHeight: true,
+  pageDots: false,
+  contain: true,
 };
 
 const productGalleryThumbsSettings = {
@@ -19,22 +20,33 @@ const productGallerySettings = {
   ...defaultSettings,
   pageDots: false,
   lazyLoad: true,
-  imagesLoaded: true,
-  // setGallerySize: false,
 };
 
 const homepageHeroSettings = {
   ...defaultSettings,
   adaptiveHeight: true,
-  autoplay: true,
+  autoPlay: true,
   wrapAround: true,
   lazyLoad: true,
-  imagesLoaded: true,
+};
+
+const additionalProductImages = {
+  ...defaultSettings,
+  pageDots: false,
+  cellAlign: 'left',
+  prevNextButtons: true,
+  mq: {
+    'screen and (max-width: 480px)': {
+      draggable: true,
+      prevNextButtons: false,
+    }
+  }
 };
 
 export default {
   default: defaultSettings,
   ['Product Gallery']: productGallerySettings,
   ['Product Gallery Thumbs']: productGalleryThumbsSettings,
+  ['Additional Product Images']: additionalProductImages,
   ['Homepage Hero']: homepageHeroSettings,
 };

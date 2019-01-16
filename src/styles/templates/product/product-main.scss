@@ -1,14 +1,27 @@
 .vv-product-main {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
+
+  @include mq('m') {
+    flex-wrap: nowrap;
+  }
 }
 
 .product-images {
-  flex-basis: 65%;
+  flex-basis: 100%;
+
+  @include mq('m') {
+    flex-basis: 65%;
+  }
 }
 
 .product-info {
-  flex-basis: 35%;
-  min-width: 350px;
-  margin-left: 1rem;
+  flex-basis: 100%;
+
+  @include mq('m') {
+    flex-basis: 35%;
+    min-width: 350px;
+    margin-left: 1rem;
+  }
 }

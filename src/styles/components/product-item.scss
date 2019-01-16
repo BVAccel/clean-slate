@@ -1,7 +1,6 @@
 .vv-product-item {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  flex-direction: column;
   text-align: center;
   padding-top: 35px;
   margin-bottom: 30px;
@@ -9,20 +8,32 @@
   transform: translateY(0);
   transition: transform 300ms;
 
-  &:hover {
+  > * {
+    flex-basis: 100%;
+    flex: 0 1 auto;
+  }
+
+  &.with-quickshop:hover {
     transform: translateY(-55px);
 
-    .oo-button {
+    .product-item-quickshop-toggles {
       transform: translateY(0);
     }
   }
+}
 
-  .oo-button {
-    transform: translateY(100%);
-    transition: transform 300ms;
-  }
+.product-item-quickshop-toggles {
+  margin-top: auto;
+  display: flex;
+  transition: transform 300ms;
+  transform: translateY(100%);
+}
 
-  > * {
-    flex-basis: 100%;
-  }
+.product-item-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-item-subheading {
+  order: -1;
 }

@@ -1,0 +1,46 @@
+{% comment %}
+
+  Required arguments:
+  -
+
+  Optional arguments:
+  -
+
+{% endcomment %}
+
+
+{%- capture product_breadcrumbs_contents -%}
+  {%- include 'link',
+    href: '/',
+    content: 'Home',
+    classes: '',
+    attrs: '' -%}
+
+  {%- if collection != blank -%}
+    <div class="separator">/</div>
+
+    {%- include 'link',
+      href: collection.url,
+      content: collection.title
+      classes: '',
+      attrs: '' -%}
+  {%- endif -%}
+
+  <div class="separator">/</div>
+
+  <div class="">{{ product.title }}</div>
+
+  <div class="u-push-right">Share</div>
+  {%- include 'social-media-icons',
+    networks: 'facebook twitter pinterest',
+    classes: '',
+    attrs: '' -%}
+
+{%- endcapture -%}
+
+
+{%- include 'container-grid',
+  name: 'Product Breadcrumbs',
+  content: product_breadcrumbs_contents,
+  classes: 'flex-full',
+  attrs: '' -%}

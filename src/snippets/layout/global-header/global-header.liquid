@@ -1,3 +1,11 @@
+{% comment %}
+
+  - see `section-groups.liquid`
+
+{% endcomment %}
+
+
+{% comment %}
 {%- for block in section.blocks -%}
 
   {%- if block.settings.group_name != blank -%}
@@ -19,7 +27,7 @@
 
 
 {%- for group_name in group_names -%}
-  <div class="global-header--block-group {{ group_name -}}">
+  <section class="global-header--block-group {{ group_name -}}">
 
     {%- for block in section.blocks -%}
       {%- for group in groups -%}
@@ -31,5 +39,6 @@
       {%- endfor -%}
     {%- endfor -%}
 
-  </div>
+  </section>
 {%- endfor -%}
+{% endcomment %}

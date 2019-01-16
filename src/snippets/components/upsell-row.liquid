@@ -5,6 +5,7 @@
 
   Optional arguments:
   - limit
+  - title
 
 {% endcomment %}
 
@@ -14,7 +15,17 @@
 {%- endif -%}
 
 {%- capture upsell_row_contents -%}
-  {%- for _product in _collection limit: limit -%}
+
+  {%- if title != blank -%}
+
+    {%- include 'header',
+      title: title,
+      classes: 'upsell-row-title flex-full',
+      attrs: '' -%}
+
+  {%- endif -%}
+
+  {%- for _product in _collection limit: _limit -%}
 
     {%- include 'product-item',
       _product: _product,

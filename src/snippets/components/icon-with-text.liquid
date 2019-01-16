@@ -13,7 +13,10 @@
 
 <div class="oo-icon-with-text {{ classes -}}" {{ attrs -}}>
 
-  {%- include 'icon', name: icon -%}
+  {%- include 'icon',
+    name: icon,
+    classes: '',
+    attrs: '' -%}
 
   {{- text -}}
 

@@ -6,6 +6,16 @@
 
 .global-header--primary-navigation {
   margin-right: auto;
+
+  > * {
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+}
+
+.global-header--logo {
+  display: block;
+  max-width: 320px;
 }
 
 .global-header--block-group.pull-right {
@@ -14,9 +24,11 @@
   align-items: center;
 }
 
-.global-header--logo {
-  display: block;
-  max-width: 320px;
+.global-header--primary-navigation,
+.global-header--block-group.pull-right {
+  flex: 1;
+  flex-basis: 33.33%;
+  width: 33.33%;
 }
 
 .global-header--cart {
@@ -25,12 +37,6 @@
   .button--content {
     order: -1;
   }
-}
-
-.global-header--primary-navigation,
-.global-header--logo,
-.global-header--block-group.pull-right {
-  flex-basis: 33.33%;
 }
 
 .global-header--primary-navigation,

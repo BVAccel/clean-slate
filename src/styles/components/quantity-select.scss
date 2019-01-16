@@ -1,0 +1,19 @@
+.oo-quantity-select {
+  display: flex;
+  border: 1px solid $color-black;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      display: none;
+      -webkit-appearance: none;
+      margin: 0;
+  }
+}
+
+.quantity-select-value {
+  border: 1px solid $color-black;
+  border-top: 0;
+  border-bottom: 0;
+  width: 65px;
+  text-align: center;
+}

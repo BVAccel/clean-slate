@@ -1,0 +1,57 @@
+{%- capture product_secondary_details_content -%}
+
+  {%- include 'image',
+    resource: _product.featured_image,
+    size: '600x',
+    format: 'pjpg',
+    classes: 'product-secondary-details-image xs-hide m-show m-flex-half',
+    attrs: '' -%}
+
+  {%- capture _content -%}
+
+    {%- capture toggle_attrs -%}
+      data-toggle='[data-secondary-details="part-1"], [data-secondary-details="part-2"]'
+      data-toggle-group="secondary-details"
+      data-active-self-class="button--black"
+      data-toggle-self-class="button--black button--black-alt"
+    {%- endcapture -%}
+
+    {%- include 'header',
+      title: "It's all in the details",
+      classes: 'flex-full',
+      attrs: '' -%}
+
+    {%- include 'button',
+      content: 'Read The Spec',
+      classes: 'flex-half button--black',
+      attrs: toggle_attrs -%}
+
+    {%- include 'button',
+      content: 'See The Style',
+      classes: 'flex-half button--black-alt',
+      attrs: toggle_attrs -%}
+
+    {%- include 'product-secondary-details-info',
+      part: 1,
+      classes: 'is-active' -%}
+
+    {%- include 'product-secondary-details-info',
+      part: 2,
+      classes: '' -%}
+
+  {%- endcapture -%}
+
+  {%- include 'container-grid',
+    name: 'Product Secondary Details Content',
+    content: _content,
+    classes: 'xs-flex-full m-flex-half',
+    attrs: '' -%}
+
+{%- endcapture -%}
+
+
+{%- include 'container-grid',
+  name: 'Product Secondary Details',
+  content: product_secondary_details_content,
+  classes: '',
+  attrs: '' -%}

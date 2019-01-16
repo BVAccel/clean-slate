@@ -1,0 +1,36 @@
+{%- case block.type -%}
+
+  {%- when 'logo' -%}
+
+    {%- include 'image',
+      resource: block.settings.footer_logo,
+      size: '200x',
+      wrapper_tag: 'a',
+      classes: 'global-footer--logo',
+      attrs: 'href="/"' -%}
+
+  {%- when 'contact' -%}
+
+    {%- include 'global-footer-contact', content: block.settings.footer_contact_info -%}
+
+  {%- when 'social_links' -%}
+
+    {%- include 'global-footer-social-links', block_settings: block.settings, -%}
+
+  {%- when 'footer_links' -%}
+
+    {%- include 'global-footer-links',
+      menu: block.settings.footer_links_link_list,
+      show_social_icons: block.settings.show_social_icons -%}
+
+  {%- when 'newsletter' -%}
+
+    {%- include 'newsletter-signup',
+      title: block.settings.heading,
+      placeholder: block.settings.placeholder_text,
+      submit_icon: block.settings.submit_icon,
+      submit_text: block.settings.submit_text,
+      classes: 'global-footer-newsletter-signup',
+      attrs: '' -%}
+
+{%- endcase -%}

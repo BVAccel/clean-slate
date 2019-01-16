@@ -1,24 +1,17 @@
-{% comment %}
 {%- include 'product-breadcrumbs' -%}
-{% endcomment %}
 
 {%- include 'product-main' -%}
 
-{% comment %}
 {%- include 'product-benefits' -%}
-{% endcomment %}
 
-{% comment %}
 {%- include 'product-additional-images' -%}
-{% endcomment %}
 
-{% comment %}
 {%- include 'product-secondary-details' -%}
-{% endcomment %}
 
 {% comment %}
 {%- include 'product-customer-reviews' -%}
 {% endcomment %}
 
 {%- include 'upsell-row',
+  title: 'You May Also Like',
   _collection: collection.products -%}

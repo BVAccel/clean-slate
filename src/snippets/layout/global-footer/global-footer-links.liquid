@@ -19,29 +19,29 @@
       classes: 'global-footer--links-header',
       attrs: '' -%}
 
-      {% comment %}<div class="footer--links">{% endcomment %}
+      <div class="footer--links">
 
-      {%- for child in parent.links -%}
+        {%- for child in parent.links -%}
 
-        {%- assign icon = blank -%}
-        {%- assign networks = 'facebook,twitter,instagram,youtube,pinterest' | split: ',' -%}
+          {%- assign icon = blank -%}
+          {%- assign networks = 'facebook,twitter,instagram,youtube,pinterest' | split: ',' -%}
 
-        {%- if show_social_icons == true -%}
-          {%- if networks contains child.handle -%}
-            {%- assign icon = child.handle -%}
+          {%- if show_social_icons == true -%}
+            {%- if networks contains child.handle -%}
+              {%- assign icon = child.handle -%}
+            {%- endif -%}
           {%- endif -%}
-        {%- endif -%}
 
-        {%- include 'link',
-          href: child.url,
-          content: child.title,
-          icon: icon,
-          classes: 'global-footer--link',
-          attrs: '' -%}
+          {%- include 'link',
+            href: child.url,
+            content: child.title,
+            icon: icon,
+            classes: 'global-footer--link',
+            attrs: '' -%}
 
-      {%- endfor -%}
+        {%- endfor -%}
 
-      {% comment %}</div>{% endcomment %}
+      </div>
 
   </section>
 

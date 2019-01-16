@@ -32,6 +32,7 @@ export const getProductContainerData = productContainer => {
   const initialOptionValues = getInitialOptionValues(options);
   const initialVariantData = getInitialVariantData(variants);
   const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10) || null;
+  const sliders = dom.getContainer('slider', false, productContainer);
   return {
     _data: { options, variants },
     id,
@@ -40,6 +41,7 @@ export const getProductContainerData = productContainer => {
     ...initialOptionValues,
     ...initialVariantData,
     quantity,
+    sliders,
   };
 };
 

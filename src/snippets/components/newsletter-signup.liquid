@@ -1,0 +1,75 @@
+{%- comment -%}
+
+  Required arguments:
+
+  Optional arguments:
+  - title
+  - placeholder
+  - submit_icon
+  - submit_text
+
+{%- endcomment -%}
+
+{%- if submit_icon == blank and submit_text == blank -%}
+  {%- assign submit_icon = 'envelope' -%}
+{%- endif -%}
+
+<section class="oo-newsletter-signup {{ classes -}}" {{ attrs -}}>
+
+  {%- if title != blank -%}
+
+    {%- capture subtitle_content -%}
+      {%- if subtitle != blank -%}
+        {%- include 'text',
+          content: subtitle_content,
+          classes: 'newsletter-signup-subtitle',
+          attrs: '', -%}
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- include 'header',
+      level: 3,
+      title: title,
+      classes: 'newsletter-signup-title',
+      attrs: '' -%}
+
+  {%- endif -%}
+
+  {%- capture newsletter_signup_content -%}
+
+    {%- capture input_placeholder -%}
+      {%- if placeholder != blank -%}
+        placeholder="{{ placeholder }}"
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- include 'input',
+      type: 'email',
+      name: 'newsletter-signup-email',
+      classes: 'newsletter-signup-email',
+      attrs: input_placeholder -%}
+
+    {%- include 'button',
+      type: 'submit',
+      icon: submit_icon,
+      content: submit_text,
+      classes: 'newsletter-signup-submit',
+      attrs: '' -%}
+
+  {%- endcapture -%}
+
+  {%- include 'container-form',
+    name: 'newsletter-signup',
+    method: 'post',
+    action: '',
+    content: newsletter_signup_content,
+    classes: '',
+    attrs: '' -%}
+
+</section>
+
+
+{%- assign subtitle_content = nil -%}
+{%- assign newsletter_signup_content = nil -%}
+{%- assign input_placeholder = nil -%}
+{%- assign submit_icon = nil -%}

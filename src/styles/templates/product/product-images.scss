@@ -7,6 +7,15 @@
   flex-basis: 90px;
   width: 90px;
   padding-right: 10px;
+  display: none;
+
+  @include mq('m') {
+    display: block;
+  }
+}
+
+.gallery-slide-thumb {
+  margin-bottom: 10px;
 }
 
 .vv-product-gallery {

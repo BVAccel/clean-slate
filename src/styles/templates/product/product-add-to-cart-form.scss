@@ -1,7 +1,15 @@
 @import '../../components/option-group';
 
-.vv-product-main-add-to-cart .oo-option-group .oo-header {
-
+.vv-product-main-add-to-cart {
+  display: flex;
+  flex-direction: column;
 }
 
-.vv-product-main-add-to-cart {}
+.vv-product-main-add-to-cart .oo-option-group,
+.vv-product-main-add-to-cart .oo-quantity-select {
+  margin-bottom: 1rem;
+}
+
+.vv-product-main-add-to-cart .oo-quantity-select {
+  align-self: flex-start;
+}

@@ -1,0 +1,11 @@
+.vv-product-secondary-details-content {
+  align-content: flex-start;
+}
+
+.vv-product-secondary-details-info {
+  display: none;
+
+  &.is-active {
+    display: flex;
+  }
+}

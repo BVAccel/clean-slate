@@ -13,10 +13,15 @@
   }
 
   @each $value in $values {
-    $selector: flex-#{$value};
+    $flex-selector: flex-#{$value};
+    $width-selector: width-#{$value};
 
-    .#{$selector} {
+    .#{$flex-selector} {
       flex-basis: percentage($width);
+    }
+
+    .#{$width-selector} {
+      width: percentage($width);
     }
 
     @each $breakpoint in $breakpoints {
@@ -24,11 +29,37 @@
 
       @each $size in $breakpoint {
         @if type-of($size) == string {
-          .#{$size}-#{$selector} {
+          .#{$size}-#{$flex-selector} {
             @include mq($screen-width) {
               flex-basis: percentage($width);
             }
           }
+
+          .#{$size}-#{$width-selector} {
+            @include mq($screen-width) {
+              width: percentage($width);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $breakpoint in $breakpoints {
+  $screen-width: nth($breakpoint, 1);
+
+  @each $size in $breakpoint {
+    @if type-of($size) == string {
+      .#{$size}-hide {
+        @include mq($screen-width) {
+          display: none;
+        }
+      }
+
+      .#{$size}-show {
+        @include mq($screen-width) {
+          display: initial;
         }
       }
     }

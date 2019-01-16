@@ -19,16 +19,20 @@
 
   {%- include 'button',
     content: '-',
-    attrs: 'data-quantity-change=-1' -%}
+    attrs: 'data-quantity-change=-1',
+    classes: 'quantity-select-control',
+    attrs: '' -%}
 
   {%- include 'input',
     type: 'number',
     name: 'quantity',
     value: input_value,
+    classes: 'quantity-select-value',
     attrs: 'min=1 data-quantity-value readonly' -%}
 
   {%- include 'button',
     content: '+',
+    classes: 'quantity-select-control',
     attrs: 'data-quantity-change=1' -%}
 
 </div>

@@ -1,3 +1,5 @@
+@import '../components/newsletter-signup';
+
 .oo-global-footer {
   display: flex;
   flex-direction: column;
@@ -12,6 +14,15 @@
 
 .global-footer--links-block {
   flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-group {
+  order: -1;
+}
+
+.footer--links {
   display: flex;
   flex-direction: column;
 }

@@ -1,0 +1,51 @@
+{%- capture product_secondary_details_info_content -%}
+
+  {%- if part == 1 -%}
+
+    <div class="flex-half">Case Size</div>
+    <div class="flex-half">45 mm</div>
+    <div class="flex-half">Case Thickness</div>
+    <div class="flex-half">12 mm</div>
+    <div class="flex-half">Strap Width</div>
+    <div class="flex-half">22 mm</div>
+    <div class="flex-half">Movement</div>
+    <div class="flex-half">Battery powered 6 hand chronograph with date</div>
+    <div class="flex-half">Glass</div>
+    <div class="flex-half">Hardened mineral crystal</div>
+    <div class="flex-half">Water Resistance</div>
+    <div class="flex-half">5 ATM</div>
+
+  {%- elsif part == 2 -%}
+
+    <div class="flex-half">Water Resistance</div>
+    <div class="flex-half">5 ATM</div>
+    <div class="flex-half">Glass</div>
+    <div class="flex-half">Hardened mineral crystal</div>
+    <div class="flex-half">Movement</div>
+    <div class="flex-half">Battery powered 6 hand chronograph with date</div>
+    <div class="flex-half">Strap Width</div>
+    <div class="flex-half">22 mm</div>
+    <div class="flex-half">Case Thickness</div>
+    <div class="flex-half">12 mm</div>
+    <div class="flex-half">Case Size</div>
+    <div class="flex-half">45 mm</div>
+
+  {%- endif -%}
+
+{%- endcapture -%}
+
+
+{%- assign _classes = classes | append: ' flex-full' -%}
+
+{%- capture _attrs -%}
+  data-secondary-details="part-{{-part-}}"
+{%- endcapture -%}
+
+{%- include 'container-grid',
+  name: 'Product Secondary Details Info',
+  content: product_secondary_details_info_content,
+  classes: _classes,
+  attrs: _attrs -%}
+
+{%- assign _classes = nil -%}
+{%- assign _attrs = nil -%}

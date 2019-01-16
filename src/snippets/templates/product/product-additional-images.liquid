@@ -1,0 +1,24 @@
+{%- capture product_additional_images -%}
+  {%- for image in _product.images -%}
+
+    {%- include 'image',
+      resource: image,
+      size: '620x620',
+      crop: 'center',
+      lazyload: false,
+      format: 'pjpg',
+      classes: 'additional-product-image-slide',
+      attrs: ''  -%}
+
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign number_of_slides = _product.images.size -%}
+
+{%- include 'container-slider',
+  name: 'Additional Product Images',
+  slides: product_additional_images,
+  classes: '',
+  attrs: 'data-slides-to-show="4"' -%}
+
+{%- assign number_of_slides = nil -%}

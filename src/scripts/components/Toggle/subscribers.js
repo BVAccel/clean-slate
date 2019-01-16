@@ -3,6 +3,6 @@ import { toggle } from './handlers';
 
 export const initSubscribers = () => {
   PubSub.subscribe(bva.toggle, (message, data) => {
-    return toggle(data);;
+    return toggle(data);
   });
 };

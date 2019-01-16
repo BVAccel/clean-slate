@@ -18,19 +18,22 @@ const updateParentOptionValue = (parent, filterGroup, filterValue) => {
   }
 };
 
-const updateSiblingSlider = (navFor, index) => {
-  const siblingSlider = State.get(navFor).slider;
-  const siblingSliderSlides = Array.from(siblingSlider.slider.children);
-  const slideTo = siblingSliderSlides.findIndex(slide => slide.dataset.slideIndex === index);
+export const updateContainerSliders = (container, index) => {
+  const id = container.dataset.containerId;
+  const name = 'slide-index';
+  const value = index;
 
-  siblingSlider.select(slideTo);
+  const topic = bva.updateContainerSliders;
+  const data = { id, name, value };
+
+  PubSub.publish(topic, data);
 };
 
 
 const handleSliderThumbClick = ({ currentTarget: self }) => {
   const { filterValue, slideIndex } = self.dataset;
   const { navFor, parent, filterGroup } = State.get(self);
-  updateSiblingSlider(navFor, slideIndex);
+  updateContainerSliders(parent, slideIndex);
   updateParentOptionValue(parent, filterGroup, filterValue);
 
   return false;

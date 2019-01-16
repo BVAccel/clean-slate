@@ -20,7 +20,9 @@
 
   {%- assign icon_name = name | remove_first: 'icon-' | prepend: 'icon-' -%}
 
-  {%- include icon_name -%}
+  {%- include icon_name,
+    classes: '',
+    attrs: '' -%}
 
   {%- assign icon_name = nil -%}
 

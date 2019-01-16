@@ -3,37 +3,30 @@
   flex-wrap: wrap;
 }
 
-.oo-option-group .oo-header {
+.option-group-header {
   flex-basis: 100%;
   display: flex;
   align-items: center;
 }
 
 .swatch {
-
-  .oo-input {
-    display: none;
-  }
-
-  .oo-label {
-    display: inline-block;
-    font-size: 0;
-    border: 4px solid transparent;
-    outline: 1px solid $color-black;
-    height: 40px;
-    width: 40px;
-  }
-
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0;
+  border: 4px solid transparent;
+  outline: 1px solid $color-black;
+  height: 40px;
+  width: 40px;
 }
 
-.swatch-cool-blue .oo-label  {
+.swatch-cool-blue {
   background-color: skyblue;
 }
 
-.swatch-charcoal-grey .oo-label  {
+.swatch-charcoal-grey {
   background-color: grey;
 }
 
-.swatch-pink-rose .oo-label  {
+.swatch-pink-rose {
   background-color: pink;
 }

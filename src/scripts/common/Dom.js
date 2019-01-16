@@ -18,23 +18,23 @@
 
 */
 const dom = {
-  getContainer: (key, asjQuery = false) => {
+  getContainer: (key, asjQuery = false, context = document) => {
     if (key instanceof Element) {
       return (asjQuery)
         ? $(key).closest(dom.container)
         : $(key).closest(dom.container)[0];
-    } else if ($(`[data-container-id="${key}"]`).length) {
+    } else if ($(`[data-container-id="${key}"]`, context).length) {
       return (asjQuery)
-        ? $(`[data-container-id="${key}"]`)
-        : $(`[data-container-id="${key}"]`)[0];
-    } else if ($(`[data-container-name="${key}"]`).length) {
+        ? $(`[data-container-id="${key}"]`, context)
+        : $(`[data-container-id="${key}"]`, context)[0];
+    } else if ($(`[data-container-name="${key}"]`, context).length) {
       return (asjQuery)
-        ? $(`[data-container-name="${key}"]`)
-        : $(`[data-container-name="${key}"]`)[0];
-    } else if ($(`[data-container="${key}"]`).length) {
+        ? $(`[data-container-name="${key}"]`, context)
+        : $(`[data-container-name="${key}"]`, context)[0];
+    } else if ($(`[data-container="${key}"]`, context).length) {
       return (asjQuery)
-        ? $(`[data-container="${key}"]`)
-        : $(`[data-container="${key}"]`);
+        ? $(`[data-container="${key}"]`, context)
+        : $(`[data-container="${key}"]`, context).get();
     }
 
     return;
@@ -59,6 +59,8 @@ const dom = {
   priceString: (strings, priceInCents) => `$${(priceInCents / 100).toFixed(2)}`,
 
   isActive: '.is-active',
+  isActiveSelector: '.is-active',
+  isActiveClassName: 'is-active',
 
   overlay: '[data-overlay]',
 

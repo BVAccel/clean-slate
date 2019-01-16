@@ -1,9 +1,12 @@
+{%- include 'global-footer-value-props' -%}
+
 <section
   class="oo-global-footer"
   data-section-id="{{ section.id }}"
   data-section-type="global-footer">
 
-  {%- include 'global-footer' -%}
+  {%- include 'section-groups',
+    section_name: 'global-footer' -%}
 
 </section>
 
@@ -29,6 +32,12 @@
             "type": "image_picker",
             "id": "footer_logo",
             "label": "Footer Logo"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
           }
         ]
       },
@@ -42,6 +51,12 @@
             "id": "footer_contact_info",
             "label": "Footer Contact Info",
             "default": "<ul class='contact-items'><li><a href='mailto:support@mvmt.com'>support@mvmt.com</a></li><li>Call Toll-Free <br> <a href='tel:8885070220'>+1 (888) 507-0220</a></li><li>M-T 8:30-2 pm &amp; F 9-1 pm PST</li></ul>"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
           }
         ]
       },
@@ -79,6 +94,12 @@
             "id": "pinterest_link",
             "label": "Show Pinterest Link",
             "default": false
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
           }
         ]
       },
@@ -98,6 +119,12 @@
             "id": "footer_links_link_list",
             "label": "Footer Navigation Linklist",
             "default": "footer"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
           }
         ]
       },
@@ -129,6 +156,12 @@
             "type": "text",
             "id": "submit_text",
             "label": "Text for Submit Button"
+          },
+          {
+            "type": "text",
+            "id": "group_name",
+            "label": "Group Name",
+            "info": "to group blocks together, give them the same group name"
           }
         ]
       }

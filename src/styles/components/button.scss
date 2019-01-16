@@ -1,5 +1,6 @@
 .oo-button {
   display: flex;
+  align-items: center;
   margin: 0;
   padding: $oo-base-spacing-size calc(#{$oo-base-spacing-size} * 1.75);
   font-family: $font-heading;
@@ -21,6 +22,11 @@
   &.button--secondary {
     color: $color-white;
     background-color: $color-5;
+  }
+
+  &.button--black {
+    color: $color-white;
+    background-color: $color-black;
   }
 
   &.button--primary-alt {
@@ -47,6 +53,17 @@
     }
   }
 
+  &.button--black-alt {
+    color: $color-black;
+    background-color: transparent;
+    border: 2px solid $color-black;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-black;
+    }
+  }
+
   &.button--reset,
   &.button--text {
     border: 0 none;
@@ -55,4 +72,8 @@
     user-select: text;
     color: $color-body-text;
   }
+}
+
+.button--content {
+  width: 100%;
 }

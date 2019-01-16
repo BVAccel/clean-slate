@@ -1,11 +1,15 @@
-{% comment %}
+{%- comment -%}
 
-  - see `section-groups.liquid`
+  Required arguments:
+  - section_name
 
-{% endcomment %}
+  Optional arguments:
+
+{%- endcomment -%}
 
 
-{% comment %}
+{%- assign case_statement_name = section_name | append: '-case-statement' -%}
+
 {%- for block in section.blocks -%}
 
   {%- if block.settings.group_name != blank -%}
@@ -15,7 +19,7 @@
 
   {%- else -%}
 
-    {%- include 'global-footer-case-statement' -%}
+    {%- include case_statement_name -%}
 
   {%- endif -%}
 
@@ -27,13 +31,13 @@
 
 
 {%- for group_name in group_names -%}
-  <section class="global-footer--block-group {{ group_name -}}">
+  <section class="{{- section_name -}}--block-group {{ group_name -}}">
 
     {%- for block in section.blocks -%}
       {%- for group in groups -%}
         {%- if group contains block.type and group contains group_name -%}
 
-          {%- include 'global-footer-case-statement' -%}
+          {%- include case_statement_name -%}
 
         {%- endif -%}
       {%- endfor -%}
@@ -41,4 +45,5 @@
 
   </section>
 {%- endfor -%}
-{% endcomment %}
+
+{%- assign case_statement_name = nil -%}
