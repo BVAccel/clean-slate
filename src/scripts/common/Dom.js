@@ -56,7 +56,7 @@ const dom = {
       : dom.getContainer(self);
   },
 
-  priceString: (strings, priceInCents) => `$${(priceInCents / 100).toFixed(2)}`,
+  priceString: priceInCents => `$${(priceInCents / 100).toFixed(2)}`,
 
   isActive: '.is-active',
   isActiveSelector: '.is-active',

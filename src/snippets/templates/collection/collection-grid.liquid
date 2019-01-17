@@ -1,13 +1,21 @@
 {%- capture collection_grid_contents -%}
-  {%- for _product in collection.products -%}
+  {%- if react != true -%}
+    {%- for _product in collection.products -%}
 
-    {%- include 'product-item',
-      _product: _product,
-      with_quickshop: true,
-      classes: 's-flex-6 m-flex-4 l-flex-3',
-      attrs: '' -%}
+      {%- include 'product-item',
+        _product: _product,
+        with_quickshop: true,
+        classes: 's-flex-6 m-flex-4 l-flex-3',
+        attrs: '' -%}
 
-  {%- endfor -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture _attr -%}
+  {%- if react == true -%}
+    data-react-entrypoint="collection"
+  {%- endif -%}
 {%- endcapture -%}
 
 
@@ -15,4 +23,6 @@
   name: 'Collection Grid',
   content: collection_grid_contents,
   classes: '',
-  attrs: '' -%}
+  attrs: _attr -%}
+
+{%- assign _attr = nil -%}

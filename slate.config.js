@@ -7,8 +7,8 @@ const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const sectionsBase = 'templates';
-const snippetsBase = 'templates';
+const sectionsBase = 'core';
+const snippetsBase = 'core';
 
 const externals = {
   jquery: 'jQuery',
@@ -25,16 +25,14 @@ const plugins = [
     {
       from: 'sections/**/*',
       to: '../sections/',
-      flatten: true,
-      ignore: [ `${sectionsBase}/*` ],
+      flatten: true
     },
     {
       from: 'snippets/**/*',
       to: '../snippets/',
-      flatten: true,
-      ignore: [ `${snippetsBase}/*` ],
+      flatten: true
     }
-  ]),
+  ], { ignore: [ 'core/*' ] }),
 ];
 
 const alias = {
