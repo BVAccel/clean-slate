@@ -1,3 +1,5 @@
+// add data-attrs for grid container to wrapper
+
 import React, { Component } from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
@@ -47,14 +49,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <section>
+
+        {/*className={oo-grid vv-{{ name | handle}} {{ classes -}}}
+        data-container="grid"
+        data-container-name={"{{- name -}}"}
+        data-container-id={"{{- id -}}"}*/}
 
         <ProductGrid />
 
-      </div>
+      </section>
     );
   }
-}
+};
 
 export default App;
 
