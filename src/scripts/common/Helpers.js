@@ -65,3 +65,21 @@ export const setSearchParm = (param, value) => {
   window.history.pushState('', '', `?${searchParams.toString()}`);
   return searchParams;
 };
+
+export const getHandle = (type = 'product') => {
+  if (type === 'collection') {
+    return window.location.pathname.replace(/\/collections\/(.*)\/?/, '$1');
+  } else if (type === 'product'){
+    return window.location.pathname.replace(/\/products\/(.*)\/?/, '$1');
+  }
+  return window.location.pathname.replace(/\/products\/(.*)\/?/, '$1');
+};
+
+export const random = (digits = 9) => {
+  return Math.floor(Math.random() * Math.pow(10, digits));
+};
+
+
+export const handlize = string => {
+  return string.toLowerCase().replace(/[\s_]/g, '-');
+};

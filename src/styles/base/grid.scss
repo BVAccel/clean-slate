@@ -2,6 +2,9 @@
   display: flex;
   flex-wrap: wrap;
 }
+.no-wrap {
+  flex-wrap: nowrap;
+}
 
 @for $i from $columns through 1 {
   $width: ($i/$columns);

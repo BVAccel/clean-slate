@@ -1,28 +1,37 @@
-{%- capture collection_grid_contents -%}
-  {%- if react != true -%}
-    {%- for _product in collection.products -%}
-
-      {%- include 'product-item',
-        _product: _product,
-        with_quickshop: true,
-        classes: 's-flex-6 m-flex-4 l-flex-3',
-        attrs: '' -%}
-
-    {%- endfor -%}
-  {%- endif -%}
-{%- endcapture -%}
-
-{%- capture _attr -%}
-  {%- if react == true -%}
-    data-react-entrypoint="collection"
-  {%- endif -%}
-{%- endcapture -%}
+{% comment %}
 
 
-{%- include 'container-grid',
-  name: 'Collection Grid',
-  content: collection_grid_contents,
-  classes: '',
-  attrs: _attr -%}
+{% endcomment %}
 
-{%- assign _attr = nil -%}
+
+{%- if react == true -%}
+
+  <div data-react-entrypoint="collection">
+
+    <div>Loading...</div>
+
+  </div>
+
+{%- else -%}
+
+  {%- capture collection_grid_contents -%}
+    {%- if react != true -%}
+      {%- for _product in collection.products -%}
+
+        {%- include 'product-item',
+          _product: _product,
+          with_quickshop: true,
+          classes: 's-flex-6 m-flex-4 l-flex-3',
+          attrs: '' -%}
+
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- include 'container-grid',
+    name: 'Collection Grid',
+    content: collection_grid_contents,
+    classes: '',
+    attrs: '' -%}
+
+{%- endif -%}
