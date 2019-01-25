@@ -35,6 +35,7 @@ const additionalProductImages = {
   pageDots: false,
   cellAlign: 'left',
   prevNextButtons: true,
+  imagesLoaded: true,
   mq: {
     'screen and (max-width: 480px)': {
       draggable: true,

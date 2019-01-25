@@ -54,9 +54,12 @@ export const debounce = (callback, time = 250, interval) => (...args) => {
   interval = setTimeout(() => callback(...args), time);
 };
 
-export const getSearchParm = param => {
+export const getSearchParm = params => {
   const searchParams = new URLSearchParams(window.location.search);
-  return searchParams.get(param);
+
+  return (typeof(params) === 'string')
+    ? searchParams.get(params)
+    : params.reduce((params, param) => ({ ...params, [param]: searchParams.get(param.toLowerCase()) }), {});
 };
 
 export const setSearchParm = (param, value) => {
@@ -79,7 +82,6 @@ export const random = (digits = 9) => {
   return Math.floor(Math.random() * Math.pow(10, digits));
 };
 
-
 export const handlize = string => {
-  return string.toLowerCase().replace(/[\s_]/g, '-');
+  return string.trim().toLowerCase().replace(/[\s_]/g, '-');
 };

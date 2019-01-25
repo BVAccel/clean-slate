@@ -27,14 +27,16 @@ const getInitialVariantData = variants => {
 
 export const getProductContainerData = productContainer => {
   const id = productContainer.dataset.containerId;
+  const { data: images } = JSON.parse($(productContainer).find(dom.imageData).text());
   const { data: options } = JSON.parse($(productContainer).find(dom.optionData).text());
   const { data: variants } = JSON.parse($(productContainer).find(dom.variantData).text());
+  const { data: product } = JSON.parse($(productContainer).find(dom.productData).text());
   const initialOptionValues = getInitialOptionValues(options);
   const initialVariantData = getInitialVariantData(variants);
   const quantity = parseInt($(productContainer).find(dom.quantityValue).val(), 10) || null;
   const sliders = dom.getContainer('slider', false, productContainer);
   return {
-    _data: { options, variants },
+    _data: { images, options, variants, product },
     id,
     change: 'product',
     container: 'product',

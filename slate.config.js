@@ -6,6 +6,7 @@
 const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const graphqlLoader = require('graphql-tag/loader');
 
 const sectionsBase = 'core';
 const snippetsBase = 'core';
@@ -41,6 +42,7 @@ const alias = {
   'common': path.resolve('./src/scripts/common'),
   'components': path.resolve('./src/scripts/components'),
   'state': path.resolve('./src/scripts/state'),
+  'collection': path.resolve('./src/scripts/components/_Collection/components'),
 };
 
 module.exports = {
@@ -65,5 +67,16 @@ module.exports = {
         },
       },
     },
+    module: {
+      rules: [
+        {
+          test: /\.(graphql|gql)$/,
+          exclude: /node_modules/,
+          use: [
+            { loader: 'graphql-tag/loader' }
+          ]
+        }
+      ]
+    }
   },
 };

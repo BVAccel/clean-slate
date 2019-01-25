@@ -33,5 +33,6 @@
   {%- include 'image-data', images: _product.images -%}
   {%- include 'option-data', options: _product.options_with_values -%}
   {%- include 'variant-data', _product: _product, variants: _product.variants -%}
+  {%- include 'product-data', _product: _product -%}
 
 </{%- if tag != blank -%}{{- tag -}}{%- else -%}section{%- endif %}>

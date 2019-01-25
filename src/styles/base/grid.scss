@@ -2,8 +2,25 @@
   display: flex;
   flex-wrap: wrap;
 }
-.no-wrap {
+
+.flex {
+  display: flex;
+}
+
+.flex-no-wrap {
   flex-wrap: nowrap;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-auto {
+  flex-basis: auto;
 }
 
 @for $i from $columns through 1 {

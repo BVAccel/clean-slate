@@ -4,34 +4,56 @@
 {% endcomment %}
 
 
-{%- if react == true -%}
+{%- assign react = false -%}
 
-  <div data-react-entrypoint="collection">
+{%- capture _attrs -%}
 
-    <div>Loading...</div>
+  {%- if react == true -%}
+    data-react-entrypoint="collection"
+  {%- endif -%}
 
-  </div>
+{%- endcapture -%}
 
-{%- else -%}
 
-  {%- capture collection_grid_contents -%}
-    {%- if react != true -%}
-      {%- for _product in collection.products -%}
+{%- capture collection_grid_contents -%}
+  {%- for _product in collection.products -%}
+
+    {%- if react == true -%}
+
+      {% comment %}
+
+        Load the Collection Grid up with empty product containers so their contents are parsed and added to `window.bvaccel.state.products`. Use `window.bvaccel.state.products` to pre-render content inside of the Collection Grid.
+
+      {% endcomment %}
+
+      {%- include 'container-product',
+        name: 'Data Container',
+        type: 'product'
+        _product: _product,
+        content: product_item_content,
+        classes: _classes,
+        attrs: '', -%}
+
+
+    {%- else -%}
 
         {%- include 'product-item',
           _product: _product,
-          with_quickshop: true,
+          with_quickshop: false,
           classes: 's-flex-6 m-flex-4 l-flex-3',
           attrs: '' -%}
 
-      {%- endfor -%}
     {%- endif -%}
-  {%- endcapture -%}
 
-  {%- include 'container-grid',
-    name: 'Collection Grid',
-    content: collection_grid_contents,
-    classes: '',
-    attrs: '' -%}
+  {%- endfor -%}
+{%- endcapture -%}
 
-{%- endif -%}
+
+{%- include 'container-grid',
+  name: 'Collection Grid',
+  content: collection_grid_contents,
+  classes: 'flex-full',
+  attrs: _attrs -%}
+
+
+{%- assign _attrs = nil -%}

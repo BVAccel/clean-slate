@@ -1,0 +1,24 @@
+#import "../fragments.gql"
+
+query getProducts {
+  collectionProducts @client {
+    handle
+  }
+}
+
+query fetchProducts ($step: Int!, $handle: String!, $cursor: String) {
+  collection: collectionByHandle (handle: $handle) {
+    products (first: $step, after: $cursor ) @connection(key: "collectionProducts") {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+      edges {
+        cursor
+        product: node {
+          ...ProductInfo
+        }
+      }
+    }
+  }
+}

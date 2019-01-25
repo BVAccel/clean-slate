@@ -9,8 +9,9 @@
 
 {%- endcomment -%}
 
+{%- assign icon_name = name | remove_first: 'icon-' | prepend: 'icon-' -%}
 
-<div class="oo-icon icon-{{- name }} {{ classes -}}"
+<div class="oo-icon {{ name }} {{ classes -}}"
   {%- if height != blank or width != blank -%}
     style="
       {%- if height != blank -%}height: {{- height -}};{%- endif -%}
@@ -18,12 +19,11 @@
   {%- endif -%}
   {{ attrs -}}>
 
-  {%- assign icon_name = name | remove_first: 'icon-' | prepend: 'icon-' -%}
-
   {%- include icon_name,
     classes: '',
     attrs: '' -%}
 
-  {%- assign icon_name = nil -%}
-
 </div>
+
+
+{%- assign icon_name = nil -%}

@@ -1,0 +1,14 @@
+{% comment %}
+
+  Required arguments:
+  - _product
+
+  Optional arguments:
+
+{% endcomment %}
+
+<script type="application/json" data-product-data>
+{
+  "data": {%- include 'product-object', _product: _product -%}
+}
+</script>

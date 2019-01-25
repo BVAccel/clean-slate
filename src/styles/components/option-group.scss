@@ -20,13 +20,69 @@
 }
 
 .swatch-cool-blue {
-  background-color: skyblue;
+  background-color: lightblue;
 }
 
 .swatch-charcoal-grey {
-  background-color: grey;
+  background-color: #333333;
 }
 
 .swatch-pink-rose {
   background-color: pink;
+}
+
+.swatch-maple-sugar {
+  background-color: peachpuff;
+}
+
+.swatch-haute-red {
+  background-color: crimson;
+}
+
+.swatch-maple-sugar {
+  background-color: peachpuff;
+}
+
+.swatch-pink {
+  background-color: pink;
+}
+
+.swatch-black {
+  background-color: black;
+}
+
+.swatch-wine-tasting {
+  background-color: darkred;
+}
+
+.oo-input--radio[name="Size"] + .swatch {
+  position: relative;
+
+  &::after {
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.swatch-extra-small::after {
+  content: 'XS';
+}
+
+.swatch-small::after {
+  content: 'S';
+}
+
+.swatch-medium::after {
+  content: 'M';
+}
+
+.swatch-large::after {
+  content: 'L';
+}
+
+.swatch-xl::after {
+  content: 'XL';
 }

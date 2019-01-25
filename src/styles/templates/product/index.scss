@@ -13,8 +13,6 @@
 @import '../../components/quantity-select';
 @import '../../components/upsell-row';
 
-@import 'product-main';
-@import 'product-images';
-@import 'product-add-to-cart-form';
-@import 'additional-product-images';
-@import 'secondary-details';
+@import 'product-main/index';
+@import 'product-additional-images';
+@import 'product-secondary-details';

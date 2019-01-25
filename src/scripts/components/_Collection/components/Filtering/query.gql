@@ -1,0 +1,7 @@
+query getActiveFilters {
+  activeSort @client
+}
+
+mutation updateActiveFilters ($sort: String!) {
+  UpdateSort(sort: $sort) @client
+}
