@@ -48,33 +48,3 @@ query fetchProducts ($step: Int!, $handle: String!, $cursor: String) {
     }
   }
 }
-
-fragment CollectionProductData on CollectionProduct {
-  id
-  handle
-  title
-  tags
-  prices {
-    min {
-      value
-      string
-    }
-    range
-  }
-  options {
-    group
-    value
-  }
-  featuredImage {
-    alt
-    lqip
-    src
-    srcset
-  }
-  images {
-    alt
-    lqip
-    src
-    srcset
-  }
-}

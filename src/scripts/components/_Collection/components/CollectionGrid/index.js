@@ -11,7 +11,7 @@ const CollectionGrid = props => {
   const { apollo, products } = props;
 
   return (
-    <div className="collection-grid oo-grid">
+    <div className="collection-grid flex-full">
 
       <section className="collection-filtersort oo-grid flex-full">
 

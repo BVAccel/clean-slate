@@ -14,7 +14,6 @@ import { defaults } from './defaults';
 import { resolvers } from './resolvers';
 import { schema as typeDefs } from './schema';
 
-
 const client = new ApolloClient({
   connectToDevTools: true,
   cache,

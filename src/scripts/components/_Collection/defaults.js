@@ -1,4 +1,4 @@
-import { parseInitialData } from 'collection/App';
+import { parseInitialData } from './parseData';
 
 export const defaults = {
   cursor: null,
@@ -17,7 +17,7 @@ export const defaults = {
     ],
     __typename: 'CollectionFilterOptions',
   },
-  activeSort: '',
+  activeSort: { value: null, __typename: 'SortValue' },
   sortOptions: [
     {value: 'TITLE_DESCENDING', label: 'Title: A - Z', __typename: 'SortValue' },
     {value: 'TITLE_ASCENDING', label: 'Title: Z - A', __typename: 'SortValue' },

@@ -39,4 +39,33 @@ const CollectionSorting = props => {
   )
 };
 
+export const sortProducts = (products, { value }) => {
+  if (!value || value === null) return products;
+  return products
+    .sort((a, b) => {
+      const titleA = a.title.toLowerCase();
+      const titleB = b.title.toLowerCase();
+      const priceA = a.prices.min.value;
+      const priceB = b.prices.min.value;
+      switch (value) {
+        case 'TITLE_DESCENDING':
+          if (titleA < titleB) return -1;
+          if (titleA > titleB) return 1;
+          return 0;
+        case 'TITLE_ASCENDING':
+          if (titleA > titleB) return -1;
+          if (titleA < titleB) return 1;
+          return 0;
+        case 'PRICE_DESCENDING':
+          if (priceA > priceB) return -1;
+          if (priceA < priceB) return 1;
+          return 0;
+        case 'PRICE_ASCENDING':
+          if (priceA < priceB) return -1;
+          if (priceA > priceB) return 1;
+          return 0;
+      }
+    });
+};
+
 export default CollectionSorting;

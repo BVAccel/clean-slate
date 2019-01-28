@@ -1,1 +1,19 @@
-{{ _product | json }}
+{
+  "available": {{ _product.available | json }},
+  "collections": [{% for _collection in _product.collections %}"{{ _collection.handle }}"{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "compare_at_price_max": {{ _product.compare_at_price_max | json }},
+  "compare_at_price_min": {{ _product.compare_at_price_min | json }},
+  "compare_at_price_varies": {{ _product.compare_at_price_varies | json }},
+  "content": {{ _product.content | json }},
+  "description": {{ _product.description | json }},
+  "handle": {{ _product.handle | json }},
+  "id": {{ _product.id | json }},
+  "price": {{ _product.price | json }},
+  "price_max": {{ _product.price_max | json }},
+  "price_min": {{ _product.price_min | json }},
+  "price_varies": {{ _product.prices_varies | json }},
+  "tags": {{ _product.tags | json }},
+  "title": {{ _product.title | json }},
+  "type": {{ _product.type | json }},
+  "vendor": {{ _product.vendor | json }}
+}

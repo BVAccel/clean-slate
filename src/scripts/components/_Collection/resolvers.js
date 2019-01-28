@@ -5,40 +5,19 @@ import {
   _getCollectionProducts as _GET_COLLECTION_PRODUCTS, } from 'collection/App/query.gql';
 
 import {
-  getFilterOptions, } from 'collection/Filtering/query.gql';
+  getFilterOptions as GET_FILTER_OPTIONS, } from 'collection/Filtering/query.gql';
+
+import {
+  getActiveSort as GET_ACTIVE_SORT, } from 'collection/Sorting/query.gql';
+
+import { sortProducts } from 'collection/Sorting';
+import { filterProducts } from 'collection/Filtering';
 
 export const resolvers = {
   Mutation: {
     updateSortOrder: (_, { sort }, { cache }) => {
       const {collectionProducts: products} = cache.readQuery({ query: GET_COLLECTION_PRODUCTS });
-
-      if (sort === null) return products;
-
-      const collectionProducts = products
-        .sort((a, b) => {
-          const titleA = a.title.toLowerCase();
-          const titleB = b.title.toLowerCase();
-          const priceA = a.prices.min.value;
-          const priceB = b.prices.min.value;
-          switch (sort.value) {
-            case 'TITLE_DESCENDING':
-              if (titleA < titleB) return -1;
-              if (titleA > titleB) return 1;
-              return 0;
-            case 'TITLE_ASCENDING':
-              if (titleA > titleB) return -1;
-              if (titleA < titleB) return 1;
-              return 0;
-            case 'PRICE_DESCENDING':
-              if (priceA > priceB) return -1;
-              if (priceA < priceB) return 1;
-              return 0;
-            case 'PRICE_ASCENDING':
-              if (priceA < priceB) return -1;
-              if (priceA > priceB) return 1;
-              return 0;
-          }
-        });
+      const collectionProducts = sortProducts(products, sort);
 
       cache.writeData({ data: { collectionProducts, activeSort: sort }});
 
@@ -47,29 +26,12 @@ export const resolvers = {
     updateFilteredProducts: (_, { filters }, { cache }) => {
       const {collectionProducts: products} = cache.readQuery({ query: GET_COLLECTION_PRODUCTS });
       const {_collectionProducts: _products} = cache.readQuery({ query: _GET_COLLECTION_PRODUCTS });
-      const {filterOptions: { tagDelimiter }} = cache.readQuery({ query: getFilterOptions });
+      const {filterOptions: { tagDelimiter }} = cache.readQuery({ query: GET_FILTER_OPTIONS });
+      const {activeSort: sort} = cache.readQuery({ query: GET_ACTIVE_SORT });
+      const filteredProducts = filterProducts(_products, filters, tagDelimiter);
+      const sortedFilteredProducts = sortProducts(filteredProducts, sort);
 
-      if (!filters.length) {
-        const allProducts = [ ..._products ];
-        cache.writeData({ data: { collectionProducts: allProducts }});
-
-        return allProducts;
-      }
-
-      const filteredProducts = _products.filter(product => {
-        return filters.some(({ group, value, type }) => {
-          if (type === 'option') {
-            return product.options.some(option => option.group === group && option.value === value);
-          }
-          if (type === 'tag') {
-            return product.tags.includes(`${group}${tagDelimiter}${value}`);
-          }
-        })
-      });
-
-      console.log(filteredProducts);
-
-      cache.writeData({ data: { collectionProducts: filteredProducts }});
+      cache.writeData({ data: { collectionProducts: sortedFilteredProducts }});
 
       return filteredProducts;
     },

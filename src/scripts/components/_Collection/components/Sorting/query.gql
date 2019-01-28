@@ -26,7 +26,9 @@ query getSortOptions {
 }
 
 query getActiveSort {
-  activeSort @client
+  activeSort @client {
+    value
+  }
 }
 
 query getCollectionProducts {
@@ -44,32 +46,32 @@ mutation updateSortOrder ($sort: String!) {
 }
 
 
-fragment CollectionProductData on CollectionProduct {
-  id
-  handle
-  title
-  tags
-  prices {
-    min {
-      value
-      string
-    }
-    range
-  }
-  options {
-    group
-    value
-  }
-  featuredImage {
-    alt
-    lqip
-    src
-    srcset
-  }
-  images {
-    alt
-    lqip
-    src
-    srcset
-  }
-}
+# fragment CollectionProductData on CollectionProduct {
+#   id
+#   handle
+#   title
+#   tags
+#   prices {
+#     min {
+#       value
+#       string
+#     }
+#     range
+#   }
+#   options {
+#     group
+#     value
+#   }
+#   featuredImage {
+#     alt
+#     lqip
+#     src
+#     srcset
+#   }
+#   images {
+#     alt
+#     lqip
+#     src
+#     srcset
+#   }
+# }

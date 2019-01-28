@@ -1,38 +1,9 @@
-# fragment CollectionProductData on CollectionProduct {
-#   id
-#   handle
-#   title
-#   tags
-#   prices {
-#     min {
-#       value
-#       string
-#     }
-#     range
-#   }
-#   options {
-#     group
-#     value
-#   }
-#   featuredImage {
-#     alt
-#     lqip
-#     src
-#     srcset
-#   }
-#   images {
-#     alt
-#     lqip
-#     src
-#     srcset
-#   }
-# }
-
 fragment CollectionProductData on CollectionProduct {
   id
   handle
   title
   tags
+  collections
   prices {
     min {
       value
@@ -81,6 +52,35 @@ fragment CollectionProductMetaData on CollectionProduct {
   tags
 }
 
+fragment ProductInfo on Product {
+  id
+  handle
+  title
+  tags
+  collections (first: 100) {
+    edges {
+      collection: node {
+        handle
+      }
+    }
+  }
+  options(first: 3) {
+    name
+    values
+  }
+  prices: priceRange {
+    ...PriceValues
+  }
+  images(first: 25) {
+    edges {
+      image: node {
+        ...ImageSrc
+      }
+    }
+  }
+}
+
+
 fragment PriceValues on ProductPriceRange {
   min: minVariantPrice {
     value: amount
@@ -111,25 +111,4 @@ fragment ProductImage on Image {
   lqip
   src
   srcset
-}
-
-fragment ProductInfo on Product {
-  id
-  handle
-  title
-  tags
-  options(first: 3) {
-    name
-    values
-  }
-  prices: priceRange {
-    ...PriceValues
-  }
-  images(first: 25) {
-    edges {
-      image: node {
-        ...ImageSrc
-      }
-    }
-  }
 }

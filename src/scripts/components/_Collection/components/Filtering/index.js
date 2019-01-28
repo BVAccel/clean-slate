@@ -56,10 +56,7 @@ const CollectionFiltering = props => {
             removeSelected
             options={groupedOptions({products, apollo})}
             components={makeAnimated()}
-            onChange={(activeFilters) => {
-              // console.log(activeFilters);
-              mutate({ variables: { filters: activeFilters }})
-            }}
+            onChange={(activeFilters) => mutate({ variables: { filters: activeFilters }})}
             placeholder="Filters"
             className="flex-full"
             closeMenuOnSelect={false}
@@ -70,6 +67,20 @@ const CollectionFiltering = props => {
 
     </div>
   );
+};
+
+export const filterProducts = (products, filters, tagDelimiter = '::') => {
+  if (!filters.length) return [ ...products ];
+  return products.filter(product => {
+    return filters.some(({ group, value, type }) => {
+      if (type === 'option') {
+        return product.options.some(option => option.group === group && option.value === value);
+      }
+      if (type === 'tag') {
+        return product.tags.includes(`${group}${tagDelimiter}${value}`);
+      }
+    })
+  });
 };
 
 export default CollectionFiltering;
