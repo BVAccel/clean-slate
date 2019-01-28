@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import { Query, Mutation, graphql } from 'react-apollo';
+import { Query, Mutation, graphql, ApolloConsumer } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import isBase64 from 'is-base64';
+import uniqby from 'lodash.uniqby';
 
-import Graphql from './graphql';
-import { fetchProducts, getProducts, } from './query.gql';
+import {
+  productData as PRODUCT_DATA,
+  fetchProducts as FETCH_PRODUCTS, } from './query.gql';
 
 import CollectionGrid from 'collection/CollectionGrid';
 
 import Dom from 'common/Dom';
+import { getHandle } from 'common/Helpers';
+
 
 const parsePrices = prices => {
   const { min: _min, max: _max, price_min, price_max } = prices;
-
   const minValue = price_min || parseInt(_min.value) * 100;
   const maxValue = price_max || parseInt(_max.value) * 100;
   const range = (minValue !== maxValue) ? `${Dom.priceString(minValue)} - ${Dom.priceString(maxValue)}` : null;
-  const min = { value: minValue, string: Dom.priceString(minValue), __typename: 'Price' };
-  const max = { value: maxValue, string: Dom.priceString(maxValue), __typename: 'Price' };
+  const min = { value: minValue, string: Dom.priceString(minValue), __typename: 'CollectionProductPrice' };
+  const max = { value: maxValue, string: Dom.priceString(maxValue), __typename: 'CollectionProductPrice' };
 
-  return { min, max, range, __typename: 'Prices' };
+  return { min, max, range, __typename: 'CollectionProductPrices' };
 };
 
 const parseImages = images => {
@@ -28,21 +31,22 @@ const parseImages = images => {
   return imageData.map(data => {
     const image = data.edge || data;
     const { alt, lqip, src, src2x, src3x } = image.image || image;
-    const id = (isBase64(image.id)) ? btoa(atob(image.id).replace(/.*\//, '')) : btoa(image.id);
     const srcset = `${src} 1x, ${src2x} 2x, ${src3x} 3x`;
     const __typename = 'CollectionProductImage';
 
-    return { id, alt, lqip, src, src2x, src3x, srcset, __typename };
+    return { alt, lqip, src, src2x, src3x, srcset, __typename };
   });
 };
 
 const parseOptions = options => {
-  return options.map(option => {
-    const { name, values } = option;
+  return options.reduce((optionValues, option) => {
+    const { name, values, initialValue, position } = option;
     const __typename = 'CollectionProductOption';
+    const transformedValues = option.values.map(value =>
+      ({ value, group: option.name, type: 'option', label: value, __typename }));
 
-    return { name, values, __typename };
-  });
+    return [ ...optionValues, ...transformedValues ];
+  }, []);
 };
 
 export const parseInitialData = () => {
@@ -50,124 +54,91 @@ export const parseInitialData = () => {
     .map(product => product._data)
     .map(productData => {
       const { handle, tags, title, price_min, price_max } = productData.product;
-      const id = btoa(productData.product.id);
       const options = parseOptions(productData.options);
       const prices = parsePrices({price_min, price_max});
       const images = parseImages(productData.images)
       const featuredImage = images[0];
+      const __typename = 'CollectionProduct';
+      const id = productData.product.id.toString();
 
-      return { id, handle, tags, title, options, prices, images, featuredImage, __typename: 'CollectionProduct' };
+      return { id, handle, tags, title, options, prices, images, featuredImage, __typename  };
     });
 };
 
-class App extends Component {
-  state = {};
+const parseProductDataFromApollo = (edges) => {
+  return edges.map(edge => {
+    const { handle, tags, title } = edge.product;
+    const options = parseOptions(edge.product.options);
+    const prices = parsePrices(edge.product.prices);
+    const images = parseImages(edge.product.images);
+    const featuredImage = images[0];
+    const __typename = 'CollectionProduct';
+    const id = atob(edge.product.id).replace(/.*\//, '');
 
-  parseProductDataFromApollo (data = {}) {
-    const { collection = {} } = data;
-    const { products = {} } = collection;
-    const { edges = [] } = products;
+    return { id, handle, tags, title, options, prices, images, featuredImage, __typename };
+  });
+};
 
-    return edges.map(edge => {
-      const { handle, tags, title } = edge.product;
-      const options = parseOptions(edge.product.options);
-      const prices = parsePrices(edge.product.prices);
-      const images = parseImages(edge.product.images);
-      const featuredImage = images[0];
-      const id = btoa(atob(edge.product.id).replace(/.*\//, ''));
+const updateQuery = (prev, { fetchMoreResult: next }) => {
+  const oldData = prev.collectionProducts;
+  const newData = parseProductDataFromApollo(next.collectionByHandle.products.edges);
+  const { edges } = next.collectionByHandle.products;
 
-      return { id, handle, tags, title, options, prices, images, featuredImage, __typename: 'CollectionProduct' };
-    });
-  };
+  if (edges.length) {
+    const cursor = edges[edges.length - 1].cursor;
 
-  updateQuery (prev, { fetchMoreResult: next }) {
-    const { edges: oldEdges } = prev.collection.products;
-    const { edges: newEdges, pageInfo, __typename } = next.collection.products;
-
-    if (newEdges.length) {
-      return {
-        ...prev,
-        collection: {
-          ...prev.products,
-          products: {
-            edges: [ ...oldEdges, ...newEdges ],
-            pageInfo,
-            __typename,
-          },
-          __typename: next.collection.__typename
-        }
-      }
+    return {
+      ...prev,
+      collectionProducts: uniqby([ ...oldData, ...newData ], 'handle'),
+      pageInfo: next.collectionByHandle.products.pageInfo,
+      cursor,
     }
+  }
 
-    return prev;
+  return {
+    ...prev,
+    cursor: false,
   };
+};
 
-  fetchMoreProducts = apollo => {
-    const { updateQuery } = this;
-    const { client, data, error, loading, fetchMore } = apollo;
-    const { collection = {}} = data;
-    const { products = {}} = collection;
-    const { edges = [], pageInfo = {} } = products;
+const fetchMoreProducts = apollo => {
+  if (apollo.data.productsLoaded) return;
+  const { data, fetchMore } = apollo;
 
-    if (pageInfo.hasNextPage === true) {
-      const cursor = edges[edges.length - 1].cursor;
-      const step = 50;
-      const variables = { cursor, step };
+  const query = FETCH_PRODUCTS;
+  const step = 50;
+  const handle = getHandle('collection');
+  const cursor = data.cursor;
+  const variables = { step, handle, cursor };
 
-      fetchMore({ variables, updateQuery, });
-    }
-
-    if (pageInfo.hasNextPage === false) {
-      const parsedProducts = this.parseProductDataFromApollo(data);
-      const oldData = client.readQuery({ query: getProducts });
-      const newData = [ ...oldData, ...parsedProducts ];
-
-      console.log(newData);
-
-      client.writeData({data: { collectionProducts: newData }});
-
-      const fresh = client.readQuery({ query: getProducts });
-
-      console.log(fresh);
-    }
-  };
-
-  render () {
-    const { props, state, } = this;
-
-    return (
-      <Query
-        query={fetchProducts}
-        variables={{ step: 25, handle: props.handle }}
-      >
-
-        {apollo =>
-
-          <CollectionGrid {...props}
-            parsedProducts={this.parseProductDataFromApollo(apollo.data)}
-            apollo={apollo}
-            fetchMoreProducts={this.fetchMoreProducts} />
-
-        }
-
-      </Query>
-    );
+  if (cursor === false) {
+    apollo.client.writeData({ data: {
+      productsLoaded: true,
+      collectionProducts: data.collectionProducts,
+      _collectionProducts: data.collectionProducts,
+    }});
+  } else {
+    fetchMore({ query, updateQuery, variables });
   }
 };
 
-App.defaultState = {
-  ...Graphql.defaultState,
-  ...CollectionGrid.defaultState,
+const App = props => {
+  return (
+    <Query query={PRODUCT_DATA}>
+      {apollo => {
+        const { collectionProducts: products, productsLoaded } = apollo.data;
+        fetchMoreProducts(apollo);
+
+        return (
+          <CollectionGrid
+            products={products}
+            loaded={productsLoaded}
+            apollo={apollo}
+            {...props} />
+        );
+      }}
+    </Query>
+  );
 };
-
-App.schema = [
-  Graphql.schema,
-  ...CollectionGrid.schema,
-];
-
-App.resolvers = [
-  Graphql.resolvers,
-  ...CollectionGrid.resolvers,
-];
 
 export default App;

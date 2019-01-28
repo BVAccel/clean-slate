@@ -1,7 +1,75 @@
+# import "../../fragments.gql"
+
+query areProductsLoaded {
+  productsLoaded @client
+}
+
+query getCollectionProducts {
+  collectionProducts @client {
+    ...CollectionProductData
+  }
+}
+
+
+query productData {
+  productsLoaded @client
+  collectionProducts @client {
+    ...CollectionProductData
+  }
+}
+
+query getSortOptions {
+  sortOptions @client {
+    value
+    label
+  }
+}
+
 query getActiveSort {
   activeSort @client
 }
 
+query getCollectionProducts {
+  collectionProducts @client {
+    ...CollectionProductData
+  }
+}
+
 mutation updateActiveSort ($sort: String!) {
-  UpdateSort(sort: $sort) @client
+  UpdateSort (sort: $sort) @client
+}
+
+mutation updateSortOrder ($sort: String!) {
+  updateSortOrder (sort: $sort) @client
+}
+
+
+fragment CollectionProductData on CollectionProduct {
+  id
+  handle
+  title
+  tags
+  prices {
+    min {
+      value
+      string
+    }
+    range
+  }
+  options {
+    group
+    value
+  }
+  featuredImage {
+    alt
+    lqip
+    src
+    srcset
+  }
+  images {
+    alt
+    lqip
+    src
+    srcset
+  }
 }

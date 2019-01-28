@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 class ProductImage extends Component {
-
   render() {
-    const { collection, handle, featuredImage, } = this.props.product;
+    const { product, handle: collection } = this.props
+    const { handle, featuredImage, } = product;
 
     return (
       <a
@@ -12,10 +12,9 @@ class ProductImage extends Component {
       >
 
         <img
-          className="oo-image lazyload"
-          src={(this.props.initialLoad) ? featuredImage.src : featuredImage.lqip}
+          className={`oo-image ${(true) ? 'lazyload' : ''}`}
           alt={featuredImage.alt}
-          data-sizes="auto"
+          src={(true) ? featuredImage.lqip : featuredImage.src}
           data-srcset={featuredImage.srcset} />
 
       </a>

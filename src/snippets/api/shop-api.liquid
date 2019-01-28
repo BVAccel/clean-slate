@@ -2,8 +2,12 @@
   document.documentElement.className = document.documentElement.className.replace('no-js', '');
 
   window.bvaccel = {
-    product: {{ product.handle | json }},
-    collection: {{ collection.handle | json }},
+    product: {
+      handle: {{ product.handle | json }},
+    },
+    collection: {
+      handle: {{ collection.handle | json }},
+    },
     customer: {
       loggedIn: {% if customer %}true{% else %}false{% endif %},
       id: {{ customer.id | json }},

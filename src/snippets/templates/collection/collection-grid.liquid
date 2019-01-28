@@ -3,19 +3,27 @@
 
 {% endcomment %}
 
+{% comment %}
+
+  make sure to set the query variable in _Collection/components/App/index.js to at least the same number that you paginate by below
+
+{% endcomment %}
+
+{% paginate collection.products by 16 %}
+
 
 {%- assign react = false -%}
 
 {%- capture _attrs -%}
-
+  data-total-items="{{ paginate.items }}"
   {%- if react == true -%}
     data-react-entrypoint="collection"
   {%- endif -%}
-
 {%- endcapture -%}
 
 
 {%- capture collection_grid_contents -%}
+
   {%- for _product in collection.products -%}
 
     {%- if react == true -%}
@@ -46,6 +54,7 @@
     {%- endif -%}
 
   {%- endfor -%}
+
 {%- endcapture -%}
 
 
@@ -57,3 +66,6 @@
 
 
 {%- assign _attrs = nil -%}
+
+
+{% endpaginate %}

@@ -3,29 +3,25 @@ import { render } from 'react-dom';
 
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-boost';
-import { combineResolvers } from 'graphql-resolvers'
 import { ApolloProvider } from 'react-apollo';
-
 import merge from 'lodash.merge';
 
-import App, { parseInitialData } from 'collection/App';
-
-import { getHandle } from 'common/Helpers';
-
-const initialData = parseInitialData();
-
-// console.log(initialData);
+import App from 'collection/App';
 
 const cache = new InMemoryCache()
-// .restore(initialData);
+
+import { defaults } from './defaults';
+import { resolvers } from './resolvers';
+import { schema as typeDefs } from './schema';
+
 
 const client = new ApolloClient({
   connectToDevTools: true,
   cache,
   clientState: {
-    defaults: App.defaultState,
-    resolvers: merge(...App.resolvers),
-    typeDefs: App.schema.join(),
+    defaults,
+    resolvers,
+    typeDefs,
   },
   uri: 'https://bva-clean-slate.myshopify.com/api/graphql',
   headers: {
@@ -35,7 +31,7 @@ const client = new ApolloClient({
 
 const ApolloApp = App => (
   <ApolloProvider client={client}>
-    <App handle={getHandle('collection')} />
+    <App />
   </ApolloProvider>
 );
 

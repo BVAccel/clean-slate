@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
-import Graphql from './graphql';
-
-import ProductImage from 'collection/ProductImage';
-import OptionGroup from 'collection/OptionGroup';
-import ProductMeta from 'collection/ProductMeta';
-
-import Button from 'collection/Button';
-import AddIcon from 'collection/IconAdd';
+import ProductImage from './ProductImage';
+import OptionGroup from './OptionGroup';
+import ProductMeta from './ProductMeta';
+import Button from './Button';
+import AddIcon from './IconAdd';
 
 import { handlize, random } from 'common/Helpers';
 
@@ -60,9 +57,5 @@ class ProductItem extends Component {
     )
   }
 };
-
-ProductItem.defaultState = Graphql.defaultState;
-ProductItem.schema = Graphql.schema;
-ProductItem.resolvers = Graphql.resolvers;
 
 export default ProductItem;
