@@ -1,18 +1,14 @@
-import 'styles/templates/collection/index.scss';
+import * as ChangeBackgroundOnProductHover from "components/ChangeBackgroundOnProductHover.js";
+import "components/_Collection";
+import "styles/templates/collection/index.scss";
 
-import Quickshop from 'components/Quickshop';
-import Modal from 'components/Modal';
+// Quickshop.initSubscribers();
+// Modal.initSubscribers();
 
-import 'components/_Collection';
-
-Quickshop.initSubscribers();
-Modal.initSubscribers();
-
-document.addEventListener('DOMContentLoaded', () => {
-  Quickshop.bindActions();
-  Modal.bindActions();
+document.addEventListener("DOMContentLoaded", () => {
+  // Quickshop.bindActions();
+  // Modal.bindActions();
+  ChangeBackgroundOnProductHover.init();
 });
 
-window.addEventListener('load', () => {
-
-});
+window.addEventListener("load", () => {});

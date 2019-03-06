@@ -1,25 +1,96 @@
-{%- comment -%}
+<header class="main-header-wrapper js-header-container" data-main-header>
+  <div class="main-header main-desktop-header" role="banner">
+    <div class="header-tools desktop-navigation">
+      {% include 'navigation', showArrows: false %}
+    </div>
+    <a class="header-branding branding-logo-container" href="/">
+      <img class="header-logo" alt="{{ shop.name | escape }}" src="{{ 'oros-header-logo.png' | asset_url }}">
+    </a>
 
-  Required arguments:
-  - title
+    <div class="header-tools header-tools-right-side">
+      <div id="country-picker" class="dropdown-container"></div>
+      <p class="header-cart-link" tabindex="0" data-toggle-cart>
+        {% include 'shop-bag', class: 'icon-bag' %}
+        {% comment %}<span class="header-cart-count {% if cart.item_count > 0 %}active{% endif%}">{{ cart.item_count }}</span>{% endcomment %}
 
-  Optional arguments:
-  - level
-  - content
-  - classes
-  - attrs
+        <span class="header-cart-count active" id="flow-cart-count"></span>
+        <script>
+          Flow.set('on', 'ready', function () {
+            if (!Flow.getExperience()) {
+              if ('{{ cart.item_count }}' == 0) {
+                $('#flow-cart-count').removeClass('active');
+              }
 
-{%- endcomment -%}
+              $('#flow-cart-count').html('{{ cart.item_count }}');
+            } else {
+              Flow.cart.getCart({
+                success: function(status, cart) {
+                  if (cart.item_count == 0) {
+                    $('#flow-cart-count').removeClass('active');
+                  }
 
+                  $('#flow-cart-count').html(cart.item_count);
+                },
+                error: function(status, error){
+                  console.error('An error occurred when flow tried to get cart data', { status: status, error: error })
+                }
+              });
+            }
+          });
+        </script>
+      </p>
+    </div>
+  </div>
+  <div class="main-header main-mobile-header" role="banner">
+    <div class="header-drawer-toggle-container">
+      <a class="drawer-toggle-icon drawer-toggle js-drawer-toggle" data-drawer-toggle tabindex="0">
+        <span class="icon-menu">
+        {% include 'ham-menu' %}
+        </span>
+        <span class="icon-cross">
+          {% include 'ham-menu-close' %}
+        </span>
+      </a>
+      <span class="js-mobile-icon-back mobile-icon-back drawer-toggle" style="display: none;">
+        {% include 'ham-menu-back' %}
+      </span>
+    </div>
+    <a class="header-branding branding-logo-container" href="/">
+      <img class="header-logo" alt="{{ shop.name | escape }}" src="{{ 'oros-header-logo.png' | asset_url }}">
+    </a>
+    <p class="header-cart-link" tabindex="0" data-toggle-cart>
+      {% include 'shop-bag', class: 'icon-bag' %}
+      {% comment %}<span class="header-cart-count {% if cart.item_count > 0 %}active{% endif%}">{{ cart.item_count }}</span>{% endcomment %}
 
-<header class="oo-header {{ classes -}}" {{ attrs -}}>
+      <span class="header-cart-count active" id="flow-cart-count"></span>
+      <script>
+        Flow.set('on', 'ready', function () {
+          if (!Flow.getExperience()) {
+            if ('{{ cart.item_count }}' == 0) {
+              $('#flow-cart-count').removeClass('active');
+            }
 
-  {%- include 'heading',
-    level: level,
-    title: title,
-    classes: '',
-    attrs: '' -%}
+            $('#flow-cart-count').html('{{ cart.item_count }}');
+          } else {
+            Flow.cart.getCart({
+              success: function(status, cart) {
+                if (cart.item_count == 0) {
+                  $('#flow-cart-count').removeClass('active');
+                }
 
-  {{- content -}}
-
+                $('#flow-cart-count').html(cart.item_count);
+              },
+              error: function(status, error) {
+                console.error("An error occurred when flow tried to get cart data", {status: status, error: error })
+              }
+            });
+          }
+        });
+      </script>
+    </p>
+  </div>
+  <div class="header-drawer mobile-navigation" tabindex="-1">
+    {% include 'navigation', showArrows: true %}
+    <div id="country-picker-mobile" class="dropdown-container"></div>
+  </div>
 </header>
