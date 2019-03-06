@@ -1,0 +1,320 @@
+.top-header-content-container {
+  position: fixed;
+  top: 0;
+  max-width: 100% !important;
+  width: 100%;
+  z-index: 101;
+  transition: all 0.3s ease-in-out;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+header {
+  background-color: transparent;
+  max-width: 100% !important;
+  width: 100%;
+  z-index: 100;
+  transition: all 0.3s ease-in-out;
+  margin-top: 0 !important;
+  padding: 0 !important;
+
+  @media screen and (max-width: 1023px) {
+    .promo-open & {
+      background-color: $color-white;
+    }
+  }
+
+  .showing-mobile-drawer & {
+    background-color: $color-white;
+  }
+}
+
+.header-cart-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin-right: 30px;
+  position: relative;
+  cursor: pointer;
+
+  @include mq($screen-md-ipad) {
+    margin-right: 0;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+.header-cart-count {
+  display: none;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  color: $color-white;
+  font-family: $gt-america-mono-regular;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  background-color: $color-black;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}
+
+header .icon-menu .ham-menu-path {
+  .showing-mobile-drawer & {
+    fill: $color-black;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .promo-open & {
+      fill: $color-black;
+    }
+  }
+}
+
+.shop-bag-base,
+.shop-bag-handle,
+.shop-bag-upper-handle-right,
+.shop-bag-upper-handle-left,
+.ham-menu-path,
+.ham-menu-close-path {
+  .showing-mobile-drawer & {
+    fill: $color-black;
+  }
+}
+
+.header-logo {
+  max-width: 80px;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
+  height: 60px;
+  padding: 0 !important;
+
+  @include mq($screen-md-ipad) {
+    height: 90px;
+  }
+}
+
+.header-actions {
+  line-height: 0;
+  height: 100%;
+
+  &:before {
+    display: none;
+  }
+}
+
+.shop-bag-base,
+.shop-bag-handle,
+.shop-bag-upper-handle-right,
+.shop-bag-upper-handle-left {
+  fill: $color-white;
+}
+
+.drawer-toggle {
+  position: relative !important;
+
+  @include mq-max(1023px) {
+    display: block;
+
+    &:before {
+      width: 0 !important;
+    }
+  }
+}
+
+.drawer-toggle-icon .icon-cross,
+.drawer-toggle-icon .icon-menu {
+  &:before {
+    display: none;
+  }
+}
+
+.mobile-icon-back {
+  cursor: pointer;
+}
+
+.ham-menu-path {
+  fill: $color-white;
+}
+
+.ham-menu-close-path {
+  fill: $color-black;
+}
+
+.header-mini,
+.header-mini .main-header-wrapper {
+  background-color: $color-white;
+
+  .header-navigation-link {
+    color: $color-black;
+  }
+
+  .header-actions-list-item {
+    color: $color-black;
+  }
+
+  .header-logo {
+    filter: brightness(0);
+  }
+
+  .shop-bag-base,
+  .shop-bag-handle,
+  .shop-bag-upper-handle-right,
+  .shop-bag-upper-handle-left,
+  .ham-menu-path,
+  .ham-menu-close-path {
+    fill: $color-black;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .header-logo {
+    .promo-open & {
+      filter: brightness(0);
+    }
+  }
+}
+
+.shop-bag-base,
+.shop-bag-handle,
+.shop-bag-upper-handle-right,
+.shop-bag-upper-handle-left,
+.ham-menu-path,
+.ham-menu-close-path {
+  .promo-open & {
+    fill: $color-black;
+  }
+}
+
+/* OLD CSS BELOW */
+
+// STICKY HEADER
+body {
+  transition: padding-top 0.4s ease-in-out;
+
+  &.has-sticky-header {
+    padding-top: 92px; //60px for header and 32px for promo-bar
+
+    @include mq($screen-sm) {
+      padding-top: 168px;
+    }
+
+    @include mq($screen-md) {
+      padding-top: 176px;
+    }
+
+    &.promo-open {
+      padding-top: 528px;
+
+      @include mq($screen-xs) {
+        padding-top: 514px;
+      }
+
+      @include mq(659) {
+        padding-top: 490px;
+      }
+
+      @include mq($screen-sm) {
+        // padding-top: 194px;
+        padding-top: 534px; // reverted back due to new floating email popup on hover.
+      }
+
+      @include mq($screen-md) {
+        padding-top: 176px;
+      }
+    }
+
+    &.promo-open-success {
+      padding-top: 319px;
+      @include mq(590px) {
+        padding-top: 255px;
+      }
+      @include mq($screen-sm) {
+        padding-top: 395px;
+      }
+      @include mq($screen-md) {
+        padding-top: 176px;
+      }
+    }
+
+    &.has-slideshow-full-window {
+      padding-top: 0 !important;
+    }
+
+    &.has-goal-enabled {
+      padding-top: 0;
+
+      @include mq($screen-sm) {
+        padding-top: 120px + 56px;
+      }
+
+      .no-js & {
+        padding-top: 0;
+
+        @include mq($screen-sm) {
+          padding-top: 120px;
+        }
+      }
+
+      &.has-goal-expired {
+        padding-top: 120px;
+      }
+    }
+  }
+
+  &.has-promo {
+    padding-top: 56px;
+
+    @include mq($screen-xxs) {
+      padding-top: 58px;
+    }
+    @include mq($screen-sm) {
+      padding-top: 48px;
+    }
+    @include mq($screen-md) {
+      padding-top: 56px;
+    }
+  }
+}
+
+.navigation {
+  @include mq($screen-md-ipad) {
+    display: flex !important;
+    height: auto !important;
+    line-height: 1 !important;
+    width: 100% !important;
+  }
+  @include mq-max(1023px) {
+    width: 100% !important;
+  }
+}
+
+// STICKY HEADER CUSOMIZATIONS
+.has-sticky-header {
+  background-color: #000000;
+}
+
+.scrolled {
+  background-color: #000000;
+}

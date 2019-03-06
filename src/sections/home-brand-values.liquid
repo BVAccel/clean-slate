@@ -1,0 +1,133 @@
+<div class="brand-values-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <span class="brand-values__tagline">{{ section.settings.value_tagline }}</span>
+      </div>
+      <div class="col-12 col-lg-6">
+        <h2>{{ section.settings.value_title }}</h2>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="brand-values__content">
+          <p>{{ section.settings.value_content }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="brand-values">
+          {% for block in section.blocks %}
+            <div class="brand-value">
+              <div class="brand-value__icon">
+                {% capture brand_icon %}icon-{{ block.settings.value_icon }}{% endcapture %}
+                {% include 'icon-svg' with brand_icon %}
+              </div>
+              <p class="brand-value__title">{{ block.settings.value_text }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% unless template == 'page.technology' %}
+      <div class="row">
+        <div class="col-12">
+          <div class="brand-values__actions">
+            <a href="{{ section.settings.value_text_link }}" class="text-link">{{ section.settings.value_text_link_text }}</a>
+            <a href="{{ section.settings.value_button_link }}" class="btn btn--striped">{{ section.settings.value_button_link_text }}</a>
+          </div>
+        </div>
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Brand Values",
+    "settings": [
+      {
+        "type":"text",
+        "id":"value_tagline",
+        "label":"Brand Value Section Tagline",
+        "default":"NASA-Inspired"
+      },
+      {
+        "type":"text",
+        "id":"value_title",
+        "label":"Brand Value Section Title",
+        "default":"Solarcore Insulation"
+      },
+      {
+        "type":"textarea",
+        "id":"value_content",
+        "label":"Brand Value Section Content",
+        "default":"Our proprietary technology delivers up to 70% more warmth and less bulk when compared to traditional insulators like goose down."
+      },
+      {
+        "type":"url",
+        "id":"value_text_link",
+        "label":"Text Link"
+      },
+      {
+        "type":"text",
+        "id":"value_text_link_text",
+        "label":"Text Link Content",
+        "default":"Want to learn more?"
+      },
+      {
+        "type":"url",
+        "id":"value_button_link",
+        "label":"Button Link"
+      },
+      {
+        "type":"text",
+        "id":"value_button_link_text",
+        "label":"Button Link Content",
+        "default":"Explore Our Technology"
+      }
+    ],
+    "max_blocks": 4,
+    "blocks": [
+      {
+        "type": "brand-value",
+        "name": "Brand Value",
+        "settings": [
+          {
+            "type":"select",
+            "id":"value_icon",
+            "label":"Brand Value Icon",
+            "options": [
+              {
+                "value":"breathable",
+                "label":"Breathable Icon"
+              },
+              {
+                "value":"thermal",
+                "label":"Thermal Icon"
+              },
+              {
+                "value":"flexible",
+                "label":"Flexible Icon"
+              },
+              {
+                "value":"thickness",
+                "label":"Thickness Icon"
+              }
+            ]
+          },
+          {
+            "type":"text",
+            "id":"value_text",
+            "label":"Brand Value Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Brand Values",
+        "category": "Homepage Sections"
+      }
+    ]
+  }
+{% endschema %}

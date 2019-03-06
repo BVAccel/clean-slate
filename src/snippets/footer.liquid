@@ -1,0 +1,101 @@
+<div class="footer">
+
+  <div class="footer__top">
+
+    <a href="#top" class="footer__scroll" data-smooth-scroll>
+      <svg class="footer__scroll-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.02 60.02"><path d="M30.895.54c-.34-.678-1.449-.678-1.789 0l-29 58A1 1 0 0 0 1 59.988h58.02a1 1 0 0 0 .795-1.608L30.895.54z" fill="#FFF"/></svg>
+      <svg class="footer__scroll-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.02 60.02"><path d="M30.895.54c-.34-.678-1.449-.678-1.789 0l-29 58A1 1 0 0 0 1 59.988h58.02a1 1 0 0 0 .795-1.608L30.895.54z" fill="#FFF"/></svg>
+    </a>
+
+    <div class="container">
+      <div class="row">
+        <a class="footer__icon" href="/">
+          <img class="footer__icon-img" src="{{ 'icon.png' | asset_url }}" alt="" />
+        </a>
+
+        <div class="col-sm-12 col-md-12 col-lg-5">
+          <h2 class="footer__heading">
+            Find Your <br><span class="outline outline--white">Beyond</span>
+          </h2>
+
+          <form id="email_signup" class="klaviyo_gdpr_embed_Lcmfpq cta" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-
+lists.com/ajax/subscriptions/subscribe" method="GET" 
+target="_blank" novalidate="novalidate">
+            <input type="hidden" name="g" value="Lcmfpq">
+            <input type="hidden" name="$fields" value="$consent">
+            <input type="hidden" name="$list_fields" value="$consent">
+
+              <div class="cta__input-group">
+                <input class="cta__input" type="email" value="" name="email" id="k_id_email" placeholder="Enter your email" required/>
+                <button class="cta__submit" type="submit" class="klaviyo_submit_button">Submit</button>
+              </div>
+
+              <div class="success_message alert alert--success"></div>
+              <div class="error_message alert alert--danger"></div>
+          </form>
+
+          <ul class="social">
+            <li class="social__icon">
+              <a href="https://www.facebook.com/orosapparel" target="_blank">
+                <img class="social__icon__img" src="{{ 'facebook--w.svg' | asset_url }}" alt="social media facbook">
+              </a>
+            </li>
+            <li class="social__icon">
+              <a href="https://www.instagram.com/orosapparel" target="_blank">
+                <img class="social__icon__img" src="{{ 'instagram--w.svg' | asset_url }}" alt="social media instagram">
+              </a>
+            </li>
+            <li class="social__icon">
+              <a href="https://twitter.com/orosapparel" target="_blank">
+                <img class="social__icon__img" src="{{ 'twitter--w.svg' | asset_url }}" alt="social media twitter">
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-7">
+          <div class="row">
+            <div class="col-xs-6 col-sm-6">
+              <ul class="footer__links">
+                <li class="footer__link"><p>Help</p></li>
+                  {% for link in linklists.footer2__col1.links %}
+                      <li class="footer__link"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+            {% comment %}
+              add column once the reviews sections are ready
+
+            <div class="col-xs-6 col-sm-4">
+              <ul class="footer__links">
+                <li class="footer__link"><p>Reviews</p></li>
+                  {% for link in linklists.footer2__col2.links %}
+                      <li class="footer__link"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div> 
+            {% endcomment %}
+            <div class="col-xs-6 col-sm-6">
+              <ul class="footer__links">
+                <li class="footer__link"><p>Explore Oros</p></li>
+                {% for link in linklists.footer2__col3.links %}
+                  <li class="footer__link"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__btm">
+    <div class="container">
+      <ul class="footer__btm__links">
+        <li class="footer__btm__link"><p>&copy; Oros 2018</p></li>
+        <li class="footer__btm__link"><a href="/pages/privacy-policy">Privacy Policy</a></li>
+        <li class="footer__btm__link"><a href="/pages/terms-and-conditions">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

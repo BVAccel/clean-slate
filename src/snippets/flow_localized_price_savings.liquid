@@ -1,0 +1,20 @@
+{% comment %}
+
+  Arguments:
+  - _variant
+
+{% endcomment %}
+
+{% include 'flow_metafields_prices' with _variant %}
+{%- assign _flow_localized_price = flow_localized_price | remove: flow_localized_currency | times: 1 -%}
+{%- assign _flow_localized_compare_at = flow_localized_compare_at | remove: flow_localized_currency | times: 1 -%}
+
+{%- assign _price_savings = _flow_localized_compare_at | minus: _flow_localized_price -%}
+
+{%- if flow_localized_currency.size == 1 -%}
+  {{ _price_savings | prepend: flow_localized_currency }}
+{%- elsif flow_localized_currency.size == 3 -%}
+  {{ _price_savings | append: flow_localized_currency }}
+{%- else -%}
+  {{ _price_savings }}
+{%- endif -%}

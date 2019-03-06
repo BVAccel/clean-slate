@@ -1,0 +1,20 @@
+{% assign src_size = 'large' %}
+{% if settings.home-blog-column == "2" %}
+  {% assign src_size = 'grande' %}
+{% endif %}
+
+{% if article.image %}
+  {{ article.image | img_url: src_size }}
+{% else %}
+  {% assign src = false %}
+  {% assign img_tag = '<img' %}
+  {% if article.excerpt_or_content contains img_tag %}
+    {% assign src = article.excerpt_or_content | split: 'src="' %}
+    {% assign src = src[1] | split: '"' | first %}
+  {% endif %}
+  {% if src %}
+    {{ src }}
+  {% else %}
+    {{ "no-image.png" | asset_url }}
+  {% endif %}
+{% endif %}

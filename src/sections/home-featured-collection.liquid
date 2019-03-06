@@ -1,0 +1,115 @@
+<div class="featured-collection-section" style="background-image:url({{ section.settings.collection_bg_image | img_url: '2880x' }})" data-mobile-image="{% if section.settings.collection_mobile_bg_image %}{{ section.settings.collection_mobile_bg_image | img_url: '1984x' }}{% endif %}" data-desktop-image="{{ section.settings.collection_bg_image | img_url: '2880x' }}" data-mobile-image-check>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="featured-collection__header">
+          <h2>{{ section.settings.collection_title }}</h2>
+          <p>{{ section.settings.collection_content }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        {% if section.settings.collection_feature_title %}
+        <span class="featured-collection__products-title">{{ section.settings.collection_feature_title }}</span>
+        {% endif %}
+        <div class="featured-collection__products" data-mobile-product-slider>
+          {% for block in section.blocks %}
+            {% assign product = all_products[block.settings.featured_product] %}
+            <div class="featured-collection__product">
+              <a href="{{ product.url }}">
+                <div class="product__image" style="background-image:url({{ product.featured_image | img_url: '840x' }});">
+                </div>
+                <div class="product__content">
+                  <h3>{{ product.title }}</h3>
+
+
+
+                  <span class="btn btn--white-frost">
+                    {% comment %}{{ product.price_min | money }}{% endcomment %}
+                    {% include 'flow_localized_price' %} - Shop Now
+                  </span>
+
+
+
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% if section.settings.collection_link %}
+      <div class="row">
+        <div class="col-12">
+          <div class="featured-collection__actions">
+            <a href="{{ section.settings.collection_link }}" class="btn btn--white-frost">{{ section.settings.collection_link_text }}</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Featured Collection",
+    "settings": [
+      {
+        "type":"image_picker",
+        "id":"collection_bg_image",
+        "label":"Section Background Image"
+      },
+      {
+        "type":"image_picker",
+        "id":"collection_mobile_bg_image",
+        "label":"Section Background Mobile Image"
+      },
+      {
+        "type":"text",
+        "id":"collection_title",
+        "label":"Section Title"
+      },
+      {
+        "type":"textarea",
+        "id":"collection_content",
+        "label":"Section Content"
+      },
+      {
+        "type":"url",
+        "id":"collection_link",
+        "label":"Collection Link"
+      },
+      {
+        "type":"text",
+        "id":"collection_link_text",
+        "label":"Collection Link Text"
+      },
+      {
+        "type":"text",
+        "id":"collection_feature_title",
+        "label":"Featured Products Title",
+        "default":"Featured Products"
+      }
+    ],
+    "max_blocks": 2,
+    "blocks": [
+      {
+        "type": "featured-product",
+        "name": "Featured Product",
+        "settings": [
+          {
+            "type":"product",
+            "id":"featured_product",
+            "label":"Featured Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Collection",
+        "category": "Homepage Sections"
+      }
+    ]
+  }
+{% endschema %}

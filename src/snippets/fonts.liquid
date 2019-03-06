@@ -1,0 +1,118 @@
+<!-- Theme Google Fonts -->
+
+{% capture userFonts %}{{ settings.body-font }} {{ settings.heading-font }} {{ settings.section-heading-font }} {{ settings.meta-font }} {{ settings.primary-button-font }}{% endcapture %}
+{% capture allFonts %}
+
+  {% comment %}<!-- Sans Serif -->{% endcomment %}
+
+  {% if userFonts contains "Lato, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Lato:300italic,400italic,700italic,300,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Open Sans', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Source Sans Pro', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,400italic,700italic,300,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Arimo, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Arimo:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Karla, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Karla:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Montserrat, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Roboto, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Roboto:300italic,400italic,700italic,300,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Roboto Condensed, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,300,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Raleway', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% comment %}<!-- Condensed Sans Serif -->{% endcomment %}
+
+  {% if userFonts contains "'Archivo Narrow', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Archivo+Narrow:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Oswald, sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Fjalla One', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Fjalla+One:400' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% comment %}<!-- Geometric Sans Serif -->{% endcomment %}
+
+  {% if userFonts contains "'Titillium Web', sans-serif" %}
+    <link href='//fonts.googleapis.com/css?family=Titillium+Web:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% comment %}<!-- Serif -->{% endcomment %}
+
+  {% if userFonts contains "'PT Serif', serif" %}
+    <link href='//fonts.googleapis.com/css?family=PT+Serif:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Volkhov, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Volkhov:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Alegreya, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Lora, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Lora:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Merriweather, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Merriweather:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Droid Serif', serif" %}
+    <link href='//fonts.googleapis.com/css?family=Droid+Serif:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Crimson Text', serif" %}
+    <link href='//fonts.googleapis.com/css?family=Crimson+Text:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Playfair Display', serif" %}
+    <link href='//fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% comment %}<!-- Slab serif -->{% endcomment %}
+
+  {% if userFonts contains "Rokkitt, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Rokkitt:400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Arvo, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Arvo:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "Bitter, serif" %}
+    <link href='//fonts.googleapis.com/css?family=Bitter:400italic,400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+  {% if userFonts contains "'Roboto Slab', serif" %}
+    <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+  {% endif %}
+
+{% endcapture %}
+
+{{ allFonts | strip_newlines }}

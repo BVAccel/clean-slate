@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/32/down/WHITE</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon/32/down/WHITE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Group" transform="translate(10.000000, 13.000000)" stroke="#FFFFFF">
+            <g id="orro_icons-02" transform="translate(5.500000, 3.500000) rotate(-90.000000) translate(-5.500000, -3.500000) translate(2.500000, -1.500000)">
+                <path d="M0,4.9 L5.2,0.1" id="Shape"></path>
+                <path d="M0,9.9 L5.2,5.1" id="Shape-Copy" transform="translate(2.600000, 7.500000) scale(-1, 1) translate(-2.600000, -7.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

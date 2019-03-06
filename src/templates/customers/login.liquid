@@ -1,0 +1,69 @@
+<div class="module-wrapper">
+  <div class="module module-login">
+    <div class="module-header">
+      <h1 class="module-title page-title">{{ 'customer.login.header' | t }}</h1>
+      <div class="module-subtitle">
+        <div class="successful-reset">{{ 'customer.reset_password.successful_reset' | t }}</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-content">
+        <div class="customer-login">
+          {% form 'customer_login' %}
+            {% if form.errors %}
+              <p class="error-message banner">{{ 'customer.login.error' | t }}</p>
+            {% endif %}
+            <div class="input-wrapper">
+              <label for="customer[email]">{{ 'general.general.email' | t }}</label>
+              <input type="text" placeholder="{{ 'general.general.email' | t }}" value="{{ form.email }}" id="customer[email]" name="customer[email]">
+            </div>
+            <div class="input-wrapper">
+              <label for="customer[password]">{{ 'general.general.password' | t }}</label>
+              <input type="password" placeholder="{{ 'general.general.password' | t }}" id="customer[password]" name="customer[password]">
+            </div>
+            <div class="input-wrapper">
+              <input class="button" type="submit" value="{{ 'general.general.login' | t }}">
+              <p class="toggle-forgetfulness"><span>{{ 'customer.login.forgot_password' | t }}</span></p>
+            </div>
+          {% endform %}
+        </div>
+        <div class="recover-password">
+          {% form 'recover_customer_password' %}
+            <p>{{ 'customer.reset_password.subtext' | t }}</p>
+            {% if form.posted_successfully? %}
+              <span class="reset-check" data-successful-reset="true"></span>
+            {% endif %}
+            <div class="input-wrapper">
+              <label for="email">{{ 'general.general.email' | t }}</label>
+              <input type="text" placeholder="{{ 'general.general.email' | t }}" value="{{ form.email }}" name="email" id="email" class="{% if form.errors %}error{% endif %}">
+              {% if form.errors %}
+                <p class="error-message">{{ form.errors.messages['form'] }}</p>
+              {% endif %}
+            </div>
+            <div class="input-wrapper reset-button">
+              <input class="button" type="submit" value="{{ 'customer.reset_password.submit' | t }}">
+              <p class="toggle-forgetfulness"><span>{{ 'customer.general.or' | t }} {{ 'customer.general.cancel' | t }}</span></p>
+            </div>
+          {% endform %}
+        </div>
+        {% if shop.checkout.guest_login %}
+          <div class="guest-checkout">
+            <h3>{{ 'customer.guest_login.checkout_as_guest' | t }}</h3>
+            {% form 'guest_login' %}
+              <p>{{ 'customer.guest_login.no_login' | t }}</p>
+              <input class="button" type="submit" value="{{ 'customer.guest_login.checkout_as_guest' | t }}" />
+            {% endform %}
+          </div>
+        {% else %}
+          <div class="new-customer">
+            <h3>{{ 'customer.login.new_customer' | t }}</h3>
+            <p>{{ 'customer.activate_account.benefits' | t }}</p>
+            <div class="input-wrapper">
+              <a class="button secondary" href="/account/register">{{ 'customer.activate_account.submit' | t }}</a>
+            </div>
+          </div>
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+</div>

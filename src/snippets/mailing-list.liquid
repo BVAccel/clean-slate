@@ -1,0 +1,91 @@
+{% if settings.mailing-list-title != blank %}
+  {% assign mailing-list-header = true %}
+{% endif %}
+
+{% assign instagram = false %}
+{% if settings.instagram-widget and settings.home-instagram-access-token != blank %}
+  {% assign instagram = true %}
+{% endif %}
+
+{% assign twitter = false %}
+{% if settings.twitter-widget and settings.twitter-widget-id != blank %}
+  {% assign twitter = true %}
+{% endif %}
+
+<div class="module-wrapper style-{{ settings.newsletter-style }} {% if instagram or twitter %}border{% endif %}">
+  <div class="module mailing-list-signup{% if mailing-list-header %} has-header{% endif %}">
+    <div class="mailing-list-signup-container">
+      <div class="module-header">
+        <h3 class="module-title">{{ 'general.mailing_list.title' | t }}</h3>
+          <p class="module-subtitle">
+            {{ 'general.mailing_list.description' | t }}
+          </p>
+      </div>
+
+      <div class="module-body">
+        <div class="mailing-list-signup-form-container">
+          {% if settings.mailing-list-platform == 'mailchimp' or settings.mailing-list-platform == 'campaign-monitor' and settings.mailing-list-action-url != blank %}
+            <form class="mailing-list-signup-form" action="{{ settings.mailing-list-action-url }}" method="post" name="{% if settings.mailing-list-platform == 'mailchimp' %}mc-embedded-subscribe-form{% endif %}" target="_blank">
+              <div class="mailing-list-signup-form-field">
+                <input
+                  class="mailing-list-signup-form-email"
+                  {% if settings.mailing-list-platform == 'mailchimp' %}
+                    name="EMAIL"
+                  {% endif %}
+                  {% if settings.mailing-list-platform == 'campaign-monitor' %}
+                    id="fieldEmail"
+                    name="{{ settings.campaign-monitor-name }}"
+                    required
+                  {% endif %}
+                  type="email"
+                  placeholder="{{ 'general.general.email_placeholder' | t }}"
+                  value=""
+                  aria-label="{{ 'general.general.email_placeholder' | t }}" />
+                <div class="mailing-list-signup-form-field-icon icon icon-mail"></div>
+              </div>
+              <div class="mailing-list-signup-form-cta">
+                <input
+                  class="mailing-list-signup-form-submit"
+                  name="subscribe"
+                  type="submit"
+                  value="{{ 'general.general.subscribe' | t }}"
+                  aria-label="{{ 'general.general.subscribe' | t }}" />
+                <div class="mailing-list-signup-form-submit-icon icon icon-arrow-right"></div>
+              </div>
+            </form>
+          {% else %}
+            {% form 'customer', id: 'newsletter-signup' %}
+
+            {% if form.posted_successfully? %}
+              <p class="module-subtitle">
+                {{ 'general.mailing_list.success' | t }}
+              </p>
+            {% else %}
+              <div class="mailing-list-signup-form-field">
+                <input
+                  class="mailing-list-signup-form-email icon-arrow-right"
+                  name="contact[email]"
+                  type="email"
+                  placeholder="{{ 'general.general.email_placeholder' | t }}"
+                  value=""
+                  aria-label="{{ 'general.general.email_placeholder' | t }}" />
+                <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+                <div class="mailing-list-signup-form-field-icon icon icon-mail"></div>
+              </div>
+              <div class="mailing-list-signup-form-cta">
+                <input
+                  class="mailing-list-signup-form-submit"
+                  name="subscribe"
+                  type="submit"
+                  value="{{ 'general.general.subscribe' | t }}"
+                  aria-label="{{ 'general.general.subscribe' | t }}" />
+                <div class="mailing-list-signup-form-submit-icon icon icon-arrow-right"></div>
+              </div>
+            {% endif %}
+            {% endform %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

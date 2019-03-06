@@ -36,6 +36,19 @@
   }
 }
 
+
+@mixin mq-max($value) {
+  @if (type-of($value) != number) {
+    @error "Sorry, but `#{$value}` is not a valid argument for the mq() mixin.";
+  } @else if (unitless($value)) {
+    $value: $value + "px";
+  }
+  @media only screen and (max-width: $value) {
+    @content;
+  }
+}
+
+
 /**
  *  Hide element but make it accessible to screen readers
  *

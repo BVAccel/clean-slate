@@ -1,0 +1,47 @@
+<section class="ugc">
+  <div class="container">
+    <h3 class="ugc__subheading">{{ section.settings.subheading }}</h3>
+    <h1 class="ugc__heading">{{ section.settings.heading }}</h1>
+
+    <div class="ugc__main"></div>
+
+    {% comment %} We need to use table layouts here because of slick carousel {% endcomment %}
+    <div class="ugc__modal">
+      <div class="ugc__modal-backdrop" data-toggle-ugc-modal>
+        <div class="ugc__modal-close">&times;</div>
+      </div>
+
+      <div class="ugc__modal-inner">        
+        <div class="ugc__images"></div>
+        <div class="ugc__details"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "YotPo Customer Images",
+    "settings": [
+      {
+        "type":"text",
+        "id":"heading",
+        "label":"Heading",
+        "default": "Where They're Taking Us"
+      },
+      {
+        "type":"text",
+        "id":"subheading",
+        "label":"Subheading",
+        "default": "FROM OUR CUSTOMERS"
+      }
+    ],
+    "presets": [
+      {
+        "name": "YotPo Customer Images",
+        "category": "Homepage Sections"
+      }
+    ]
+  }
+{% endschema %}

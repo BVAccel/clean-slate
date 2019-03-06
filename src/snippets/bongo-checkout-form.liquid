@@ -1,0 +1,20 @@
+<form name="BongoCheckoutForm" method="post" action=" https://tranzaction.bongous.com/pay/c1fc8/index.php ">
+<input type="hidden" name="PARTNER_KEY" value=" cb27aee122f95a21269fc64de849b508cb1db7946490a63886b32b28428a78ac ">
+<input type="hidden" name="TOTAL_DOMESTIC_SHIPPING_CHARGE" value="0">
+{% for item in cart.items %}
+<input type="hidden" name="PRODUCT_ID_{{ forloop.index }}" value="{{ item.sku }}">
+<input type="hidden" name="PRODUCT_NAME_{{ forloop.index }}" value="{{ item.title }}">
+
+
+
+<input type="hidden" name="PRODUCT_PRICE_{{ forloop.index }}" value="{{ item.price | money_without_currency }}">
+
+
+
+<input type="hidden" name="PRODUCT_Q_{{ forloop.index }}" value="{{ item.quantity }}">
+<input type="hidden" name="PRODUCT_SHIPPING_{{ forloop.index }}" value="">
+<input type="hidden" name="PRODUCT_CUSTOM_1_{{ forloop.index }}" value="{{ item.variant.title }}">
+<input type="hidden" name="PRODUCT_CUSTOM_2_{{ forloop.index }}" value="">
+<input type="hidden" name="PRODUCT_CUSTOM_3_{{ forloop.index }}" value="">
+{% endfor %}
+</form>

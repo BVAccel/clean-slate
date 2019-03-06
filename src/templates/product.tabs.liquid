@@ -1,0 +1,516 @@
+{% assign selectedVariant = product.selected_or_first_available_variant | default: product.variants.first %}
+{% capture productGoalDeliveryDate %}{{ settings.product-sale-goal-estimated-delivery-date | trim }}{% endcapture %}
+
+<div class="module-wrapper {% if settings.product-border %}border{% endif %}">
+  <div class="module module-product">
+    <div itemscope itemtype="http://schema.org/Product">
+      <div class="product-details mobile">
+        <div class="product-title">
+          <h1 itemprop="name">{{ product.title }}</h1>
+        </div>
+        <div class="product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <span class="price" itemprop="price">
+
+
+
+            <span class="money">
+              {% comment %}{{ selectedVariant.price | money }}{% endcomment %}
+              {% include 'flow_localized_price' with selectedVariant %}
+            </span>
+
+
+
+            {% unless product.variants.size == 1 and product.compare_at_price_min <= selectedVariant.price %}
+              <span class="product-price-compare">
+                <span class="original money">
+                  {% if selectedVariant.compare_at_price > selectedVariant.price %}
+
+
+
+                    {% comment %}{{ selectedVariant.compare_at_price | money }}{% endcomment %}
+                    {% include 'flow_localized_price' with selectedVariant, flow_tag_display: 'compare_at' %}
+
+
+
+                  {% endif %}
+                </span>
+
+
+
+                <span class="saving">
+                  {% if selectedVariant.compare_at_price > selectedVariant.price %}
+                    <span> {{ "products.product.saving" | t }} </span>
+                    <span class="saving-result money">
+
+
+
+                      {% comment %}{{ selectedVariant.compare_at_price | minus: selectedVariant.price | money }}{% endcomment %}
+                      {% include 'flow_localized_price_savings', _variant: selectedVariant %}
+
+
+
+                    </span>
+                  {% endif %}
+                </span>
+              </span>
+            {% endunless %}
+          </span>
+        </div>
+      </div>
+      {% assign featured_image = selectedVariant.featured_image | default: product.featured_image %}
+      <div class="product-slideshow clearfix" id="ProductPhoto">
+        <div class="product-image-container clearfix">
+          <div class="product-big-image" data-no-image-svg="{{ 'no-image.svg' | asset_url }}" data-no-image-png="{{ 'no-image.png' | asset_url }}">
+            <span class="product-slideshow-loader"></span>
+            {% if product.images.size > 0 %}
+              <img src="{{ featured_image | product_img_url: 'grande' }}" alt="{{ product.title | escape }}" data-high-res="{{ featured_image | product_img_url: 'master' }}" id="ProductPhotoImg"/>
+            {% else %}
+              <img class="product-no-images" src="{{ 'no-image.svg' | asset_url }}" alt="No Image Available" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;" />
+            {% endif %}
+            {% if settings.product-enable-zoom %}
+              <div class="product-image-zoom"></div>
+            {% endif %}
+          </div>
+          {% if product.images.size > 1 %}
+            <a class="product-slideshow-navigation product-slideshow-previous icon icon-arrow-left" href="#" tabindex="0"></a>
+            <a class="product-slideshow-navigation product-slideshow-next icon icon-arrow-right" href="#" tabindex="0"></a>
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="product-slideshow-pagination product-thumbnails">
+            {% for image in product.images %}
+              <a
+                class="product-slideshow-pagination-item {% if image == featured_image %}active{% endif %}"
+                style="background-image:url({{ image | product_img_url: 'small' }})"
+                data-default-res="{{ image | product_img_url: 'grande' }}"
+                data-high-res="{{ image | product_img_url: 'master' }}"
+                data-alt="{{ image.alt }}"
+                href="#"
+                tabindex="0"></a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="product-wrap">
+        <div class="product-details">
+          <div class="product-title">
+            <h1 itemprop="name">{{ product.title }}</h1>
+          </div>
+          <div class="product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <span class="price" itemprop="price">
+
+
+
+              <span class="money">
+                {% comment %}{{ selectedVariant.price | money }}{% endcomment %}
+                {% include 'flow_localized_price' with selectedVariant %}
+              </span>
+
+
+
+              {% unless product.variants.size == 1 and product.compare_at_price_min <= selectedVariant.price %}
+                <span class="product-price-compare">
+                  <span class="original money">
+                    {% if selectedVariant.compare_at_price > selectedVariant.price %}
+
+
+
+                      {% comment %}{{ selectedVariant.compare_at_price | money }}{% endcomment %}
+                      {% include 'flow_localized_price' with selectedVariant, flow_tag_display: 'compare_at' %}
+
+
+
+                    {% endif %}
+                  </span>
+                  <span class="saving">
+                    {% if selectedVariant.compare_at_price > selectedVariant.price %}
+                      <span> {{ "products.product.saving" | t }} </span>
+
+
+
+                      <span class="saving-result money">
+                        {% comment %}{{ selectedVariant.compare_at_price | minus: selectedVariant.price | money }}{% endcomment %}
+                        {% include 'flow_localized_price_savings', _variant: selectedVariant %}
+                      </span>
+
+
+
+                    {% endif %}
+                  </span>
+                </span>
+              {% endunless %}
+            </span>
+          </div>
+          {% if settings.product-display-vendor %}
+            <div class="product-vendor" itemprop="brand">
+              {{ product.vendor }}
+            </div>
+          {% endif %}
+        </div>
+        {% if settings.product-sale-goal-use and product.handle == settings.featured-product-main %}
+          <div class="product-goal">
+            {% include "product-goal" %}
+          </div>
+        {% endif %}
+        <form class="product-form" action="/cart/add" method="post">
+          <!-- Advanced Product Options Addon -->
+          <span class="mw-product-options"></span>
+          <!-- End Advanced Product Options Addon -->
+          <div class="clearfix product-form-nav">
+            {% if product.variants.size > 1 %}
+              <div class="product-options">
+                <select name="id" id="product-select" class="product-select" aria-label="{{ "products.product.variant" | t }}">
+                  {% for variant in product.variants %}
+
+
+
+                    <option {% if variant == selectedVariant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {% comment %}{{ variant.price | money }}{% endcomment %}{% include 'flow_localized_price' with variant %}</option>
+
+
+
+                  {% endfor %}
+                </select>
+              </div>
+            {% else %}
+              <input type="hidden" name="id" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+            {% endif %}
+
+            <div id="infiniteoptions-container"></div>
+            <div id="uploadery-container"></div>
+
+            <div class="number-input-wrapper product-quantity clearfix">
+              <div class="number-input-field">
+                <input type="number" name="quantity" id="quantity" value="1" aria-label="{{ "general.general.quantity" | t }}" />
+                <label class="number-input-label" for="quantity">{{ 'general.general.quantity' | t }}</label>
+              </div>
+              <div class="number-input-nav">
+                <div class="number-input-nav-item icon icon-plus"></div>
+                <div class="number-input-nav-item icon icon-minus"></div>
+              </div>
+            </div>
+          </div>
+          <div class="add-to-cart">
+            {% if product.available %}
+              {% capture add_to_cart_button %}{{ 'products.product.add_to_cart' | t }}{% endcapture %}
+              {% if product.handle == settings.featured-product-main and settings.product-sale-goal-use %}
+                {% capture add_to_cart_button %}
+                  {% if settings.product-sale-goal-button != blank %}
+                    {{ settings.product-sale-goal-button }}
+                  {% else %}
+                    {{ "home.goal.pre_order" | t }}
+                  {% endif %}
+                {% endcapture %}
+              {% endif %}
+              <div class="product-form-submit-wrap">
+                <input class="button outline add-to-cart-button" type="submit" value="{{ add_to_cart_button | strip_newlines | strip_html | strip }}" />
+                <div class="add-to-cart-loader"></div>
+              </div>
+              {% capture cart_link %}
+                <a href="/cart">{{ 'products.product.cart_link' | t }}</a>
+              {% endcapture %}
+              {% capture continue_link %}
+                <a href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+              {% endcapture %}
+              {% capture checkout_link %}
+                <a href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+              {% endcapture %}
+              {% capture product_item %}
+                <span class='added-product-name'></span>
+              {% endcapture %}
+              <p class="product-add-success-message">{{ 'products.product.success_html' | t: cart_link: cart_link, continue_link: continue_link, checkout_link: checkout_link, product: product_item  }}</p>
+              <!-- Cart preview -->
+              <div id="cart-previewOFF" class="cart-preview hidden">
+                <div id="cart-preview-close" class="cart-preview-close"><span class="icon icon-cross"></span></div>
+                <h3 class="cart-preview-title"><div class="notification-icon ion-bag"></div> Added to cart!</h3>
+                <p class="cart-preview-product-title">{{ product.title }}</p>
+                <p class="cart-preview-quantity"><strong>Quantity:</strong> <span id="cart-preview-quantity">0</span></p>
+                <p class="cart-preview-variant"><strong>Variant:</strong> <span id="cart-preview-variant"></span></p>
+                <p class="cart-preview-total-items-cart"><strong>Total items in cart:</strong> <span id="cart-preview-total-items-cart">0</span></p>
+                <div class="cart-preview-actions-wrap">
+                	<a class="cart-preview-product-checkout" href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+                	<a class="cart-preview-product-continue-shopping" href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+                </div>
+              </div>
+              <!-- End cart preview -->
+              <p class="product-add-error-message"></p>
+            {% else %}
+              <input type="submit" class="button outline disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+            {% endif %}
+            <div class="product-payment-shopify"><a href="//www.shopify.com/pci-compliant?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="//cdn.shopify.com/s/images/badges/shopify-secure-badge-light-shadow.png" alt="Shopify secure badge" /></a></div>
+          </div>
+
+          {% if settings.product-sale-goal-estimated-delivery-date != blank and showDeliveryEstimate %}
+            <span class="product-featured-goal-delivery-date">
+              {{ productGoalDeliveryDate }}
+            </span>
+          {% endif %}
+        </form>
+        {% if settings.product-show-info-link-1 or settings.product-show-info-link-2 %}
+          <div class="product-more-info">
+            {% if settings.product-show-info-link-1 %}
+              <p class="product-info-link {{ settings.product-info-link-icon-1 }}">
+                {% if settings.product-info-link-url-1.size > 0 %}<a href="{{ settings.product-info-link-url-1 }}">{% endif %}
+                  {{ settings.product-info-link-text-1 }}
+                {% if settings.product-info-link-url-1.size > 0 %}</a>{% endif %}
+              </p>
+            {% endif %}
+            {% if settings.product-show-info-link-2 %}
+              <p class="product-info-link {{ settings.product-info-link-icon-2 }}">
+                {% if settings.product-info-link-url-2.size > 0 %}<a href="{{ settings.product-info-link-url-2 }}">{% endif %}
+                  {{ settings.product-info-link-text-2 }}
+                {% if settings.product-info-link-url-2.size > 0 %}</a>{% endif %}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if product.description.size > 0 %}
+        {% assign productTabContent = product.description | split: '[/Section]' %}
+          <div class="product-tabs hide-mobile">
+            <div class="product-tabs-header clearfix">
+              <div class="product-tabs-header-item active" rel="tab1">
+                {% comment %}
+                	{{ "products.product.description" | t }}
+                {% endcomment %}
+                	Description
+              </div>
+              <!--
+              <div class="product-tabs-header-item" rel="tab2">
+                Features
+              </div>
+			  -->
+              <div class="product-tabs-header-item" rel="tab3">
+                Sizing
+              </div>
+              <div class="product-tabs-header-item" rel="tab4">
+                Specs and Care
+              </div>
+            </div>
+            <div class="product-tabs-body">
+              <div class="product-tabs-body-item rte active" rel="tab1" itemprop="description">
+                {{ productTabContent[0] }}
+              </div>
+              <div class="product-tabs-body-item rte" rel="tab2">
+                {{ productTabContent[1] | strip }}
+              </div>
+              <div class="product-tabs-body-item rte" rel="tab3">
+                {% case product.handle %}
+                  {% when 'orion-series-gloves-unisex' %}
+                    <img src={{ 'unisex-glove-sizing.jpg' | asset_img_url: '600x', scale: 3 }}/>
+                  {% when 'orion-series-jacket' %}
+                     <img src={{ 'mens-jacket-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                  {% when 'orion-series-jacket-womens' %}
+                     <img src={{ 'womens-jacket-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                  {% when 'orion-series-snow-pants-men' %}
+                     <img src={{ 'mens-snow-pants-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                  {% when 'orion-series-snow-pants-women' %}
+                     <img src={{ 'womens-snow-pants-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                  {% when 'orion-series-beanie-men-and-women' %}
+
+                  {% else %}
+              	{% endcase %}
+                {{ productTabContent[2] }}
+              </div>
+              <div class="product-tabs-body-item rte" rel="tab4">
+                {{ productTabContent[3] | strip }}
+              </div>
+            </div>
+          </div>
+          <!-- Accordion -->
+          <div class="panel-group product-tabs-accordion show-mobile" id="product-accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-light">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Description
+                  </a>
+                  <a class="icon icon-angle-down product-accordion-arrow" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+					{{ productTabContent[0] }}
+                </div>
+              </div>
+            </div>
+            <!--
+            <div class="panel panel-dark">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Features
+                  </a>
+                  <a class="icon icon-angle-down product-accordion-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"></a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                	{{ productTabContent[1] | strip }}
+                </div>
+              </div>
+            </div>
+            -->
+            <div class="panel panel-light">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Sizing
+                  </a>
+                  <a class="icon icon-angle-down product-accordion-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                  	{% case product.handle %}
+                      {% when 'orion-series-gloves-unisex' %}
+                        <img src={{ 'unisex-glove-sizing.jpg' | asset_img_url: '600x', scale: 3 }}/>
+                      {% when 'orion-series-jacket' %}
+                         <img src={{ 'mens-jacket-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                      {% when 'orion-series-jacket-womens' %}
+                         <img src={{ 'womens-jacket-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                      {% when 'orion-series-snow-pants-men' %}
+                         <img src={{ 'mens-snow-pants-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                      {% when 'orion-series-snow-pants-women' %}
+                         <img src={{ 'womens-snow-pants-sizing.jpg' | asset_img_url: '1000x', scale: 3 }}/>
+                      {% when 'orion-series-beanie-men-and-women' %}
+
+                      {% else %}
+                    {% endcase %}
+                	{{ productTabContent[2] }}
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-light">
+              <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Specs and Care
+                  </a>
+                  <a class="icon icon-angle-down product-accordion-arrow" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"></a>
+                </h4>
+              </div>
+              <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                	{{ productTabContent[3] | strip }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Accordion -->
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% if settings.enable-share-buttons %}
+  <div class="module-wrapper">
+    <div class="module module-share">
+      <div class="module-body clearfix">
+        {% include 'share-buttons' %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  // required for splitting variants
+  // see ProductView
+  window.productJSON = {{ product | json }};
+</script>
+
+  {% assign product-modules = '' %}
+  {% for i in (1..2) %}
+    {% capture module %}product-module-{{ i }}{% endcapture %}
+    {% unless settings[module] == 'none' or product-modules contains settings[module] %}
+      {% capture product-modules %}{{ product-modules }}|{{ settings[module] }}{% endcapture %}
+    {% endunless %}
+  {% endfor %}
+
+  {% assign product-modules = product-modules | remove_first: '|' %}
+  {% if product-modules != blank %}
+    {% assign sections = product-modules | split: '|' %}
+    {% for section in sections %}
+      {% include section %}
+    {% endfor %}
+  {% endif %}
+
+
+{% case product.handle %}
+  {% when 'orion-series-gloves-unisex' %}
+
+  {% when 'orion-series-jacket' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-jacket' %}
+          	</div>
+      	</div>
+  	</div>
+  {% when 'orion-series-jacket-womens' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-jacket' %}
+          	</div>
+      	</div>
+  	</div>
+  {% when 'orion-series-snow-pants-mens' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-pants' %}
+          	</div>
+      	</div>
+  	</div>
+  {% when 'orion-series-snow-pants-womens' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-pants' %}
+          	</div>
+      	</div>
+  	</div>
+  {% when 'orion-series-beanie-unisex' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-beanie' %}
+          	</div>
+      	</div>
+  	</div>
+  {% when 'womens-leggings' %}
+	<div class="module-wrapper style-default border">
+  		<div class="module product-testimonials">
+      		<div class="module-header">
+          		<h3 class="module-title product-testimonials-title">Testimonials</h3>
+      		</div>
+          	<div class="module-body ">
+  				{% include 'testimonials-product-leggings' %}
+          	</div>
+      	</div>
+  	</div>
+  {% else %}
+{% endcase %}
+
+{% if settings.product-show-related %}
+  {% include 'product-related' %}
+{% endif %}
+
+{% include "notification" %}

@@ -1,0 +1,36 @@
+<!-- Scripts -->
+{% comment %}{{ 'api.jquery.js' | shopify_asset_url | script_tag }}{% endcomment %}
+
+{% if page.template_suffix == 'contact' %}
+  {{ 'https://maps.googleapis.com/maps/api/js' | script_tag }}
+  {{ 'infobox.js' | asset_url | script_tag }}
+{% endif %}
+
+{% if template contains 'cart' %}
+
+  {% if settings.show-shipping-calculator %}
+    {{ "jquery.tmpl.min.js" | asset_url | script_tag }}
+    {{ "/services/javascripts/countries.js" | script_tag }}
+    {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {{ 'jquery.cart.min.js' | asset_url | script_tag }}
+{% endif %}
+
+{% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+{% endif %}
+
+{% if settings.show-currency-switcher %}
+  {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+  {{ "jquery.currencies.js" | asset_url | script_tag }}
+{% endif %}
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+{{ 'modernizr-2.7.1.min.js' | asset_url | script_tag }}
+{{ 'plugins.js'  | asset_url | script_tag }}
+{% comment %}{{ 'site.js'  | asset_url | script_tag }}{% endcomment %}
+<!-- Product Tabs Accordion -->
+{{ 'collapse.js' | asset_url | script_tag }}

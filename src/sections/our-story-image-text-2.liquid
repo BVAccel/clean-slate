@@ -1,0 +1,53 @@
+{% include 'section-text-image' %}
+
+{% schema %}
+  {
+    "name": "Image Text Split",
+    "settings": [
+      {
+        "type": "richtext",
+        "id": "section_text",
+        "label": "Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "section_image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "theme_select",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "select",
+        "id": "layout_select",
+        "label": "Layout",
+        "info": "pick a layout for the section",
+        "options": [
+          {
+            "value": "image-right",
+            "label": "Image Right"
+          },
+          {
+            "value": "image-left",
+            "label": "Image Left"
+          }
+        ],
+        "default": "image-left"
+      }
+    ]
+}
+{% endschema %}

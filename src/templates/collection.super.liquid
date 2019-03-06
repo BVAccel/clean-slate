@@ -1,0 +1,97 @@
+<div class="super">
+
+  {%- capture headingStyles -%}
+    {%- if collection.metafields.c_f['super_heading_theme'] == 'dark' -%}
+      background-color: #232323; color: #fff; background-image: url('{{- "oros-t-collections-mens-header-2x.jpg" | asset_img_url: '1920x1080' -}}');
+    {%- else -%}
+      color: #000; background-color: #fdf9f4; background-image: url('{{- "oros-t-collections-womens-header-2x.jpg" | asset_img_url: '1920x1080' -}}');
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <div class="hero" style="{{- headingStyles -}}">
+    <div class="container">
+      <h1 class="hero__heading">{{ collection.title }}</h1>
+    </div>
+  </div>
+
+  {% assign collectionHandles = collection.metafields.c_f.super_array | split: "," %}
+
+  {% for handle in collectionHandles %}
+
+    {% comment %} Left or right section depending on index {% endcomment %}
+    {% assign remainder = forloop.index | modulo: 2 %}
+    {% if remainder == 0 %}
+      {% assign side = 'category--right' %}
+    {% else %}
+      {% assign side = 'category--left' %}
+    {% endif %}
+
+    {% assign featured_product = all_products[collections[handle].metafields.c_f.sub_featured_product] %}
+
+    {% assign hasBackgroundImage = collections[handle].metafields.c_f.sub_background != blank %}
+
+    {% capture backgroundGradientStyle %}
+      {% if collections[handle].metafields.c_f.sub_heading_bg != blank %}
+        style="background: {{ collections[handle].metafields.c_f.sub_heading_bg }}"
+      {% endif %}
+    {% endcapture %}
+
+    <div class="category {{ side }}{% unless hasBackgroundImage %} category--light{% endunless %}">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-6 category__gradient" {{ backgroundGradientStyle }}>
+            <div class="category__headings">
+              <h1 class="category__heading">{{ collections[handle].title }}</h1>
+              <p class="category__description">{{ collections[handle].description | strip_html }}</p>
+              <a class="category__cta" href="/collections/{{ collections[handle].handle }}">Shop All</a>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6 category__bg-img-wrapper">
+            <img class="category__bg-img" src="{{ collections[handle].metafields.c_f.sub_background }}" alt="" />
+
+            {%- capture hideOnDesktop -%}
+              {%- if collections[handle].metafields.c_f.sub_show_product_img != 'true' -%}
+                category__img--hide-on-desktop
+              {%- endif -%}
+            {%- endcapture -%}
+
+            <img class="category__img {{ hideOnDesktop }}" src="{{ featured_product.images[0] | img_url: '1080x1080' }}" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="category__featured">
+        <p class="category__featured-subheading">featured</p>
+        <a href="/products/{{ featured_product.handle }}">
+          <h3 class="category__featured-heading">{{ featured_product.title }}</h3>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if
+    collection.metafields.c_f.super_last_heading != blank &&
+    collection.metafields.c_f.super_last_subheading != blank &&
+    collection.metafields.c_f.super_last_description != blank &&
+    collection.metafields.c_f.super_last_cta_link != blank &&
+    collection.metafields.c_f.super_last_cta_text != blank
+  %}
+    <div class="category category--right category--light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <div class="category__headings">
+              <h6 class="category__subheading">{{ collection.metafields.c_f.super_last_heading }}</h6>
+              <h1 class="category__heading">{{ collection.metafields.c_f.super_last_subheading }}</h1>
+              <p class="category__description">{{ collection.metafields.c_f.super_last_description }}</p>
+              <a class="category__cta" href="{{ collection.metafields.c_f.super_last_cta_link }}">{{ collection.metafields.c_f.super_last_cta_text }}</a>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6 category__img-wrapper">
+            <img class="category__img" src="{{ collection.metafields.c_f.super_last_image }}" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

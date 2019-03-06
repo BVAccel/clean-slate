@@ -1,0 +1,455 @@
+{% section 'sizing-guide' %}
+{% section 'shipping-guide' %}
+
+{% section 'swatchcolors' %}
+
+<section class="pdp">
+  <div class="pdp__hero">
+
+    {% comment %}
+      Add background image to product hero section, if no image is provided from metafields then use default image
+    {% endcomment %}
+    {% if product.metafields.product.next_img %}
+      <div class="pdp__hero-bg" style="background-image: url('{{ product.metafields.product.next_img }}');"></div>
+      {% else %}
+      <div class="pdp__hero-bg" style="background-image: url('https://images.pexels.com/photos/552784/pexels-photo-552784.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');"></div>
+    {% endif %}
+
+    <div class="container pdp__main-meta">
+      <div class="row">
+        {% include 'breadcrumbs' %}
+        <div class="col-md-12 col-lg-6 pdp__main-center">
+          <div class="slick slick--light">
+            {% for image in product.images %}
+              <div class="slick__slide">
+                <img class="js-square-image" src="{{ image | product_img_url:'1920x1080' }}" alt="{{ image.alt }}">
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <a href="#performance" class="pdp__arrow-down">
+          <img src="{{ 'arrow-down--white.svg' | asset_url }}" alt="">
+        </a>
+        {% include 'yotpo-star-rating' %}
+        <div class="col-md-12 col-lg-4 pdp__main-left">
+
+          <h1 class="pdp__title">{{ product.title }}</h1>
+
+
+
+          <h4 class="pdp__price">
+            {% comment %}{{ product.price | money }}{% endcomment %}
+            {% include 'flow_localized_price' %}
+          </h4>
+
+
+
+
+
+          {%- assign description = product.description | split: "<p>[/Section]</p>" -%}
+
+          <p class="pdp__description">
+            {{ description[0] | strip_html }}
+          </p>
+
+          <ul class="pdp__infos">
+            <li class="pdp__info Accordion">
+              <div class="pdp__info-heading Accordion__toggle">Features</div>
+              <div class="pdp__info-body Accordion__body">
+                <div class="Accordion__body-inner">
+                  {{ description[1] }}
+                </div>
+              </div>
+            </li>
+            <li class="pdp__info Accordion">
+              <div class="pdp__info-heading Accordion__toggle">Specs/Care</div>
+              <div class="pdp__info-body Accordion__body">
+                <div class="Accordion__body-inner">
+                  {{ description[2] }}
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-lg-3 pdp__main-right">
+
+          {% comment %} Color Options {% endcomment %}
+          {% for option in product.options_with_values %}
+            {% if option.name == 'color' or option.name == 'Color' %}
+              <div class="pdp__option-wrap" data-options-index="1">
+                <h3 class="pdp__option-label">Color: &nbsp;<span class="pdp__option-label--selection" data-value-for="option{{- option.position -}}">{{ option.selected_value }}</span></h3>
+                <ul class="pdp__options">
+                  {% for color in option.values %}
+
+                    <input class="pdp__option pdp__option--color" id="color-input-{{ forloop.index }}" type="radio" name="option{{- option.position -}}" value="{{ color }}" {% if option.selected_value == color %}checked{% endif %} data-option-name="{{ option.name }}">
+                    <label for="color-input-{{ forloop.index }}" class="{{ color | handleize }}">{{ color }}</label>
+
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% comment %} Size Options {% endcomment %}
+          {% for option in product.options_with_values %}
+            {% if option.name == 'size' or option.name == 'Size' %}
+              {% comment %} For changing abbreviated size to non-abbreviated e.g. S -> SMALL {% endcomment %}
+              {%- capture nonAbbreviatedSize -%}
+                {%- case option.selected_value -%}
+                  {%- when 'XS' -%}
+                    X-Small
+                  {%- when 'S' -%}
+                    Small
+                  {%- when 'M' -%}
+                    Medium
+                  {%- when 'L' -%}
+                    Large
+                  {%- when 'XL' -%}
+                    X-Large
+                  {%- when '2XL' -%}
+                    2X-Large
+                  {%- when '3XL' -%}
+                    3X-Large
+                  {%- else -%}
+                    {{- option.selected_value -}}
+                {%- endcase -%}
+              {%- endcapture -%}
+
+              <div class="pdp__option-wrap" data-options-index="2">
+                <h3 class="pdp__option-label">Size: &nbsp;<span class="pdp__option-label--selection" data-value-for="option{{- option.position -}}">{{- nonAbbreviatedSize -}}</span></h3>
+                <ul class="pdp__options">
+                  {% for size in option.values %}
+
+                    <input class="pdp__option pdp__option--size" id="size-input-{{ forloop.index }}" type="radio" name="option{{- option.position -}}" value="{{- size -}}" {% if option.selected_value == size %}checked{% endif %} data-option-name="{{ option.name }}">
+                    <label for="size-input-{{ forloop.index }}">{{ size }}</label>
+
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          <button type="button" class="pdp__add-to-cart" id="pdpAtc" data-cart-add="{{ product.selected_or_first_available_variant.id }}" data-price="{{ product.selected_or_first_available_variant.price | divided_by: 100 }}"
+            {% unless product.variants.first.available %}
+              disabled
+            {% endunless %}
+          >
+
+
+            {% comment %}<span class="pdp__add-to-cart-price">{{- product.price | money -}}</span>{% endcomment %}
+
+            <div class="pdp__add-to-cart-price">
+              {% include 'flow_localized_price' %} - Add To Cart
+            </div>
+            {% comment %}{%- include 'flow_localized_price', classnames: 'pdp__add-to-cart-price' -%} - Add to Cart</button>{% endcomment %}
+
+          </button>
+
+          <ul class="pdp__additional-infos">
+            <li class="pdp__additional-info" data-sizing-toggle><p><span class="pdp__additional-info-bullet" >&bull;</span> Fit Guide</p></li>
+
+            <li class="pdp__additional-info"
+            data-shipping-toggle><p><span class="pdp__additional-info-bullet">&bull;</span> Shipping</p></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if
+  product.metafields.c_f['Performance Solarcore'] != blank and
+  product.metafields.c_f['Performance Solarcore Copy'] != blank and
+  product.metafields.c_f['Performance Temperature'] != blank and
+  product.metafields.c_f['Performance Temperature Copy'] != blank and
+  product.metafields.c_f['Performance Conditions'] != blank and
+  product.metafields.c_f['Performance Conditions Copy'] != blank
+%}
+<section class="performance" id="performance">
+  <h2 class="performance__heading">Performance</h2>
+  <div class="container">
+    <div class="row slick-responsive slick-responsive--sm slick--light">
+      <div class="col-sm-12 col-md-4 feature">
+        <h4 class="feature__heading">SOLARCORE</h4>
+        <ul class="feature__progresses">
+          {% capture solarcoreRange %}{{ product.metafields.c_f['Performance Solarcore'] | split: ',' }}{% endcapture %}
+          <li class="feature__progress {% if solarcoreRange contains 'zoned' %}
+             feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Zoned</p>
+          </li>
+          <li class="feature__progress {% if solarcoreRange contains 'partial' %}
+             feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Partial</p>
+          </li>
+          <li class="feature__progress {% if solarcoreRange contains 'full' %}
+             feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Full</p>
+          </li>
+        </ul>
+        <p class="feature__description">
+          {{ product.metafields.c_f['Performance Solarcore Copy'] }}
+        </p>
+      </div>
+      <div class="col-sm-12 col-md-4 feature">
+        <h4 class="feature__heading">Temperature</h4>
+        <ul class="feature__progresses">
+
+          {% capture tempRange %}{{ product.metafields.c_f['Performance Temperature'] | split: ',' }}{% endcapture %}
+          <li class="feature__progress {% if tempRange contains 'cool' %}
+             feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Cool</p>
+          </li>
+          <li class="feature__progress {% if tempRange contains 'cold' %}
+             feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Cold</p>
+          </li>
+          <li class="feature__progress {% if tempRange contains 'extreme' %}
+            feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Extreme</p>
+          </li>
+        </ul>
+        <p class="feature__description">
+          {{ product.metafields.c_f['Performance Temperature Copy'] }}
+        </p>
+      </div>
+      <div class="col-sm-12 col-md-4 feature">
+        <h4 class="feature__heading">Conditions</h4>
+        <ul class="feature__progresses">
+          {% capture conditionsRange %}{{ product.metafields.c_f['Performance Conditions'] | split: ',' }}{% endcapture %}
+
+          <li class="feature__progress {% if conditionsRange contains 'dry' %}
+            feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Dry</p>
+          </li>
+          <li class="feature__progress {% if conditionsRange contains 'wet' %}
+            feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Wet</p>
+          </li>
+          <li class="feature__progress {% if conditionsRange contains 'harsh' %}
+            feature__progress--active
+          {% endif %}">
+            <span class="feature__progress-bar"></span>
+            <p class="feature__progress-label">Harsh</p>
+          </li>
+        </ul>
+        <p class="feature__description">
+          {{ product.metafields.c_f['Performance Conditions Copy'] }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if
+  product.metafields.c_f['Lower Level Temp Subheading'] != blank and
+  product.metafields.c_f['Lower Level Temp Copy'] != blank and
+  product.metafields.c_f['Lower Level Temp Image URL'] != blank
+%}
+<section class="overlap overlap--dark">
+  <div class="row no-gutters">
+    <div class="col-md-0 col-lg-1"></div>
+    <div class="col-md-12 col-lg-5 overlap__left">
+      <p class="overlap__label">{{ product.metafields.c_f['Lower Level Temp Subheading'] }}</p>
+      <p class="overlap__content unit">
+        <span class="metric">{{ product.metafields.c_f['Lower Level Temp Metric'] }}</span>
+        <span class="imperial">{{ product.metafields.c_f['Lower Level Temp Imperial'] }}</span>
+      </p>
+
+      <div class="row overlap__row">
+        <div class="col-auto overlap__arrow-wrap">
+          <svg class="overlap__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12"><g fill-rule="nonzero"><path d="M.462 11.533V.609l8.68 5.462zM14.462 11.533V.609l8.68 5.462z"/></g></svg>
+        </div>
+        <div class="col overlap__desc-wrap">
+          <p class="overlap__description">{{ product.metafields.c_f['Lower Level Temp Copy'] }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-9 overlap__right">
+      <img src="{{ product.metafields.c_f['Lower Level Temp Image URL'] }}" alt="">
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{% if
+  product.metafields.c_f['Material Heading'] != blank and
+  product.metafields.c_f['Material Subheading'] != blank and
+  product.metafields.c_f['Material Copy'] != blank and
+  product.metafields.c_f['Material Image URL'] != blank and
+  product.metafields.c_f['Construction Heading'] != blank and
+  product.metafields.c_f['Construction Subheading'] != blank and
+  product.metafields.c_f['Construction Copy'] != blank and
+  product.metafields.c_f['Construction Image URL'] != blank
+%}
+<section class="details">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-xl-6 details__detail">
+        <img src="{{ product.metafields.c_f['Material Image URL'] }}" alt="" class="details__img">
+
+        <div class="details__text-wrap">
+          <p class="details__subheading">{{ product.metafields.c_f['Material Subheading'] }}</p>
+          <h3 class="details__heading">{{ product.metafields.c_f['Material Heading'] }}</h3>
+          <p class="details__description">{{ product.metafields.c_f['Material Copy'] }}</p>
+        </div>
+      </div>
+      <div class="col-lg-12 col-xl-6 details__detail">
+        <img src="{{ product.metafields.c_f['Construction Image URL'] }}" alt="" class="details__img">
+
+        <div class="details__text-wrap">
+          <p class="details__subheading">{{ product.metafields.c_f['Construction Subheading'] }}</p>
+          <h3 class="details__heading">{{ product.metafields.c_f['Construction Heading'] }}</h3>
+          <p class="details__description">{{ product.metafields.c_f['Construction Copy'] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{% if
+  product.metafields.c_f['Sustainability Heading'] != blank and
+  product.metafields.c_f['Sustainability Subheading'] != blank and
+  product.metafields.c_f['Sustainability Copy'] != blank and
+  product.metafields.c_f['Sustainability Image URL'] != blank
+%}
+<section class="overlap overlap--light">
+  <div class="row no-gutters">
+    <div class="col-md-0 col-lg-1"></div>
+    <div class="col-md-12 col-lg-5 overlap__left">
+      <p class="overlap__label">{{ product.metafields.c_f['Sustainability Subheading'] }}</p>
+      <h2 class="overlap__heading">{{ product.metafields.c_f['Sustainability Heading'] }}</h2>
+
+      <div class="row">
+        <div class="col-auto overlap__arrow-wrap">
+          <svg class="overlap__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12"><g fill-rule="nonzero"><path d="M.462 11.533V.609l8.68 5.462zM14.462 11.533V.609l8.68 5.462z"/></g></svg>
+        </div>
+        <div class="col overlap__desc-wrap">
+          <p class="overlap__description">{{ product.metafields.c_f['Sustainability Copy'] }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-9 overlap__right">
+      <img src="{{ product.metafields.c_f['Sustainability Image URL'] }}" alt="">
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{% if product.metafields.c_f['Show Solarcore'] == 'true' %}
+<section class="solarcore">
+  <div class="container">
+    <div class="solarcore__headings">
+      <h2 class="solarcore__heading">Solarcore Insulation</h2>
+      <h4 class="solarcore__subheading">
+        {{ product.metafields.c_f.['Solarcore Insulation Copy'] }}
+      </h4>
+    </div>
+
+    <div class="row slick-responsive slick-responsive--sm slick--dark">
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <img src="{{ 'breathable.svg' | asset_url }}" alt="" class="solarcore__icon">
+        <p class="solarcore__label">Highly Breathable</p>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <img src="{{ 'thermal.svg' | asset_url }}" alt="" class="solarcore__icon">
+        <p class="solarcore__label">Unparalleled Thermal Performance</p>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <img src="{{ 'flexible.svg' | asset_url }}" alt="" class="solarcore__icon">
+        <p class="solarcore__label">Works When Compressed</p>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <img src="{{ 'thickness.svg' | asset_url }}" alt="" class="solarcore__icon">
+        <p class="solarcore__label">Thin &amp; Lightweight</p>
+      </div>
+    </div>
+
+    <a href="https://www.orosapparel.com/pages/oros-technology" class="solarcore__button">Our Technology</a>
+  </div>
+</section>
+{% endif %}
+
+<section class="product-reviews-section" data-scroll-position="reviews-section">
+  <div class="product-reviews-main-title-stars-container" id="yotpo">
+    {% comment %}<div class="avg-review-stars"></div>{% endcomment %}
+    <div class="avg-review-title">
+      {% comment %}<span class="num-reviews"></span>{% endcomment %}
+      <span class="num-reviews-bottom-title"></span>
+    </div>
+  </div>
+  {% include 'yotpo-slider' %}
+</section>
+
+{% assign ymal_coll = collections[product.collections[1].handle] %}
+{% if collection %}
+  {% assign ymal_coll = collection %}
+{% endif %}
+
+<section class="recommend">
+  <div class="row no-gutters">
+    <div class="col-md-12 col-lg-4 recommend__heading-wrap">
+      <h4 class="recommend__heading">You Might Also Like</h4>
+    </div>
+
+    <div class="slick-responsive slick-responsive--md slick--light">
+      {% for prod in ymal_coll.products limit: 3 %}
+        {% comment %}skip if the same product{% endcomment %}
+        {% if prod.handle == product.handle %}
+          {% assign same_prod = true %}
+          {% continue %}
+        {% endif %}
+        {% comment %}stop if on third and same_prod wasn't skipped{% endcomment %}
+        {% if forloop.index > 2 and same_prod == blank %}
+          {% break %}
+        {% endif %}
+
+        <div class="col-sm-12 col-md-6 recommend__product">
+          <h4 class="recommend__product-title">{{ prod.title }}</h4>
+          <div class="recommend__product-shop-wrap">
+            <a href="/products/{{ prod.handle }}" class="recommend__product-shop">
+
+
+
+            {% comment %}{{ prod.price | money }}{% endcomment %}
+            {%- include 'flow_localized_price' with prod -%} - Shop Now</a>
+
+
+
+          </div>
+          <img class="recommend__product-img" src="{{ prod.images.first | product_img_url: '480x720' }}" alt="{{ prod.title}}">
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  // required for splitting variants
+  // see ProductView
+  window.productJSON = {{ product | json }};
+</script>
+
+{% include 'klaviyo-product' %}

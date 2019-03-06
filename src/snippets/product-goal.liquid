@@ -1,0 +1,78 @@
+{% assign showDeliveryEstimate = false %}
+
+{% capture productGoalHandle %}{{ settings.featured-product-main }}{% endcapture %}
+{% if all_products[productGoalHandle].variants.first.inventory_management == "shopify" %}
+  {% if settings.product-goal-starting-quantity != blank %}
+    {% if settings.product-goal != blank %}
+
+      {% capture productGoalStartingQuantity %}{{ settings.product-goal-starting-quantity }}{% endcapture %}
+
+      {% assign showDeliveryEstimate = true %}
+
+      {% assign productGoalInventory = 0 %}
+      {% for variant in all_products[productGoalHandle].variants %}
+        {% assign productGoalInventory = productGoalInventory | plus: variant.inventory_quantity %}
+      {% endfor %}
+
+      {% capture productGoalPrice %}{{ all_products[productGoalHandle].variants.first.price }}{% endcapture %}
+      {% capture productGoal %}{{ settings.product-goal }}{% endcapture %}
+      {% capture productGoalTotalSold %}{{ productGoalStartingQuantity | minus: productGoalInventory }}{% endcapture %}
+
+
+
+      {% capture productGoalTotalSoldMoney %}{{ productGoalPrice | times: productGoalTotalSold | money_with_currency  }}{% endcapture %}
+
+
+
+      {% capture productGoalTotalTargetMoney %}{{ productGoalPrice | times: productGoal | money_with_currency }}{% endcapture %}
+
+
+
+      {% capture productGoalAchievement %}{{ productGoalTotalSold | times: 100 | divided_by: productGoal | floor }}{% endcapture %}
+      {% assign productGoalAchievementWidth = productGoalAchievement | plus: 0 %}
+
+      {% comment %}
+        - Less than wants to check against an integer
+      {% endcomment %}
+      {% if productGoalAchievementWidth >= 100 %}
+        {% assign productGoalAchievementWidth = 100 %}
+      {% endif %}
+
+      {% comment %}
+        - Contain wants to check against a string
+      {% endcomment %}
+      {% if productGoalAchievement contains '-' %}
+        {% assign productGoalAchievementWidth = 0 %}
+      {% endif %}
+
+      {% capture productGoalCurrent %}
+        {% if settings.product-goal-use-quantity %}
+          {{ "products.product.goal_units_html" | t: total_sold: productGoalTotalSold, target: productGoal }}
+        {% else %}
+          {{ "products.product.goal_money_html" | t: total_sold: productGoalTotalSoldMoney, target: productGoalTotalTargetMoney }}
+        {% endif %}
+      {% endcapture %}
+
+      {% assign productGoal = productGoal | : plus 0 %}
+      {% if productGoal > 0 %}
+
+        <div class="product-featured-goal">
+          <div class="product-featured-goal-graph">
+            <div class="product-featured-goal-bar-container">
+              <div class="product-featured-goal-bar-complete" style="width:{{ productGoalAchievementWidth | strip_newlines | strip }}%">
+                <div class="product-featured-goal-tooltip">
+                  {{ productGoalAchievement }}%
+                  <div class="product-featured-goal-tooltip-arrow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-featured-goal-blurb" data-goal-blurb>
+            {{ productGoalCurrent | strip_newlines }}
+          </div>
+        </div>
+
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endif %}

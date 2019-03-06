@@ -1,0 +1,17 @@
+<p class="text-section__text">
+  {{- section.settings.section_text -}}
+</p>
+
+{% schema %}
+  {
+    "name": "Text Section",
+    "class": "text-section",
+    "settings": [
+      {
+        "id": "section_text",
+        "type": "textarea",
+        "label": "Text"
+      }
+    ]
+  }
+{% endschema %}

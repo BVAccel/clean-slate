@@ -1,0 +1,88 @@
+{% include 'section-text-overlay' %}
+
+{% schema %}
+  {
+    "name": "HP Section Image Overlay",
+    "settings": [
+      {
+        "id": "section_heading",
+        "type": "text",
+        "label": "Heading"
+      },
+      {
+        "id": "section_text",
+        "type": "richtext",
+        "label": "Text"
+      },
+      {
+        "id": "section_cta_1_text",
+        "type": "text",
+        "label": "CTA 1 Text"
+      },
+      {
+        "id": "section_cta_1_url",
+        "type": "url",
+        "label": "CTA 1 Link"
+      },
+      {
+        "id": "section_cta_2_text",
+        "type": "text",
+        "label": "CTA 2 Text"
+      },
+      {
+        "id": "section_cta_2_url",
+        "type": "url",
+        "label": "CTA 2 Link"
+      },
+      {
+          "id": "section_image",
+          "type": "image_picker",
+          "label": "Background Image"
+      },
+      {
+        "type": "select",
+        "id": "section_theme_layout",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+            {
+                "value": "image-right",
+                "label": "Image Right"
+            },
+            {
+                "value": "image-left",
+                "label": "Image Left"
+            }
+        ],
+        "default": "image-left"
+    },
+    {
+      "type": "select",
+      "id": "section_theme_select",
+      "label": "Theme",
+      "info": "pick a color theme for the section",
+      "options": [
+          {
+              "value": "dark",
+              "label": "Dark"
+          },
+          {
+              "value": "light",
+              "label": "Light"
+          },
+          {
+              "value": "white",
+              "label": "White"
+          }
+      ],
+      "default": "white"
+    }
+    ],
+    "presets": [
+      {
+        "category": "Homepage Sections",
+        "name": "Text Image Overlay"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,108 @@
+<div class="home-hero" style="background-image:url({{ section.settings.hero_image | img_url: '2880x' }})" data-mobile-image="{% if section.settings.hero_mobile_image %}{{ section.settings.hero_mobile_image | img_url: '1984x' }}{% endif %}" data-desktop-image="{{ section.settings.hero_image | img_url: '2880x' }}" data-mobile-image-check>
+  <div class="container">
+    <div class="row">
+      <div class="hero__content">
+        <h1>{{ section.settings.hero_title | replace: '<span>', '<span class="outline outline--light-blue">' }}</h1>
+        <p>{{ section.settings.hero_content | replace: '&reg;', '<sup>&reg;</sup>' | replace: '®', '<sup>®</sup>'}}</p>
+        <div class="hero__cta">
+          {% for block in section.blocks %}
+            <a href="{{ block.settings.cta_link }}" class="btn btn--grey">{{ block.settings.cta_text }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% if section.settings.hero_commitment_enable %}
+      <div class="row">
+        <div class="col-12">
+          <div class="hero__commitment">
+            <h2>{{ section.settings.hero_commitment_title }}</h2>
+            <p>{{ section.settings.hero_commitment_content }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="hero__arrow-wrap">
+      <svg class="hero__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12"><g fill-rule="nonzero"><path d="M.462 11.533V.609l8.68 5.462zM14.462 11.533V.609l8.68 5.462z"/></g></svg>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Hero",
+    "settings": [
+      {
+        "type":"image_picker",
+        "id":"hero_image",
+        "label":"Hero Image"
+      },
+      {
+        "type":"image_picker",
+        "id":"hero_mobile_image",
+        "label":"Mobile Hero Image"
+      },
+      {
+        "type":"header",
+        "content":"Hero Header"
+      },
+      {
+        "type":"text",
+        "id":"hero_title",
+        "label": "Title",
+        "default":"<span>NASA Inspired</span> Insulation"
+      },
+      {
+        "type":"textarea",
+        "id":"hero_content",
+        "label":"Hero Content",
+        "default":"Using a breakthrough material called SOLARCORE, insulation is now warmer, lighter, and<br> thinner than ever."
+      },
+      {
+        "type":"header",
+        "content":"Hero Commitment Message"
+      },
+      {
+        "type":"checkbox",
+        "id":"hero_commitment_enable",
+        "label":"Enable Commitment Message",
+        "default":true
+      },
+      {
+        "type":"text",
+        "id":"hero_commitment_title",
+        "label":"Commitment Title",
+        "default":"Our Commitment"
+      },
+      {
+        "type":"textarea",
+        "id":"hero_commitment_content",
+        "label":"Commitment Content",
+        "default":"We’re advancing apparel technology by pushing the boundaries of modern materials."
+      }
+    ],
+    "max_blocks": 2,
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "settings": [
+          {
+            "type": "url",
+            "id": "cta_link",
+            "label": "Call To Action Link"
+          },
+          {
+            "type":"text",
+            "id":"cta_text",
+            "label":"Call To Action Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero",
+        "category": "Homepage Sections"
+      }
+    ]
+  }
+{% endschema %}

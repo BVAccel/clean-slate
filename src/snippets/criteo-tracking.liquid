@@ -1,0 +1,70 @@
+<script type="text/javascript" src="//static.criteo.net/js/ld/ld.js" async="true"></script>
+{% assign template-type = template | split: '.' | first %}
+{% if template-type == 'cart' or template-type == 'collection' or template-type == 'index' or template-type == 'product' %}
+{% unless template-type == 'cart' and cart.item_count < 1 %}
+<script type="text/javascript">
+(function(){
+
+function priceFromCents(cents) {
+    if (typeof(cents) != "number")
+        return;
+
+    return (cents / 100);
+}
+
+var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
+window.criteo_q = window.criteo_q || [];
+window.criteo_q.push(
+  { event: "setAccount", account: 41196 },
+  { event: "setEmail", email: "{{ customer.email }}" },
+  { event: "setSiteType", type: deviceType },
+  {% case template-type %}
+  {% when 'cart' %}{ event: "viewBasket", item: [{% for item in cart.items %}{% unless forloop.index0 == 0 %}, {% endunless %}{ id: "{{ item.product_id }}", price: priceFromCents({{ item.price }}), quantity: {{ item.quantity }} }{% endfor %}]}
+  {% when 'collection' %}{ event: "viewList", item: [{% for product in collection.products limit:3 %}{% if forloop.index0 != 0 %},{% endif %}"{{product.id}}"{% endfor %}]}
+  {% when 'index' %}{ event: "viewHome" }
+  {% when 'product' %}{ event: "viewItem", item: "{{ product.id }}" }
+  {% endcase %}
+);
+
+function isRelevantCartUpdate(settings) {
+    function dataContains(term) {
+        return settings.data && settings.data.indexOf && settings.data.indexOf(term) > -1;
+    }
+
+    return (settings.url == "/cart/add.js" || settings.url == "/cart/update.js")
+      && (
+        dataContains('attributes[prod') ||
+        (dataContains('id=') && dataContains('quantity='))
+      );
+}
+
+$(document).ajaxSuccess(function(event, xhr, settings) {
+    if (isRelevantCartUpdate(settings)) {
+        $.getJSON("/cart.js", function(data) {
+            var basketData = [];
+            var item;
+
+            if (!data.items || !data.items.length)
+                return;
+
+            for (var i = 0; i < data.items.length; i++) {
+                item = data.items[i];
+
+                basketData.push({
+                    id: item.product_id,
+                    price: priceFromCents(item.price),
+                    quantity: item.quantity
+                });
+            }
+
+            window.criteo_q.push({
+                event: "viewBasket",
+                product: basketData
+            });
+        });
+    }
+});
+})();
+</script>
+{% endunless %}
+{% endif %}

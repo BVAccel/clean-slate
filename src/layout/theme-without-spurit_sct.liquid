@@ -1,0 +1,116 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie9 lt-ie10 no-js" lang="en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html class="no-js" lang="en"><![endif]-->
+
+<head>
+  
+  {% include 'SEOMetaManager' %}
+
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="86p-PIYIH8pOlp7wUICzFN_dncE0ivaYT7Y9CI1N4yE" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="msvalidate.01" content="33DC66309CC8CBC399B1B4558A2B832C" />
+
+  {% assign tab_index = 0 %}
+
+<!--
+  {% if template == 'index' %}
+    <title>{{ shop.name }} | {{ page_title }}</title>
+  {% elsif template == '404' %}
+    <title>{{ "general.404.title" | t }} | {{ shop.name }}</title>
+  {% else %}
+    <title>{{ page_title }} | {{ shop.name }}</title>
+  {% endif %}
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+-->
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  {{ content_for_header }}
+
+  {% include 'social-meta' %}
+
+  {% include 'scripts-styles-header' %}
+</head>
+
+{% include 'additional-classes' %}
+<body class="{{ bodyClasses }}">
+{% capture the_snippet_content %}{% include 'socialshopwave-helper' %}{% endcapture %}
+            {% unless the_snippet_content contains 'Liquid error' %}
+              {{ the_snippet_content }}
+            {% endunless %}
+	<div class="message-header">
+      <div class="message-header-text"><a href="https://www.orosapparel.com/pages/shipping-and-returns">Free Shipping On Orders Over $50* (US Only)</a></div>
+    	<div class="message-header-close"><i class="list-item-icon ion-close" aria-hidden="true" title="Warmth"></i></div>
+  	</div>
+  {% include 'header' %}
+
+  <main class="main-content">
+
+    {% unless template contains 'index' or fullBleed %}
+      {% unless template contains 'slideshow' and settings.product-slideshow-layout == 'full-width' %}
+        {% include 'breadcrumbs' %}
+      {% endunless %}
+    {% endunless %}
+
+    {{ content_for_layout }}
+  </main>
+<script>
+jQuery(function() {
+  jQuery('.swatch :radio').change(function() {
+    var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+    var optionValue = jQuery(this).val();
+    jQuery(this)
+      .closest('form')
+      .find('.single-option-selector')
+      .eq(optionIndex)
+      .val(optionValue)
+      .trigger('change');
+  });
+});
+</script>
+  {% include 'footer' %}
+  {% include 'scripts-styles-footer' %}
+{% if product %}
+<script>
+  var boosterParams = boosterParams || {};
+  boosterParams.customer = {};
+  boosterParams.product = {{ product | json }};
+  {% if  customer %}
+    boosterParams.customer.email = "{{ customer.email }}";
+  {% endif %}
+</script>
+{% endif %}
+
+<!-- CRITEO START -->
+{% include 'criteo-tracking' %}
+<!-- CRITEO END -->
+<!-- Start Quantcast Tag -->
+<script type="text/javascript">
+var _qevents = _qevents || [];
+
+ (function() {
+   var elem = document.createElement('script');
+   elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+   elem.async = true;
+   elem.type = "text/javascript";
+   var scpt = document.getElementsByTagName('script')[0];
+   scpt.parentNode.insertBefore(elem, scpt);
+  })();
+
+_qevents.push({qacct: "p-3FMLT93SwskX2"});
+
+</script>
+<noscript>
+ <img src="//pixel.quantserve.com/pixel/p-3FMLT93SwskX2.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript>
+<!-- End Quantcast tag -->  
+{% include 'mw_PO_objects' %}</body>
+</html>

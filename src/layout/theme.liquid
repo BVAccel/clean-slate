@@ -1,77 +1,203 @@
 <!doctype html>
-  <!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
-  <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie9 lt-ie10 no-js" lang="en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html class="no-js" lang="en"><![endif]-->
 
-  <head>
+<head>
+  <meta name="google-site-verification" content="SOOq6OmJ7cw2q1iZy1Qstf19wGhhYB2MXTaoMIeKZSQ" />
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="canonical" href="{{ canonical_url }}">
+  <script>
+    console.log('{{ template }}');
+  </script>
 
-    <!-- Site Meta ============================================ -->
+  {{ 'jquery-1.10.2.min.js' | asset_url | script_tag }}
 
-      {%- include 'favicon' -%}
-      {%- include 'page-title' -%}
-      {%- include 'page-description' -%}
-      {%- include 'social-meta-tags' -%}
+  {% include 'google-optimize' %}
+  {% include 'datalayer' %}
+  {% include 'GTM-head' %}
 
-    <!-- jQuery =============================================== -->
+  {% include 'SEOMetaManager' %}
 
-      <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-      </script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,es5,es6,fetch,Array.prototype.includes,Promise.all"></script>
 
-    <!-- Header Content ======================================= -->
+  {% include 'flow-io-theme' %}
+  {% include 'yotpo-javascript' %}
+  {% include 'lucky-orange' %}
 
-      {{ content_for_header }}
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="google-site-verification" content="86p-PIYIH8pOlp7wUICzFN_dncE0ivaYT7Y9CI1N4yE" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="msvalidate.01" content="33DC66309CC8CBC399B1B4558A2B832C" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
 
-    <!-- Stylesheets ========================================== -->
+  {{ content_for_header }}
 
-      {%- include 'style-tags', layout: 'theme' -%}
-      {%- include 'css-variables' -%}
+  {% include 'social-meta' %}
 
-    <!-- Scripts ============================================== -->
+  {% include 'scripts-styles-header' %}
 
-      {%- include 'script-tags', layout: 'theme' -%}
-      {%- include 'shop-api' -%}
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+  {% include 'script-tags', layout: 'theme' %}
+  {% include 'style-tags', layout: 'theme'  %}
+  {% include 'shop-api' %}
+
+  {% include 'lucky-orange' %}
+
+</head>
+
+{% include 'additional-classes' %}
+
+{% comment %}
+  Add class .header-mini to pages that have white backgrounds above the fold
+  to prevent white text on white bg
+{% endcomment %}
+{% capture templateHandle %}{{ template | handleize }}{% endcapture %}
+
+{% if
+  templateHandle == 'page-contact' or
+  templateHandle == 'page' or
+  templateHandle == 'blog' or
+  templateHandle == 'collection-super' or
+  templateHandle == 'cart'
+%}
+  {% assign headerActiveStyleClass = 'header-mini' %}
+{% endif %}
+
+<body class="{{ bodyClasses }} {% if template == 'page.technology' %}template-page-technology{% endif %} has-promo {{ headerActiveStyleClass }}" id="top">
+  {% capture the_snippet_content %}
+  {% include 'socialshopwave-helper' %}
+  {% endcapture %}
+
+  {% unless the_snippet_content contains 'Liquid error' %}
+  {{ the_snippet_content }}
+  {% endunless %}
 
 
-    {% if template.directory == 'customers' %}
-      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
-    {% endif %}
+  <div class="top-header-content-container js-header-container" js-header-container>
+    {% include 'promotion-bar' %}
 
-  </head>
+    {% include 'header-message' %}
 
-  <body
-    data-template="{{ template.name | handle }}"
-    {%- if template.suffix != blank -%}
-      data-alternate-template="{{ template.suffix | handle }}"
-    {%- endif -%}>
+    {% include 'header' %}
+  </div>
 
-    <a href="#MainContent" class="in-page-link u-visually-hidden">Skip to content</a>
+  {% section 'inline-cart' %}
 
-    {%- section 'topbar' -%}
+  <main class="main-content">
+    {{ content_for_layout }}
+  </main>
 
-    {%- section 'global-header' -%}
+  <script>
+  jQuery(function() {
+  jQuery('.swatch :radio').change(function() {
+    var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+    var optionValue = jQuery(this).val();
+    jQuery(this)
+    .closest('form')
+    .find('.single-option-selector')
+    .eq(optionIndex)
+    .val(optionValue)
+    .trigger('change');
+  });
+  });
+  </script>
 
-    <main role="main" class="oo-main" id="MainContent">
+  {% include 'footer' %}
+  {% include 'scripts-styles-footer' %}
 
-      {{ content_for_layout }}
+  {% if product %}
+  <script>
+  var boosterParams = boosterParams || {};
+  boosterParams.customer = {};
+  boosterParams.product = {{ product | json }};
+  {% if  customer %}
+    boosterParams.customer.email = "{{ customer.email }}";
+  {% endif %}
+  </script>
+  {% endif %}
 
-    </main>
+  <!-- CRITEO START -->
+  {% include 'criteo-tracking' %}
+  <!-- CRITEO END -->
 
-    {%- section 'global-footer' -%}
+  {% include 'mw_PO_objects' %}
 
-    {%- section 'bottombar' -%}
+  <!-- spurit_sct-added -->
+  {% include 'spurit_sct-theme-snippet' %}
+  <!-- /spurit_sct-added -->
 
-    {%- section 'inline-cart' -%}
+  <script>
+  /*
 
-    {%- section 'modal' -%}
+    (function() {
+      Flow.set('on', 'ready', function () {
+        var isFlowCart = Flow.getExperience() ? true : false;
+        console.log(`is flow cart: ${isFlowCart}`);
 
-    {%- include 'overlay' -%}
+        window.flow.countryPicker.createCountryPicker({});
+        window.flow.countryPicker.createCountryPicker({containerId: 'country-picker-mobile'});
 
-  </body>
+        InlineCart.init({ isFlowCart });
+        CartUpsell.init({ isFlowCart });
+        {% if template contains 'cart' %}
+          CartPage.init({ isFlowCart });
+        {% endif %}
+
+        {% if template contains 'product' %}
+          PDP.init();
+        {% endif %}
+
+        if (isFlowCart) {
+          console.log(`using flowcart instead of cartjs`);
+          FlowCart.init();
+          $('head').append('<style type="text/css">[id$="_ribbon_container"] { display: none; }</style>');
+          $('a[href="/pages/referral"]').parent().hide();
+        } else {
+          CartJS.init({{ cart | json }});
+        }
+      });
+
+      // Init modules
+      Select3.init(document.body);
+      Header.init();
+      PromotionBar.init();
+      Newsletter.init();
+      Meganav.init();
+      MobileImageCheck.init();
+      Sliders.init();
+      Accordion.init();
+      SquareImage.init();
+      AffixInParent.init();
+      ChangeBackgroundOnProductHover.init();
+      Parallax.init();
+      SetInternational.init();
+
+      {% if template contains 'product' %}
+        Scroll.init();
+        YotpoApp.init();
+        FitGuide.init();
+      {% endif %}
+
+      {% if template contains 'technology' or template contains 'our_story' %}
+        Scroll.init();
+      {% endif %}
+
+      YotPoUGC.init();
+
+      CartJS.init({{ cart | json }});
+      DetermineDevice.init();
+      DetermineIP.init();
+    }());
+
+    */
+  </script>
+  
+  {% include 'flow-checkout-mods' %}
+  {% include 'flow-GA-CheckoutFunnel' %}
+</body>
 </html>

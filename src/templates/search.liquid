@@ -1,1 +1,140 @@
-{%- section 'search' -%}
+<div class="module-wrapper style-light">
+  <div class="module search">
+    <div class="module-header search-header">
+      <div class="module-title search-title">
+        {% if search.performed %}
+          <h1>{{ 'general.search.header_results' | t }}</h1>
+        {% else %}
+          <h1>{{ 'general.search.header' | t }}</h1>
+        {% endif %}
+      </div>
+      <div class="module-subtitle search-subtitle">
+        {% paginate search.results by 10 %}
+          {% if search.performed %}
+            {% if search.results.size > 0 %}
+              {% capture results %}
+                {{ 'general.search.results' | t: count: search.results_count }}
+              {% endcapture %}
+              {{ 'general.search.results_text' | t: search_terms: search.terms, results_count: search.results_count, results: results }}
+            {% else %}
+              <p>{{ 'general.search.no_results' | t: search_terms: search.terms }}</p>
+            {% endif %}
+          {% endif %}
+        {% endpaginate %}
+      </div>
+      <div class="module-form">
+        <form class="search-form" action="/search" method="get">
+          <input class="search-input" name="q" type="text" placeholder="{{ 'general.general.search_placeholder' | t }}" value="{{ search.terms }}" />
+          <div class="search-submit">
+            <span class="search-submit-icon icon icon-search"></span>
+            <input type="submit" value="{{ 'general.search.submit' | t }}" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="module-body search-body">
+      {% paginate search.results by 9 %}
+        {% if search.performed %}
+          {% if search.results.size > 0 %}
+
+            {% assign product_count = 0 %}
+
+            {% for item in search.results %}
+              {% if item.price %}
+                {% assign product_count = product_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+
+            {% assign product_value = product_count | modulo: 2 %}
+            {% if product_value == 0 %}
+              {% assign product_count_odd == true %}
+            {% endif %}
+
+            {% if product_count < 2 %}
+              {% assign product_list_class = "compact column-1" %}
+              {% assign product_column = '1' %}
+            {% else %}
+              {% if product_count_odd == false %}
+                {% assign product_list_class = "compact column-2" %}
+                {% assign product_column = '2' %}
+              {% else %}
+                {% assign product_list_class = "compact column-3" %}
+                {% assign product_column = '3' %}
+              {% endif %}
+            {% endif %}
+
+            {% if product_count > 0 %}
+              <div class="list {{ product_list_class }}">
+                {% for item in search.results %}
+                  {% if item.price %}
+                    {% include 'product-list-item' %}
+                    {% assign clear = product_column %}
+                    {% assign group = 'product_found' %}
+                    {% include 'clear' %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% assign page_count = 0 %}
+            {% for item in search.results %}
+              {% unless item.price %}
+                {% assign page_count = page_count | plus: 1 %}
+              {% endunless %}
+            {% endfor %}
+
+            {% assign page_value = page_count | modulo: 2 %}
+            {% if page_value == 0 %}
+              {% assign page_count_odd == true %}
+            {% endif %}
+
+            {% if page-count < 2 %}
+              {% assign page_list_class = 'inline column-1' %}
+              {% assign page_column = '1' %}
+            {% else %}
+              {% if page_count_odd == false %}
+                {% assign page_list_class = 'inline column-2' %}
+                {% assign page_column = '2' %}
+              {% else %}
+                {% assign page_list_class = 'inline column-3' %}
+                {% assign page_column = '3' %}
+              {% endif %}
+            {% endif %}
+
+            {% if page-count > 0 %}
+              <div class="list {{ page_list_class }}">
+                {% for item in search.results %}
+                  {% unless item.price %}
+                    <div class="list-item">
+                      <div class="list-container">
+                        <div class="list-text-wrapper text-center">
+                          <div class="list-title">
+                            {{ item.title }}
+                          </div>
+                          <div class="list-text">
+                            {{ item.content | strip_html | truncate: 90 }}
+                          </div>
+                          <div class="list-cta">
+                            <a class="button list-button" href="{{ item.url }}">{{ "general.search.read_more" | t }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% assign clear = page_column %}
+                    {% assign group = 'page_found' %}
+                    {% include 'clear' %}
+                  {% endunless %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+          {% endif %}
+          {% if paginate.previous or paginate.next %}
+            {% include 'pagination' %}
+          {% endif %}
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
+</div>
+

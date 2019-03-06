@@ -1,0 +1,94 @@
+/* ==========================================================================
+   # @font-face
+   ========================================================================== */
+
+/**
+ * @font-face declaration using .woff format only
+ * http://caniuse.com/#search=woff
+ *
+ * @font-face {
+ *   font-family: "<FONT NAME>";
+ *   src: url("{{ '<FONT FILE.WOFF>' | file_url }}") format("woff");
+ *   font-weight: <FONT WEIGHT>;
+ *   font-style: <FONT WEIGHT>;
+ * }
+ *
+ */
+
+ @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+ @import url("https://fonts.googleapis.com/css?family=Maven+Pro:400,700,900");
+ 
+ // h1 - h4
+ @font-face {
+   font-family: "GTAmerica-ExpandedBold";
+   src: url("{{ 'GTAmerica-ExpandedBold_2.eot' | asset_url }}");
+   src: url("{{ 'GTAmerica-ExpandedBold_2.eot?#iefix' | asset_url }}")
+       format("embedded-opentype"),
+     url("{{ 'GTAmerica-ExpandedBold_2.woff2' | asset_url }}") format("woff2"),
+     url("{{ 'GTAmerica-ExpandedBold_2.woff' | asset_url }}") format("woff"),
+     url("{{ 'GTAmerica-ExpandedBold_2.ttf' | asset_url }}") format("truetype"),
+     url("{{ 'GTAmerica-ExpandedBold_2.svg#GTAmerica-ExpandedBold' | asset_url }}")
+       format("svg");
+   font-weight: 400;
+   font-style: normal;
+ }
+ 
+ // h5, p, p.caption
+ @font-face {
+   font-family: "GTAmerica-Regular";
+   src: url("{{ 'GTAmerica-Regular_2.eot' | asset_url }}");
+   src: url("{{ 'GTAmerica-Regular_2.eot?#iefix' | asset_url }}")
+       format("embedded-opentype"),
+     url("{{ 'GTAmerica-Regular_2.woff2' | asset_url }}") format("woff2"),
+     url("{{ 'GTAmerica-Regular_2.woff' | asset_url }}") format("woff"),
+     url("{{ 'GTAmerica-Regular_2.ttf' | asset_url }}") format("truetype"),
+     url("{{ 'GTAmerica-Regular_2.svg#GTAmerica-Regular' | asset_url }}")
+       format("svg");
+   font-weight: 400;
+   font-style: normal;
+ }
+ 
+ @font-face {
+   font-family: "GTAmerica-Regular";
+   src: url("{{ 'GTAmerica-Bold_1.eot' | asset_url }}");
+   src: url("{{ 'GTAmerica-Bold_1.eot?#iefix' | asset_url }}")
+       format("embedded-opentype"),
+     url("{{ 'GTAmerica-Bold_1.woff2' | asset_url }}") format("woff2"),
+     url("{{ 'GTAmerica-Bold_1.woff' | asset_url }}") format("woff"),
+     url("{{ 'GTAmerica-Bold_1.ttf' | asset_url }}") format("truetype"),
+     url("{{ 'GTAmerica-Bold_1.svg#GTAmerica-Regular' | asset_url }}")
+       format("svg");
+   font-weight: 700;
+   font-style: bold;
+ }
+ 
+ // h6
+ @font-face {
+   font-family: "GTAmericaMono-Regular";
+   src: url("{{ 'GTAmericaMono-Regular_1.eot' | asset_url }}");
+   src: url("{{ 'GTAmericaMono-Regular_1.eot?#iefix' | asset_url }}")
+       format("embedded-opentype"),
+     url("{{ 'GTAmericaMono-Regular_1.woff2' | asset_url }}") format("woff2"),
+     url("{{ 'GTAmericaMono-Regular_1.woff' | asset_url }}") format("woff"),
+     url("{{ 'GTAmericaMono-Regular_1.ttf' | asset_url }}") format("truetype"),
+     url("{{ 'GTAmericaMono-Regular_1.svg#GTAmericaMono-Medium' | asset_url }}")
+       format("svg");
+   font-weight: 400;
+   font-style: normal;
+ }
+ 
+ // a
+ @font-face {
+   font-family: "GTAmericaMono-Medium";
+   src: url("{{ 'GTAmericaMono-Medium_3.eot' | asset_url }}");
+   src: url("{{ 'GTAmericaMono-Medium_3.eot?#iefix' | asset_url }}")
+       format("embedded-opentype"),
+     url("{{ 'GTAmericaMono-Medium_3.woff2' | asset_url }}") format("woff2"),
+     url("{{ 'GTAmericaMono-Medium_3.woff' | asset_url }}") format("woff"),
+     url("{{ 'GTAmericaMono-Medium_3.ttf' | asset_url }}") format("truetype"),
+     url("{{ 'GTAmericaMono-Medium_3.svg#GTAmericaMono-Medium' | asset_url }}")
+       format("svg");
+   font-weight: 400;
+   font-style: normal;
+ }
+ 

@@ -1,0 +1,8 @@
+{% case clear %}
+  {% when '2' %}
+    {% cycle group: '', '<div class="list-clearfix clearfix"></div>' %}
+  {% when '3' %}
+    {% cycle group: '', '', '<div class="list-clearfix clearfix"></div>' %}
+  {% when '4' %}
+    {% cycle group: '', '', '', '<div class="list-clearfix clearfix"></div>' %}
+{% endcase %}

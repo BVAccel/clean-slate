@@ -1,0 +1,55 @@
+{% assign first_percent = section.settings.first_percentage %}
+{% assign first_desc = section.settings.first_description %}
+{% assign second_percent = section.settings.second_percentage %}
+{% assign second_desc = section.settings.second_description %}
+
+<div class="our-tech-percentage-wrapper">
+    <div class="our-tech-percentage">
+        <h3 class="our-tech-percentage__text">
+            <span class="our-tech-percentage__percentage">{{ first_percent }}</span>
+            {{- first_desc -}}
+        </h3>
+    </div>
+    <div class="our-tech-percentage">
+        <h3 class="our-tech-percentage__text">
+            <span class="our-tech-percentage__percentage">{{ second_percent }}</span>
+            {{- second_desc -}}
+        </h3>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "50 50 Split",
+    "settings": [
+        {
+            "type": "header",
+            "content": "First Block"
+        },
+      {
+        "id": "first_percentage",
+        "type": "text",
+        "label": "Percentage"
+      },
+      {
+        "id": "first_description",
+        "type": "text",
+        "label": "Description"
+      },
+        {
+            "type": "header",
+            "content": "Second Block"
+        },
+      {
+        "id": "second_percentage",
+        "type": "text",
+        "label": "Percentage"
+      },
+      {
+        "id": "second_description",
+        "type": "text",
+        "label": "Description"
+      }
+    ]
+  }
+{% endschema %}

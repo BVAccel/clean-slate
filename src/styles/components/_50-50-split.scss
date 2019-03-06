@@ -1,0 +1,72 @@
+.our-tech-percentage-wrapper {
+    background: $color-dark-gray;
+    padding: 30px;
+
+    @include mq($screen-sm) {
+        padding: 3rem 6rem;
+    }
+
+    @include mq($screen-md) {
+        padding: 4rem 7.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.our-tech-percentage {
+    padding: 60px;
+    background: $color-medium-gray;
+    color: white;
+
+    &:first-of-type {
+        margin-bottom: 30px;
+    }
+
+    @include mq($screen-sm) {
+        padding: 135px;
+
+        &:first-of-type {
+            margin-bottom: 6rem;
+        }
+    }
+
+    @include mq($screen-md) {
+        flex-grow: 1;
+        padding: 135px 3rem;
+        &:first-of-type {
+            margin-bottom: 0;
+            margin-right: 3rem;
+        }
+    }
+
+    @include mq($screen-lg) {
+        padding: 135px;
+        &:first-of-type {
+            margin-bottom: 0;
+            margin-right: 7.5rem;
+        }
+    }
+
+    &__text {
+        color: white;
+        text-align: center;
+        font-size: 26px;
+        line-height: 36px;
+        text-transform: uppercase;
+
+        @include mq($screen-sm) {
+            font-size: 40px;
+            line-height: 56px;
+        }
+    }
+
+    &__percentage {
+        display: block;
+        -webkit-text-fill-color: rgba(0,0,0,0);
+        -webkit-text-stroke: 1px;
+        -webkit-text-stroke-color: $color-light-blue;
+        text-align: center;
+        margin-bottom: 1px;
+    }
+}

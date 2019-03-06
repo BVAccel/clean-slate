@@ -1,0 +1,34 @@
+{% include 'section-hero' %}
+{% schema %}
+  {
+    "name": "Hero",
+    "settings": [
+        {
+            "type":      "header",
+            "content":   "Hero",
+            "info":      "Content for Hero Section"
+        },
+        {
+            "id":       "hero_title",
+            "type":     "richtext",
+            "label":    "Hero Title"
+        },
+        {
+            "type":     "color",
+            "id":       "hero_text_color",
+            "label":    "Hero Title Color",
+            "default":  "#ffffff"
+        },
+        {
+            "type":     "image_picker",
+            "id":       "hero_img_mobile",
+            "label":    "Mobile Image"
+        },
+        {
+            "type":     "image_picker",
+            "id":       "hero_img_desktop",
+            "label":    "Desktop Image"
+        }
+    ]
+  }
+{% endschema %}

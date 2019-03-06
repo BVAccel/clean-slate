@@ -1,0 +1,50 @@
+<div class="inline-cart">
+  <div class="inline-cart__backdrop" data-toggle-cart></div>
+  <div class="inline-cart__heading-wrap">
+    <span class="inline-cart__close" data-toggle-cart>&times;</span>
+
+    <h2 class="inline-cart__heading">Your Cart</h2>
+    <h4 class="inline-cart__subheading"></h4>
+  </div>
+
+  {% assign inline_max_qty = settings.inline_cart_item_max_qty_items | plus: 1  %}
+  {% if inline_max_qty %}
+    <!-- max item qty: {{ inline_max_qty }} -->
+  {% endif %}
+
+  <div class="inline-cart__body">
+    <div class="inline-cart__products" data-max-item-qty="{%if inline_max_qty %}{{ inline_max_qty }}{% endif%}">
+    </div>
+
+    <div class="inline-cart__upsell-outer">
+      <div class="inline-cart__upsell inline-cart__upsell--hidden"></div>
+    </div>
+  </div>
+
+  <div class="inline-cart__footer">
+    <div class="inline-cart__subtotal">
+      <span class="inline-cart__subtotal-label">Subtotal</span>
+      <span class="inline-cart__subtotal-price"></span>
+    </div>
+
+
+    {% comment %} US Checkout {% endcomment %}
+    <div class="inline-cart__checkout-container inline-cart__checkout-container--local">
+      <a href="/checkout" class="inline-cart__checkout inline-cart__checkout--local">
+        {% comment %}U.S. &amp; Canada Checkout{% endcomment %}
+        Checkout
+      </a>
+      {% comment %}{% include 'bongo-checkout-button', blockClass: "inline-cart" %}{% endcomment %}
+    </div>
+
+    {% comment %} International Checkout {% endcomment %}
+    {% comment %}
+    <div class="inline-cart__checkout-container inline-cart__checkout-container--international">
+      {% include 'bongo-checkout-button', blockClass: "inline-cart" %}
+      <a href="/checkout" class="inline-cart__checkout inline-cart__checkout--local">Or ship to the U.S.</a>
+    </div>
+    {% endcomment %}
+  </div>
+
+  {% include 'bongo-checkout-form' %}
+</div>

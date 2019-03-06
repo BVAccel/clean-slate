@@ -1,0 +1,41 @@
+.breadcrumbs {
+  display: inline-block;
+  ol {
+    margin: 0;
+  }
+  &__breadcrumb {
+    display: inline-block;
+    margin: 0;
+    &:not(:last-child) {
+      .breadcrumbs__link {
+        opacity: 0.6;
+      }
+      &:after {
+        content: "\00A0\00A0/\00A0\00A0";
+        color: #fff;
+        opacity: 0.6;
+        font-size: 12px;
+        letter-spacing: 0;
+      }
+    }
+  }
+  &__breadcrumb-span {
+    text-transform: uppercase;
+    font-family: $gt-america-mono-regular;
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    &--white {
+      color: white;
+      opacity: 0.6;
+    }
+  }
+  &__link {
+    text-transform: uppercase;
+    font-family: $gt-america-mono-regular;
+    font-size: 12px;
+    letter-spacing: 2px;
+    line-height: 16px;
+    color: #fff;
+  }
+}

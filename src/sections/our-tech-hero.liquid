@@ -1,0 +1,129 @@
+
+{% assign hero_title         = section.settings.hero_title %}
+{% assign hero_title_color   = section.settings.hero_text_color %}
+{% assign hero_img_mobile    = section.settings.hero_img_mobile %}
+{% assign hero_img_desktop   = section.settings.hero_img_desktop %}
+
+{% if hero_title and hero_img_mobile %}
+    
+<section class="our-tech-hero-wrapper">
+    <div class="container">
+        {% include 'breadcrumbs', additional_class: 'our-tech__breadcrumbs'%}
+    </div>
+    <div class="our-tech-hero container">
+        <div class="our-tech-hero__title">{{ hero_title | default: 'Hero Title Goes Here' }}</div>
+    </div>
+    <div class="our-tech-hero__arrow-wrapper">
+        <div class="our-tech-hero__container container">
+            <img src="{{ 'arrow-down--white.svg' | asset_url }}" alt="scroll down" class="our-tech-hero__arrow" data-scroll-to-next-section>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% style %}
+    {% if hero_img_mobile %}
+        .our-tech-hero-wrapper {
+            background-image: url('{{ hero_img_mobile | img_url: '480x' }}');
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_mobile | img_url: '960x' }}');
+            }
+        }
+
+        {% comment %} large phone {% endcomment %}
+        @media screen and (min-width: 480px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_mobile | img_url: '768x' }}');
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 480px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_mobile | img_url: '1536x' }}');
+            }
+        }
+
+        {% comment %} tablet {% endcomment %}
+        @media screen and (min-width: 720px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_mobile | img_url: '960x' }}');
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 720px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_mobile | img_url: '1920x' }}');
+            }
+        }
+    {% endif %}
+
+    {% if hero_img_desktop %}
+        @media screen and (min-width: 1020px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_desktop | img_url: '1020x' }}');
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1020px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_desktop | img_url: '2040x' }}');
+            }
+        }
+
+        @media screen and (min-width: 1440px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_desktop | img_url: '1440x' }}');
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1440px) {
+            .our-tech-hero-wrapper {
+                background-image: url('{{ hero_img_desktop | img_url: '2880x' }}');
+            }
+        }
+    {% endif %}
+
+    {% if hero_title_color %}
+        .our-tech-hero__title p {
+            color: {{ hero_title_color }} !important;
+        }
+
+        .our-tech-hero__title p em {
+            -webkit-text-stroke-color: {{ hero_title_color }} !important;
+        }
+    {% endif %}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Our Technology Hero",
+    "settings": [
+        {
+            "type":      "header",
+            "content":   "Hero",
+            "info":      "Content for Hero Section"
+        },
+        {
+            "id":       "hero_title",
+            "type":     "richtext",
+            "label":    "Hero Title"
+        },
+        {
+            "type":     "color",
+            "id":       "hero_text_color",
+            "label":    "Hero Title Color",
+            "default":  "#ffffff"
+        },
+        {
+            "type":     "image_picker",
+            "id":       "hero_img_mobile",
+            "label":    "Mobile Image"
+        },
+        {
+            "type":     "image_picker",
+            "id":       "hero_img_desktop",
+            "label":    "Desktop Image"
+        }
+    ]
+  }
+{% endschema %}

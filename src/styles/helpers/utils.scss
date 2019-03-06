@@ -1,0 +1,7 @@
+.hide-tablet-down {
+  display: none !important;
+
+  @include mq($screen-sm) {
+    display: inherit !important;
+  }
+}

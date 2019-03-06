@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="240px" viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>illustration/thermal</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="illustration/thermal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Rectangle-4-Copy">
+            <rect x="0" y="0" width="240" height="240"></rect>
+        </g>
+        <g id="Group-7" transform="translate(98.000000, 68.000000)">
+            <path d="M11.6750924,16.9795918 L11.6750924,61.1907654 C4.73593277,64.7757571 0,71.92941 0,80.1737737 C0,92.0134431 9.75852101,101.610666 21.7954286,101.610666 C33.8332101,101.610666 43.592605,92.0134431 43.592605,80.1737737 C43.592605,71.92941 38.8557983,64.7757571 31.9157647,61.1907654 L31.9157647,16.9795918" id="Fill-2" fill="#BCDEED"></path>
+            <path d="M31.9166387,62.7352066 L31.9166387,9.95305785 C31.9166387,4.47887603 27.3624874,0 21.7963025,0 C16.2301176,0 11.6759664,4.47887603 11.6759664,9.95305785 L11.6759664,62.7352066 C4.73593277,66.3210579 0,73.4738512 0,81.7190744 C0,93.5578843 9.75852101,103.155107 21.7963025,103.155107 C33.834084,103.155107 43.592605,93.5578843 43.592605,81.7190744 C43.592605,73.4738512 38.8557983,66.3210579 31.9166387,62.7352066 Z" id="Stroke-44" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M23.3469388,16.9795918 L42.6122833,16.9795918" id="Stroke-46" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M23.3469388,27.5918367 L42.6122833,27.5918367" id="Stroke-48" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M23.3469388,40.3265306 L42.6122833,40.3265306" id="Stroke-50" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M23.3469388,50.9387755 L42.6122833,50.9387755" id="Stroke-52" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,55 @@
+{% assign section_heading = section.settings.section_heading %}
+{% assign section_text = section.settings.section_text %}
+{% assign theme_color = section.settings.theme_select %}
+{% if remove_top_padding_on_desktop %}
+  {% assign padding = 'text-section--remove-top-padding-on-desktop' %}
+{% endif %}
+
+{% if section_text != empty %}
+  <div class="text-section text-section--{{ theme_color }} {{ padding }}">
+    {% if section_heading %}
+      <h2 class="text-section__heading text-section__heading--{{ theme_color }}">{{ section_heading }}</h2>
+    {% endif %}
+    <p class="text-section__text text-section__text--{{ theme_color }}">
+      {{- section_text | newline_to_br -}}
+    </p>
+  </div>
+{% endif %}
+
+
+{% comment %} Include the following schema in the wrapping section file {% endcomment %}
+{% comment %}
+  {
+    "name": "Text Section",
+    "class": "text-section",
+    "settings": [
+      {
+        "id": "section_heading",
+        "type": "text",
+        "label": "Heading"
+      },
+      {
+        "id": "section_text",
+        "type": "textarea",
+        "label": "Text"
+      },
+      {
+        "type": "select",
+        "id": "theme_select",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "light"
+      }
+    ]
+  }
+{% endcomment %}

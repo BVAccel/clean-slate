@@ -1,0 +1,61 @@
+.text-section {
+  padding: 4rem 2rem;
+  background: #fcfaf5;
+
+  &--dark {
+    background: $color-dark-gray;
+    color: white;
+  }
+
+  @include mq($screen-sm) {
+    padding: 3rem 6rem;
+  }
+
+  @include mq($screen-md) {
+    padding: 5rem 6rem;
+
+    &--remove-top-padding-on-desktop {
+      padding: 0 6rem 5rem;
+    }
+  }
+
+  &__heading {
+    font-family: $gt-america-mono-regular;
+    font-size: 14px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    max-width: 720px;
+    margin: 0 auto 4px;
+
+    &--dark {
+      color: white;
+    }
+
+    @include mq($screen-sm) {
+      padding-top: 3.5rem;
+    }
+
+    @include mq($screen-md) {
+      padding-top: 2.75rem;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__text {
+    font-family: $gt-america-regular;
+    font-size: 22px;
+    line-height: 32px;
+    max-width: 720px;
+    margin: 0 auto;
+
+    &--dark {
+      color: white;
+    }
+
+    @include mq($screen-sm) {
+      font-size: 26px;
+      line-height: 38px;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="240px" viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>illustration/thickness</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="illustration/thickness" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="illustration/thin">
+            <rect id="Rectangle-4-Copy-2" x="0" y="0" width="240" height="240"></rect>
+            <g id="Group-10" transform="translate(56.000000, 84.000000)">
+                <path d="M0,50.8235294 C0,50.8235294 47.4319059,63.4764451 63.2431059,63.4764451 C79.0534588,63.4764451 126.485365,50.8235294 126.485365,50.8235294 L126.485365,71.8674812 L63.2431059,71.8674812 L0,71.8674812 L0,50.8235294 Z" id="Stroke-8" stroke="#231F20" stroke-width="1.6"></path>
+                <path d="M0,50.8235294 C0,50.8235294 47.4319059,63.4764451 63.2431059,63.4764451 C79.0534588,63.4764451 126.485365,50.8235294 126.485365,50.8235294 L126.485365,71.8674812 L63.2431059,71.8674812 L0,71.8674812 L0,50.8235294 Z" id="Fill-10" fill="#BCDEED"></path>
+                <path d="M0,50.8235294 C0,50.8235294 47.4319059,63.4764451 63.2431059,63.4764451 C79.0534588,63.4764451 126.485365,50.8235294 126.485365,50.8235294 L126.485365,71.8674812 L63.2431059,71.8674812 L0,71.8674812 L0,50.8235294 Z" id="Stroke-12" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M0,40.2352941 C0,40.2352941 47.4319059,57.1362098 63.2431059,57.1362098 C79.0534588,57.1362098 126.485365,40.2352941 126.485365,40.2352941" id="Stroke-14" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M63.5294118,0 L63.5294118,43.3648193" id="Stroke-16" stroke="#232323" stroke-width="3" stroke-linecap="round"></path>
+                <polyline id="Stroke-4" stroke="#232323" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="75.8719059 33.8823529 63.3481412 46.7087626 50.8235294 33.8823529"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

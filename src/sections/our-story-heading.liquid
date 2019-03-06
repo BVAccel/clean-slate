@@ -1,0 +1,40 @@
+{% assign text = section.settings.text %}
+{% assign theme_color = section.settings.section_theme_color %}
+
+{% if text %}
+  <section class="heading-section heading-section--{{ theme_color }}">
+    <div class="container heading-section__container">
+      <h2 class="heading-section__heading heading-section__heading--{{ theme_color }}">{{ text }}</h2>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Heading",
+    "settings": [
+      {
+        "id": "text",
+        "type": "text",
+        "label": "Heading Text"
+      },
+      {
+        "type": "select",
+        "id": "section_theme_color",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+          {
+            "value": "dark",
+            "label": "Dark"
+          },
+          {
+            "value": "light",
+            "label": "Light"
+          }
+        ],
+        "default": "dark"
+      }
+    ]
+  }
+{% endschema %}

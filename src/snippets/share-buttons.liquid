@@ -1,0 +1,66 @@
+{% assign shareCountClass = '' %}
+
+{% if template contains 'article' or template contains 'blog' %}
+
+  {% capture permalinkURL %}{{ shop.url }}{{ article.url }}{% endcapture %}
+
+  {% unless settings.blog-display-share-count %}
+    {% assign shareCountClass = 'no-count' %}
+  {% endunless %}
+
+{% elsif template contains 'product' %}
+
+  {% capture permalinkURL %}{{ shop.url }}{{ product.url }}{% endcapture %}
+
+  {% unless settings.product-display-share-count %}
+    {% assign shareCountClass = 'no-count' %}
+  {% endunless %}
+
+{% endif %}
+
+<div class="share-buttons {{ shareCountClass }}" data-permalink="{{ permalinkURL }}">
+
+  <a class="share-buttons-item share-facebook" target="_blank" href="//www.facebook.com/sharer.php?u={{ permalinkURL }}"><span>{{ 'general.social.facebook' | t }}</span> <span class="share-count"></span></a>
+
+  <a class="share-buttons-item share-twitter" target="_blank" href="//twitter.com/share?url={{ permalinkURL }}"><span>{{ 'general.social.twitter' | t }}</span> <span class="share-count"></span></a>
+
+  {% if template contains 'product' %}
+
+    <a class="share-buttons-item share-pinterest" target="_blank" href="//pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ product.featured_image | product_img_url: 'original' }}&amp;description={{ product.title | url_escape }}"><span>{{ 'general.social.pinterest' | t }}</span> <span class="share-count"></span></a>
+
+    <a class="share-buttons-item share-fancy" target="_blank" href="http://www.thefancy.com/fancyit?ItemURL={{ permalinkURL }}&amp;Title={{ product.title | url_escape }}&amp;Category=Other&amp;ImageURL={{ product.featured_image | product_img_url: 'original' }}"><span>{{ 'general.social.fancy' | t }}</span></a>
+  
+  {% endif %}
+  
+  {% if template contains 'article' %}
+    
+    {% if article.image %}
+      {% assign src = article.image | img_url: 'large' %}
+    {% else %}
+      {% assign src = false %}
+      {% assign img_tag = '<img' %}
+      {% if article.excerpt_or_content contains img_tag %}
+        {% assign src = article.excerpt_or_content | split: 'src="' %}
+        {% assign src = src[1] | split: '"' | first %}
+      {% endif %}
+    {% endif %}
+    
+    {% if src %}
+    
+      <a class="share-buttons-item share-pinterest" target="_blank" href="//pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ src }}&amp;description={{ product.title | escape }}"><span>{{ 'general.social.pinterest' | t }}</span> <span class="share-count"></span></a>
+
+      <a class="share-buttons-item share-fancy" target="_blank" href="http://www.thefancy.com/fancyit?ItemURL={{ permalinkURL }}&amp;Title={{ product.title }}&amp;Category=Other&amp;ImageURL={{ src }}"><span>{{ 'general.social.fancy' | t }}</span></a>
+    
+    {% else %}
+
+      <a class="share-buttons-item share-pinterest disabled"><span>{{ 'general.social.pinterest' | t }}</span> <span class="share-count"></span></a>
+
+      <a class="share-buttons-item share-fancy disabled"><span>{{ 'general.social.fancy' | t }}</span></a>
+
+    {% endif %}
+    
+  {% endif %}
+
+  <a class="share-buttons-item share-google" target="_blank" href="//plus.google.com/share?url={{ permalinkURL }}"><span></span> <span class="share-count">{{ 'general.social.google' | t }}</span></a>
+
+</div>

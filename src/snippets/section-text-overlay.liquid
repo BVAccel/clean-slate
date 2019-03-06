@@ -1,0 +1,125 @@
+{% assign section_heading = section.settings.section_heading %}
+{% assign section_text = section.settings.section_text %}
+
+{% assign cta_1_text = section.settings.section_cta_1_text %}
+{% assign cta_1_url = section.settings.section_cta_1_url %}
+{% assign cta_2_text = section.settings.section_cta_2_text %}
+{% assign cta_2_url = section.settings.section_cta_2_url %}
+
+{% assign section_image = section.settings.section_image %}
+{% assign section_theme_select = section.settings.section_theme_select %}
+{% assign section_layout_select = section.settings.section_theme_layout %}
+{% assign section_hide_arrow = section.settings.section_hide_arrow %}
+
+{% assign icon = 'arrow-right--white.svg' %}
+{% assign hide_arrow = false %}
+{% if section_theme_select == 'light' or section_theme_select == 'white' %}
+  {% assign icon = 'arrow-right-black.svg' %}
+{% endif %}
+
+{% if section_hide_arrow == true %}
+    {% assign hide_arrow = true %}
+{% endif %}
+
+{% if section_heading != blank or section_image != blank %}
+    <div class="text-overlay-section text-overlay-section--{{ section_theme_select }} text-overlay-section--{{ section_layout_select }}">
+
+        <div class="text-overlay-section__container text-overlay-section__container--{{ section_layout_select }}">
+
+            {% unless section_image == blank %}
+                <picture class="text-overlay-section__picture">
+                    <source media="(min-width: 1440px)" srcset="{{ section_image | img_url: '1920x' }}, {{ section_image | img_url: '3840x'}} 2x">
+                    <source media="(min-width: 1080px)" srcset="{{ section_image | img_url: '1440x' }}, {{ section_image | img_url: '2880x'}} 2x">
+                    <source media="(min-width: 768px)" srcset="{{ section_image | img_url: '960x' }}, {{ section_image | img_url: '1920x'}} 2x">
+                    <source media="(min-width: 480px)" srcset="{{ section_image | img_url: '640x' }}, {{ section_image | img_url: '1280x'}} 2x">
+                    <source media="(min-width: 375px)" srcset="{{ section_image | img_url: '480x' }}, {{ section_image | img_url: '960x'}} 2x">
+                    <source srcset="{{ section_image | img_url: '375x' }}, {{ section_image | img_url: '750x' }} 2x">
+                    <img src="{{ section_image | img_url: '1200x' }}" alt="{{ section_image.alt | escape }}" class="text-overlay-section__image text-overlay-section__image--{{ section_layout_select }}">
+                </picture>
+            {% endunless %}
+
+            <div class="text-overlay-section__content">
+                {% if section_heading %}
+                    <h3 class="text-overlay-section__heading">{{ section_heading }}</h3>
+                    {% if section_text != empty %}
+                        <div class="text-overlay-section__text{% if hide_arrow %} text-overlay-section__text--no-arrow{% endif %}">
+                            {% unless hide_arrow %}
+                                <img src="{{ icon | asset_url }}" alt="" class="text-overlay-section__accent">
+                            {% endunless %}
+                            {{ section_text }}
+
+                            {% if cta_1_text and cta_1_url %}
+                                <a href="{{ cta_1_url }}" class="btn btn--striped text-overlay-section__btn">{{ cta_1_text }}</a>
+                            {% endif %}
+                            {% if cta_2_text and cta_2_url %}
+                                <a href="{{ cta_2_url }}" class="btn btn--striped text-overlay-section__btn">{{ cta_2_text }}</a>
+                            {% endif %}
+                        </div>
+
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+{% endif %}
+
+{% comment %} Add the following schema in the wrapping section file {% endcomment %}
+{% comment %}
+
+  {
+    "name": "Text Overlay",
+    "settings": [
+      {
+        "id": "section_heading",
+        "type": "text",
+        "label": "Heading"
+      },
+      {
+        "id": "section_text",
+        "type": "richtext",
+        "label": "Text"
+      },
+      {
+          "id": "section_image",
+          "type": "image_picker",
+          "label": "Background Image"
+      },
+      {
+        "type": "select",
+        "id": "section_theme_layout",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+            {
+                "value": "image-right",
+                "label": "Image Right"
+            },
+            {
+                "value": "image-left",
+                "label": "Image Left"
+            }
+        ],
+        "default": "image-left"
+    },
+      {
+        "type": "select",
+        "id": "section_theme_select",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+            {
+                "value": "dark",
+                "label": "Dark"
+            },
+            {
+                "value": "light",
+                "label": "Light"
+            }
+        ],
+        "default": "dark"
+    }
+    ]
+  }
+{% endcomment %}

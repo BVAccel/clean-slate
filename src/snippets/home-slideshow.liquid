@@ -1,0 +1,94 @@
+{% assign slideCount = 0 %}
+{% for x in (1..5) %}
+  {% capture enable %}show-slide-{{x}}{% endcapture %}
+  {% if settings[enable] %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+{% endfor %}
+
+
+<div class="home-slideshow-wrapper {{ settings.slideshow-layout }} {{ settings.slideshow-transition }}" data-home-slideshow>
+
+  <div class="home-slideshow-loader"></div>
+
+  {% if slideCount > 1 %}
+    <a class="home-slideshow-navigation home-slideshow-previous icon icon-angle-left" href="#" tabindex="0"></a>
+    <a class="home-slideshow-navigation home-slideshow-next icon icon-angle-right" href="#" tabindex="0"></a>
+
+    <div class="home-slideshow-pagination">
+      {% for x in (1..5) %}
+        {% capture enable %}show-slide-{{x}}{% endcapture %}
+        {% if settings[enable] %}
+          <span data-slide-id="home-slide-{{ x }}" class="pagination-list-item pagination-slide-{{ x }}"><span></span></span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="home-slideshow">
+    {% if slideCount > 0 %}
+      {% for x in (1..5) %}
+        {% capture enable %}show-slide-{{x}}{% endcapture %}
+        {% capture id %}home-slide-{{x}}{% endcapture %}
+        {% capture class %}home-slide home-slide-{{x}}{% endcapture %}
+        {% capture align %}slide-{{x}}-text-alignment{% endcapture %}
+        {% capture overlay %}slide-{{x}}-overlay-style{% endcapture %}
+        {% capture overlay-opacity %}slide-{{x}}-overlay-opacity{% endcapture %}
+        {% capture image %}slide-{{x}}-image.jpg{% endcapture %}
+        {% capture cta %}slide-{{x}}-cta{% endcapture %}
+        {% capture url %}slide-{{x}}-url{% endcapture %}
+        {% capture title %}slide-{{x}}-title{% endcapture %}
+        {% capture subtitle %}slide-{{x}}-subtitle{% endcapture %}
+        {% capture slide-text-style %}slide-{{x}}-text-style{% endcapture %}
+
+        {% if settings[enable] != false %}
+          <div id="{{id}}" class="{% if forloop.first %}active{% endif %} {{ class }} text-aligned-{{ settings[align] }} overlay overlay-{{ settings[overlay] }} overlay-opacity-{{ settings[overlay-opacity]}}" {% if settings.slideshow-layout == 'full-window' %}style="background-image: url({{ image | asset_url }});"{% endif %} data-slide-text="{{ settings[slide-text-style] }}">
+
+              {% if settings[cta] == blank and settings[url] != blank %}<a href="{{ settings[url] }}" class="slideshow-media-wrap-link">{% endif %}
+                <div class="slide-image-container" style="background-image:url({{ image | asset_url }})">
+                  <img class="slide-image" alt="{{ settings[title] | strip_html | escape }}" src="{{ image | asset_url }}" />
+                </div>
+              {% if settings[cta] == blank and settings[url] != blank %}</a>{% endif %}
+
+              {% if settings[cta] == blank and settings[url] != blank %}<a href="{{ settings[url] }}">{% endif %}
+                <div class="slide-text {{ settings[slide-text-style] }}">
+                  {% if settings[title] != blank %}
+                    <h2>{{ settings[title] }}</h2>
+                  {% endif %}
+
+                  {% if settings[subtitle] != blank %}
+                    <h3>{{ settings[subtitle] }}</h3>
+                  {% endif %}
+
+                  {% if settings[cta] != blank and settings[url] != blank %}
+                    <a class="button outline" href="{{ settings[url] }}">
+                      {{ settings[cta] }}
+                      <span class="icon icon-arrow-right"></span>
+                    </a>
+                  {% endif %}
+                </div>
+              {% if settings[cta] == blank and settings[url] != blank %}</a>{% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% assign slideImage = 'slideshow-no-image.jpg' | asset_url %}
+      {% assign onBoardingSlideStyle = 'light' %}
+      <div id="home-slide-1" class="active home-slide home-slide-1 text-aligned-center overlay overlay-gradient overlay-opacity-8" {% if settings.slideshow-layout == 'full-window' %}style="background-image: url({{ slideImage }});"{% endif %} data-slide-text="{{ onBoardingSlideStyle }}">
+        <div class="slide-image-container" style="background-image:url({{ slideImage }})">
+          <img class="slide-image" src="{{ slideImage }}" alt="{{ 'onboarding.slideshow_section.section_title' | t }}"/>
+        </div>
+
+        <div class="slide-text {{ onBoardingSlideStyle }}">
+          <h2>{{ 'onboarding.slideshow_section.section_title' | t }}</h2>
+
+          <h3>{{ 'onboarding.slideshow_section.subtitle' | t }}</h3>
+
+          <a class="button outline" href="{{ shop.url }}/admin/themes">
+            {{ 'onboarding.theme_settings_link' | t }}
+            <span class="icon icon-arrow-right"></span>
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+</div>

@@ -1,0 +1,77 @@
+<div class="module-wrapper style-{{ settings.product-specification-style }} border">
+  <div class="module product-specification">
+    {% if settings.product-specification-hero-title != blank %}
+      <div class="module-header product-specification-header">
+        {% if settings.product-specification-hero-title != blank %}
+          <h3 class="module-title product-specification-titles">{{ settings.product-specification-hero-title }}</h3>
+        {% endif %}
+        {% if settings.product-specification-hero-subtitle != blank %}
+          <p class="module-subtitle">{{ settings.product-specification-hero-subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="module-body product-specification-body">
+      <div class="product-specification-left-right-features">
+        <div class="product-specification-left-right-feature clearfix media-aligned-{{ settings.product-specification-align }}">
+          {% if settings.use-product-specification-image and settings.product-specification-align == 'left' %}
+            <div class="product-specification-left-right-section product-specification-left-right-media">
+              <img class="product-specification-left-right-image" src="{{ 'product-specification-image.png' | asset_url }}" {% if settings.product-specification-hero-title != blank %}alt="{{ settings.product-specification-hero-title }}" {% endif %}/>
+            </div>
+          {% endif %}
+          <div class="product-specification-left-right-section product-specification-left-right-text {{ settings.product-specification-align }}">
+            <div class="product-specification-list-container">
+              <ul class="product-specification-list">
+                {% for x in (1..4) %}
+                  {% capture iconName %}product-specification-section-icon-{{x}}{% endcapture %}
+                  {% capture title %}product-specification-section-{{x}}-title{% endcapture %}
+                  {% capture text %}product-specification-section-{{x}}-text{% endcapture %}
+                  {% capture index %}{{ forloop.index }}{% endcapture %}
+                  {% if settings[title] != blank and settings[text] != blank %}
+                    <li class="product-specification-list-item list-item-{{ index }} clearfix">
+                      <div class="product-specification-list-item-left">
+                        {% if settings[iconName] != blank %}
+                          {% include 'font-icon', icon: settings[iconName], class: 'product-specification-list-item-icon', title: settings[title], size: 'custom' %}
+                        {% endif %}
+                        {% if settings[title] != blank %}
+                          <h4 class="module-title product-specification-list-item-title">{{ settings[title] }}</h4>
+                        {% endif %}
+                      </div>
+                      <div class="product-specification-list-item-right">
+                        {% if settings[text] != blank %}
+                          <div class="module-content product-specification-list-item-text rte">{{ settings[text] }}</div>
+                        {% endif %}
+                      </div>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          {% if settings.use-product-specification-image and settings.product-specification-align == 'right' %}
+            <div class="product-specification-left-right-section product-specification-left-right-media">
+              <img class="product-specification-left-right-image" src="{{ 'product-specification-image.png' | asset_url }}" {% if settings.product-specification-hero-title != blank %}alt="{{ settings.product-specification-hero-title }}" {% endif %}/>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if settings.product-specification-show-download %}
+      <div class="module-footer product-specification-footer">
+        <div class="module-cta product-specification-cta">
+          <a class="button outline product-specification-button" href="{{ 'product-specification-download-image.jpg' | asset_url }}" download="product-specification-download-image.jpg" target="_blank">
+            {% if settings.product-specification-show-download-button != blank %}
+              {{ settings.product-specification-show-download-button }}
+            {% else %}
+              {{ "products.product.full_spec" | t }}
+            {% endif %}
+          </a>
+        </div>
+        {% if settings.product-specification-show-download-subline != blank %}
+          <div class="module-cta-subline">
+            {{ settings.product-specification-show-download-subline }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>

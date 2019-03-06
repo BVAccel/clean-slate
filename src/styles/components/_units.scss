@@ -1,0 +1,12 @@
+.unit {
+  &--imperial {
+    .metric {
+      display: none;
+    }
+  }
+  &__metric {
+    .imperial {
+      display: none;
+    }
+  }
+}

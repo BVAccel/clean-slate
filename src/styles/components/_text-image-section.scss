@@ -1,0 +1,118 @@
+.text-image-section {
+	padding: 30px 30px 60px;
+	font-family: $gt-america-regular;
+
+	@include mq($screen-sm) {
+		padding: 6rem; // 96px
+	}
+
+	@include mq($screen-md) {
+		padding: 5rem 7.5rem; // 80px | 120px
+	}
+
+	&__theme {
+		&--light {
+			background: $color-background-light;
+			color: #232323;
+
+			.text-image-section__copy,
+			.text-image-section__copy p{
+				color: $color-dark-gray;
+			}
+		}
+
+		&--dark {
+			background: #232323;
+			color: #ffffff;
+		}
+	}
+
+	&__container {
+		display: block;
+		&.container {
+			padding-right: 0;
+			padding-left: 0;
+			max-width: unset;
+			width: unset;
+		}
+
+		@include mq($screen-md) {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-direction: row;
+			padding: 0 60px;
+
+			&--image-right {
+				& > picture,
+				& > image {
+					order: 3;
+					flex-basis: auto;
+				}
+			}
+		}
+	}
+
+	&__picture {
+		@include mq($screen-sm) {
+			flex-basis: 640px;
+		}
+	}
+
+	&__image {
+		width: 100%;
+		height: calc(100vw - 60px);
+		object-fit: cover;
+		margin-bottom: 40px;
+
+		@include mq($screen-sm) {
+			margin-left: 0;
+			margin-bottom: 6rem;
+		}
+
+		@include mq($screen-md) {
+			height: 30rem;
+			width: 30rem;
+			object-fit: cover;
+			margin-bottom: 0;
+		}
+	}
+
+	&__copy {
+		font-family: $gt-america-regular;
+		font-size: 24px;
+		font-weight: 300;
+		color: white;
+		padding: 0;
+
+		p {
+			font-family: $gt-america-regular;
+			font-size: 24px;
+			font-weight: 300;
+			color: white;
+			padding: 0;
+			margin-bottom: 0;
+
+			&:empty + p {
+				margin-top: 20px;
+			}
+		}
+
+		@include mq($screen-sm) {
+			padding: 0;
+			font-size: 26px;
+			line-height: 38px;
+		}
+
+		@include mq($screen-md) {
+			max-width: 34rem;
+			padding: 0 1rem;
+			font-size: 28px;
+			line-height: 40px;
+		}
+
+		@include mq($screen-lg) {
+			padding: 0;
+		}
+	}
+}

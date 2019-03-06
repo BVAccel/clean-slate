@@ -1,0 +1,23 @@
+<script>
+var shortenButtons = function() {
+  const buttonElement = document.querySelector('.hidden-sm-down .button.button.button--flat-default.button--medium span');
+  const buttonText = buttonElement.innerHTML.replace('Return to ', '');
+  buttonElement.innerHTML = buttonText;
+};
+
+Flow.set('on', 'pageview.checkout_step_1', function (data) {
+  // shortenButtons();
+});
+
+Flow.set('on', 'pageview.checkout_step_2', function (data) {
+  shortenButtons();
+});
+
+Flow.set('on', 'pageview.checkout_step_3', function (data) {
+  shortenButtons();
+});
+
+Flow.set('on', 'pageview.checkout_thank_you', function (data) {
+  // shortenButtons();
+});
+</script>

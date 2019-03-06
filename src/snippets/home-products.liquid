@@ -1,0 +1,55 @@
+<div class="module-wrapper style-{{ settings.home-featured-products-style}} border">
+  <div class="module home-products">
+
+    {% if collections[settings.home-featured-products-collection].products.size > 0 %}
+      {% if settings.home-featured-products-title != blank %}
+        <div class="module-header home-products-header">
+          <h3 class="module-title">{{ settings.home-featured-products-title }}</h3>
+          {% if settings.home-featured-products-subtitle != blank %}
+            <p class="module-subtitle">{{ settings.home-featured-products-subtitle }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="module-header home-products-header">
+        <h3 class="module-title">{{ 'onboarding.featured_products_section.section_title' | t }}</h3>
+      </div>
+    {% endif %}
+
+    <div class="module-body home-products-body">
+      {% if settings.home-featured-products-collection != blank %}
+        {% if shop.products_count > 0 and collections[settings.home-featured-products-collection].products.size == 0 %}
+          {% capture collection_screen_link %}
+            <a href="{{ shop.url }}/admin/collections">{{ 'onboarding.collection_screen_link' | t }}</a>
+          {% endcapture %}
+          <div class="module-content module-helper">
+            <p>{{ 'onboarding.featured_products_section.no_products_in_collection_text_html' | t }}</p>
+          </div>
+        {% elsif shop.products_count == 0 %}
+          {% capture new_product_link %}
+            <a href="{{ shop.url }}/admin/products/new">{{ 'onboarding.new_product_link' | t }}</a>
+          {% endcapture %}
+          <div class="module-content module-helper">
+            <p>{{ 'onboarding.featured_products_section.no_products_in_shop_text_html' | t }}</p>
+          </div>
+        {% else %}
+          {% capture home_product_limit %}
+            {{ settings.home-featured-products-column | times: settings.home-featured-rows-quantity }}
+          {% endcapture %}
+          <div class="list compact crop image-contain column-{{ settings.home-featured-products-column }}">
+            {% for product in collections[settings.home-featured-products-collection].products limit: home_product_limit %}
+              {% include 'product-list-item', excludeCover: true %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% if settings.home-featured-products-cta != blank %}
+      <div class="module-footer home-products-footer">
+        <a class="button" href="{{ collections[settings.home-featured-products-collection].url }}">{{ settings.home-featured-products-cta }}</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>

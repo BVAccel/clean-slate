@@ -1,0 +1,252 @@
+
+
+{% for tag in product.tags %}
+  <!-- tag: {{tag}} -->
+  {% if tag contains 'fit-guide::' %}
+    <!-- CONTAINS FIT GUIDE TAG -->
+    {% assign custom_fit_guide = tag | remove: 'fit-guide::' %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<!-- product type: {{ product.type }} -->
+<section class="sizing">
+  <div data-sizing-toggle class="sizing__close">&times;</div>
+
+  <div class="container" data-fit-guide="{{ custom_fit_guide }}">
+    <h1 class="sizing__heading">Fit Guide</h1>
+    <div class="row">
+      <div class="col-xl-8">
+        {% if product.metafields.c_f.Sizing_Model != blank %}
+        <p class="sizing__subheading">{{ product.metafields.c_f.Sizing_Model }}</p>
+        {% endif %}
+
+        <div class="sizing__table-wrap" js-sizing-guide-table-wrap>
+          {% comment %} If Womens {% endcomment %}
+          {% if product.handle contains "women" %}
+          <table class="sizing__table sizing__table--in">
+            <tbody>
+              <tr>
+                <th class="sizing__unit sizing__unit--in" data-sizing-unit>Inches &#9660;</th>
+                <th class="sizing__unit sizing__unit--cm" data-sizing-unit>Centimeters &#9660;</th>
+                <th>XS</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>X-Large</th>
+                <th>XX-Large</th>
+              </tr>
+              <tr>
+                <td>Bust</td>
+                <td>32-33"</td>
+                <td>81.3-83.8</td>
+                <td>34-35"</td>
+                <td>86.4-89</td>
+                <td>36-38"</td>
+                <td>91.4-96.5</td>
+                <td>39-41"</td>
+                <td>99-104</td>
+                <td>41-43"</td>
+                <td>104-109</td>
+                <td>43-46"</td>
+                <td>109-116.8</td>
+              </tr>
+              <tr>
+                <td>Waist</td>
+                <td>24-26</td>
+                <td>61-66</td>
+                <td>26-28</td>
+                <td>66-71</td>
+                <td>28-30</td>
+                <td>71-76</td>
+                <td>30-32</td>
+                <td>76-81.3</td>
+                <td>33-36</td>
+                <td>84-91.4</td>
+                <td>37-40</td>
+                <td>94-101.6</td>
+              </tr>
+              <tr>
+                <td>Hip</td>
+                <td>33-35"</td>
+                <td>83.8-89</td>
+                <td>36-38"</td>
+                <td>91.4-96.5</td>
+                <td>39-41"</td>
+                <td>99-104</td>
+                <td>41-43"</td>
+                <td>104-109</td>
+                <td>43-45"</td>
+                <td>109-114.3</td>
+                <td>45-48"</td>
+                <td>114.3-122</td>
+              </tr>
+              <tr>
+                <td>Arm</td>
+                <td>29-30</td>
+                <td>73.7-76.2</td>
+                <td>30-31</td>
+                <td>76.2-78.7</td>
+                <td>31-32</td>
+                <td>78.7-81.3</td>
+                <td>32-33</td>
+                <td>81.-83.8</td>
+                <td>33-34</td>
+                <td>83.8-86.4</td>
+                <td>34-36</td>
+                <td>86.4-91.4</td>
+              </tr>
+              <tr>
+                <td>Inseam</td>
+                <td>32</td>
+                <td>81.3</td>
+                <td>32</td>
+                <td>81.3</td>
+                <td>32</td>
+                <td>81.3</td>
+                <td>32</td>
+                <td>81.3</td>
+                <td>32</td>
+                <td>81.3</td>
+                <td>32</td>
+                <td>81.3</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {% comment %} If Mens or Unisex {% endcomment %}
+          {% else %}
+          <table class="sizing__table sizing__table--in">
+            <tbody>
+              <tr>
+                <th class="sizing__unit sizing__unit--in" data-sizing-unit>Inches &#9660;</th>
+                <th class="sizing__unit sizing__unit--cm" data-sizing-unit>Centimeters &#9660;</th>
+                <th>Small</th>
+                <th>Medium</th>
+                <th>Large</th>
+                <th>XL</th>
+                <th>2XL</th>
+                <th>3XL</th>
+              </tr>
+              <tr>
+                <td>Chest</td>
+                <td>36-38"</td>
+                <td>91.4-96.5</td>
+                <td>39-41"</td>
+                <td>99-104</td>
+                <td>42-44"</td>
+                <td>106.5-112</td>
+                <td>45-47"</td>
+                <td>114.3-119.4</td>
+                <td>48-50"</td>
+                <td>122-127</td>
+                <td>51-54"</td>
+                <td>129.5-137</td>
+              </tr>
+              <tr>
+                <td>Waist</td>
+                <td>29-31"</td>
+                <td>73.7-78.7</td>
+                <td>32-34"</td>
+                <td>81.3-86.4</td>
+                <td>35-37"</td>
+                <td>89-94</td>
+                <td>38-40"</td>
+                <td>96.5-101.6</td>
+                <td>41-44"</td>
+                <td>104-112</td>
+                <td>45-47"</td>
+                <td>114.3-119.4</td>
+              </tr>
+              <tr>
+                <td>Hip</td>
+                <td>36-38"</td>
+                <td>91.4-96.5</td>
+                <td>39-41"</td>
+                <td>99-104</td>
+                <td>42-44"</td>
+                <td>106.5-112</td>
+                <td>45-48"</td>
+                <td>114.3-122</td>
+                <td>49-51"</td>
+                <td>124.5-129.5</td>
+                <td>52-54"</td>
+                <td>132-137</td>
+              </tr>
+              <tr>
+                <td>Arm</td>
+                <td>33-34"</td>
+                <td>83.8-86.4</td>
+                <td>34-35"</td>
+                <td>86.4-88.9</td>
+                <td>35-36"</td>
+                <td>88.9-91.4</td>
+                <td>36-37"</td>
+                <td>91.4-94</td>
+                <td>37-38"</td>
+                <td>94-96.5</td>
+                <td>38-39"</td>
+                <td>96.5-99</td>
+              </tr>
+              <tr>
+                <td>Inseam</td>
+                <td>32"</td>
+                <td>81.3</td>
+                <td>32"</td>
+                <td>81.3</td>
+                <td>32"</td>
+                <td>81.3</td>
+                <td>33"</td>
+                <td>83.8</td>
+                <td>33"</td>
+                <td>83.8</td>
+                <td>34"</td>
+                <td>86.4</td>
+              </tr>
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <h3 class="sizing__measure-heading">How to Measure</h3>
+        <div class="sizing__measure-description" js-sizing-guide-description>
+
+
+          {% if product.type != 'Gloves' and product.type != 'beanie' %}
+            <p><b>Note:</b> If your measurements are between sizes, we recommend selecting the larger size as product is designed with a more athletic fit.</p>
+          {% endif %}
+
+          {% case product.type %}
+
+            {% when 'Gloves' %}
+              <p><b>Hand Circ:</b> Measure the circumference of your hand across the knuckles with a tape measure.</p>
+              <p><b>Length:</b> With your hand open, measure from the tip of your middle finger, down to the crease at the base of your palm.</p>
+            {% when 'beanie' or
+              'Shirts' or
+              'Leggings' or
+              'Vests' or "Men's Vests" or
+              "Women's Vests" or
+              "Mens's Jackets" or
+              "Women's Jackets" or
+              "Men's Mid Layer" or
+              "Women's Mid Layer"
+            %}
+              <p><b>Chest:</b> Measure under the arms, around the fullest part of the chest and back circumference.</p>
+              <p><b>Waist:</b> Measure around the natural waistline, keeping tape a bit loose.</p>
+              <p><b>Hip:</b> Measure around the fullest part of the hip circumference, parallel to floor.</p>
+              <p><b>Arm Length:</b> With elbow slightly bent, measure from the center back of the neck, across shoulder, to elbow and down to the wrist bone.</p>
+              <p><b>Inseam:</b> Measure along inside leg from the crotch to ankle bone. Or, measure a good fitting base layer pant from crotch seam to bottom along seam.</p>
+            {% else %}
+              <p><b>Chest:</b> Measure under the arms, around the fullest part of the chest and back circumference.</p>
+              <p><b>Waist:</b> Measure around the natural waistline, keeping tape a bit loose.</p>
+              <p><b>Hip:</b> Measure around the fullest part of the hip circumference, parallel to floor.</p>
+              <p><b>Arm Length:</b> With elbow slightly bent, measure from the center back of the neck, across shoulder, to elbow and down to the wrist bone.</p>
+              <p><b>Inseam:</b> Measure along inside leg from the crotch to ankle bone. Or, measure a good fitting base layer pant from crotch seam to bottom along seam.</p>
+          {% endcase %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="sizing__bg"></div>

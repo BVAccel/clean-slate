@@ -1,0 +1,63 @@
+{% include 'section-text-overlay' %}
+
+{% schema %}
+  {
+    "name": "Offset Image",
+    "settings": [
+      {
+        "id": "section_heading",
+        "type": "text",
+        "label": "Heading"
+      },
+      {
+        "id": "section_text",
+        "type": "richtext",
+        "label": "Text"
+      },
+      {
+          "id": "section_image",
+          "type": "image_picker",
+          "label": "Background Image"
+      },
+      {
+        "type": "select",
+        "id": "section_theme_layout",
+        "label": "Layout",
+        "info": "pick a color theme for the section",
+        "options": [
+            {
+                "value": "image-right",
+                "label": "Image Right"
+            },
+            {
+                "value": "image-left",
+                "label": "Image Left"
+            }
+        ],
+        "default": "image-left"
+    },
+      {
+        "type": "select",
+        "id": "section_theme_select",
+        "label": "Theme",
+        "info": "pick a color theme for the section",
+        "options": [
+            {
+                "value": "dark",
+                "label": "Dark"
+            },
+            {
+                "value": "light",
+                "label": "Light"
+            }
+        ],
+        "default": "dark"
+    },
+    {
+        "type": "checkbox",
+        "id": "section_hide_arrow",
+        "label": "Hide Arrow"
+    }
+    ]
+  }
+{% endschema %}

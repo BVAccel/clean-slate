@@ -1,0 +1,49 @@
+<div class="faq-content module-wrapper">
+  <div class="module page {% if page.content == blank %}no-content{% endif %}">
+    <div class="module-header page-header">
+      <div class="module-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+    {% if page.content != blank %}
+      <div class="module-body page-body rte clearfix">
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% for x in (1..10) %}
+  {% capture question %}faq-question-{{x}}{% endcapture %}
+  {% capture answer %}faq-answer-{{x}}{% endcapture %}
+  {% if settings[question] != blank and settings[answer] != blank %}
+    {% assign faq = true %}
+  {% endif %}
+{% endfor %}
+
+{% if faq %}
+  <div class="faq-module module-wrapper style-{{ settings.question-list-style }}">
+    <div class="module">
+      <div class="module-body clearfix">
+        <div class="module-list-item-content-toggle">
+          {% for x in (1..10) %}
+            {% capture question %}faq-question-{{x}}{% endcapture %}
+            {% capture answer %}faq-answer-{{x}}{% endcapture %}
+            {% if settings[question] != blank and settings[answer] != blank %}
+              <div class="module-list-item-content-toggle-item">
+                <div class="module-list-item-content-toggle-item-header">
+                  <h4 class="module-list-item-content-toggle-item-title">{{ settings[question] }}</h4>
+                  <span class="icon icon-angle-down module-list-item-content-toggle-item-header-icon"></span>
+                  <span class="icon icon-angle-up module-list-item-content-toggle-item-header-icon"></span>
+                </div>
+                <div class="module-list-item-content-toggle-item-body">
+                  {{ settings[answer] }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

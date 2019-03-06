@@ -1,0 +1,124 @@
+{% assign onboarding = false %}
+{% unless settings.home-show-in-line-1 or settings.home-show-in-line-2 or settings.home-show-in-line-3 or settings.home-show-in-line-4 or settings.home-show-in-line-5 or settings.home-show-in-line-6 %}
+  {% assign onboarding = true %}
+{% endunless %}
+
+{% assign hasIcons = false %}
+{% for x in (1..6) %}
+  {% capture icon %}home-in-line-image-{{x}}{% endcapture %}
+  {% capture enable %}home-show-in-line-{{x}}{% endcapture %}
+  {% if settings[icon] != 'blank' and enable %}
+    {% assign hasIcons = true %}
+  {% endif %}
+{% endfor %}
+
+<div class="module-wrapper style-{{ settings.home-inline-features-style }} border home-features-inline">
+  <div class="module home-inline {% if hasIcons or onboarding %}has-images{% endif %}">
+
+    {% if settings.home-in-line-heading != blank %}
+      <div class="module-header home-inline-header">
+        {% if settings.home-in-line-heading != blank %}
+          <div class="module-title">
+            {% if onboarding %}
+              <h3>{{ 'onboarding.inline_features_section.section_title' | t }}</h3>
+            {% else %}
+              <h3>{{ settings.home-in-line-heading }}</h3>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if settings.home-in-line-subtitle != blank %}
+          <div class="module-subtitle">
+            {{ settings.home-in-line-subtitle }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="module-body home-inline-body">
+      {% if onboarding %}
+        <div class="list column-3 clearfix">
+          <div class="list-item">
+            <div class="list-image-wrapper">
+              {% include 'font-icon', icon: 'ion-image', class: 'list-item-icon' %}
+            </div>
+            <div class="list-text-wrapper text-center">
+              <div class="list-title">
+                {{ 'onboarding.inline_features_section.first_feature_title' | t }}
+              </div>
+              <div class="list-text">
+                {{ 'onboarding.inline_features_section.text' | t }}
+              </div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="list-image-wrapper">
+              {% include 'font-icon', icon: 'ion-image', class: 'list-item-icon' %}
+            </div>
+            <div class="list-text-wrapper text-center">
+              <div class="list-title">
+                  {{ 'onboarding.inline_features_section.second_feature_title' | t }}
+              </div>
+              <div class="list-text">
+                {{ 'onboarding.inline_features_section.text' | t }}
+              </div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="list-image-wrapper">
+              {% include 'font-icon', icon: 'ion-image', class: 'list-item-icon' %}
+            </div>
+            <div class="list-text-wrapper text-center">
+              <div class="list-title">
+                  {{ 'onboarding.inline_features_section.third_feature_title' | t }}
+              </div>
+              <div class="list-text">
+                {{ 'onboarding.inline_features_section.text' | t }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="list column-{{ settings.home-inline-features-column }} clearfix">
+          {% for x in (1..6) %}
+            {% capture enable %}home-show-in-line-{{x}}{% endcapture %}
+            {% capture iconName %}home-in-line-image-{{x}}{% endcapture %}
+            {% capture title %}home-in-line-{{x}}-title{% endcapture %}
+            {% capture text %}home-in-line-{{x}}-text{% endcapture %}
+            {% capture url %}home-in-line-{{x}}-url{% endcapture %}
+            {% capture cta %}home-in-line-{{x}}-cta{% endcapture %}
+            {% if settings[enable] %}
+              <div class="list-item">
+                {% if settings[iconName] != blank %}
+                  <div class="list-image-wrapper">
+                    {% include 'font-icon', icon: settings[iconName], class: 'list-item-icon', title: settings[title] %}
+                  </div>
+                {% endif %}
+                <div class="list-text-wrapper text-center">
+                  {% if settings[title] != blank %}
+                  <div class="list-title">
+                    {{ settings[title] }}
+                  </div>
+                  {% endif %}
+                  {% if settings[text] != blank %}
+                    <div class="list-text{% if settings[title] == blank %} no-margin{% endif %}">
+                      {{ settings[text] }}
+                    </div>
+                  {% endif %}
+                  {% if settings[url] != blank and settings[cta] != blank %}
+                    <div class="list-cta">
+                      <a class="button list-button" href="{{ settings[url] }}">{{ settings[cta] }}</a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% assign clear = settings.home-inline-features-column %}
+              {% assign group = 'inline' %}
+              {% include "clear" %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>

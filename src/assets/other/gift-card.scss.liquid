@@ -1,0 +1,2015 @@
+
+/* COLORS */
+
+$primary-color: {{ settings.theme-primary-color }};
+$primary-color-hover: $primary-color;
+$secondary-color: {{ settings.theme-secondary-color }};
+$secondary-color-hover: $secondary-color;
+$body-text-color: {{ settings.body-text-color }};
+$body-background-color: {{ settings.body-background-color }};
+$heading-text-color: {{ settings.heading-text-color }};
+$border-color: {{ settings.border-color }};
+$error-color: #e13333;
+$success-color: #5bef6b;
+
+/* FONTS */
+
+$body-font: {{ settings.body-font }};
+$body-weight: {{ settings.body-font-weight }};
+$heading-font: {{ settings.heading-font }};
+$heading-weight: {{ settings.heading-font-weight }};
+$button-font: {{ settings.primary-button-font }};
+$button-weight: {{ settings.primary-button-font-weight }};
+$button-min-width: 220px;
+
+/* VARS */
+
+$logo-width: {% if settings.logo-width != blank %}{{ settings.logo-width | remove: 'px' | append: 'px' }}{% else%}inherit{% endif %};
+$logo-max-width: {% if settings.logo-width != blank %}{{ settings.logo-width | remove: 'px' | append: 'px' }}{% else%}200px{% endif %};
+$logo-max-height: 100px;
+$logo-use-image: {{ settings.use-logo }};
+$black: #000;
+$white: #fff;
+$very-light-grey: #fafafa;
+$light-grey: #eeeeee;
+$dark-color: #191919;
+$gutter: 30px;
+$max-width: 1200px;
+$ease: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+$heading-font-size-1: 48px;
+$heading-font-size-1-xs: 38px;
+$heading-font-size-2: 36px;
+$heading-font-size-2-xs: 26px;
+$heading-font-size-3: 22px;
+$heading-font-size-3-xs: 18px;
+$heading-font-size-4: 20px;
+$heading-font-size-4-xs: 18px;
+$heading-font-size-5: 18px;
+$body-font-size-1: 16px;
+$body-font-size-2: 14px;
+$body-font-size-3: 12px;
+$body-line-height-1: 28px;
+$body-line-height-2: 26px;
+$subtitle-font-size: 18px;
+$button-height: 55px;
+$header-height: 120px;
+$header-small-height: 80px;
+$header-font-size: 12px;
+$header-zindex: 110;
+$header-goal-height: 56px;
+$drawer-font-size: 26px;
+$input-number-height: 53px;
+$input-number-width: 75px;
+$input-number-nav-width: 25px;
+$select-height: 55px;
+$list-icon-size: 60px;
+$sale-badge-size-small: 45px;
+$sale-badge-size-large: 65px;
+$outline-setting: 4px auto $primary-color;
+
+$stock-badge-size: $body-font-size-2;
+
+//-- Breakpoint Sizes --//
+$l: 1200px;
+$md: 1020px;
+$ipad: 768px;
+$sm: 720px;
+$xs: 480px;
+
+$use-font-smoothing: {% if settings.heading-font == "Bitter, serif" or settings.heading-font == "Roboto, sans-serif" or settings.heading-font == "'Open Sans', sans-serif" or settings.heading-font == "Volkhov, serif" or settings.heading-font == "Lato, sans-serif"%}true{% else %}false{% endif %};
+
+//************************************************************************//
+// Prefixer
+//************************************************************************//
+
+// Variable settings for /addons/prefixer.scss
+$prefix-for-webkit: true !default;
+$prefix-for-mozilla: true !default;
+$prefix-for-microsoft: true !default;
+$prefix-for-opera: true !default;
+$prefix-for-spec: true !default; // required for keyframe mixin
+
+@mixin prefixer ($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      @if $prefix-for-webkit {
+        -webkit-#{$property}: $value;
+      }
+    }
+    @else if $prefix == moz {
+      @if $prefix-for-mozilla {
+        -moz-#{$property}: $value;
+      }
+    }
+    @else if $prefix == ms {
+      @if $prefix-for-microsoft {
+        -ms-#{$property}: $value;
+      }
+    }
+    @else if $prefix == o {
+      @if $prefix-for-opera {
+        -o-#{$property}: $value;
+      }
+    }
+    @else if $prefix == spec {
+      @if $prefix-for-spec {
+        #{$property}: $value;
+      }
+    }
+    @else  {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+@mixin disable-prefix-for-all() {
+  $prefix-for-webkit:    false;
+  $prefix-for-mozilla:   false;
+  $prefix-for-microsoft: false;
+  $prefix-for-opera:     false;
+  $prefix-for-spec:      false;
+}
+
+//************************************************************************//
+// Transitions
+//************************************************************************//
+
+@mixin transition ($properties...) {
+  // Fix for vendor-prefix transform property
+  $needs-prefixes: false;
+  $webkit: ();
+  $moz: ();
+  $spec: ();
+
+  // Create lists for vendor-prefixed transform
+  @each $list in $properties {
+    @if nth($list, 1) == "transform" {
+      $needs-prefixes: true;
+      $list1: -webkit-transform;
+      $list2: -moz-transform;
+      $list3: ();
+
+      @each $var in $list {
+        $list3: join($list3, $var);
+
+        @if $var != "transform" {
+          $list1: join($list1, $var);
+          $list2: join($list2, $var);
+        }
+      }
+
+      $webkit: append($webkit, $list1);
+         $moz: append($moz,    $list2);
+        $spec: append($spec,   $list3);
+    }
+
+    // Create lists for non-prefixed transition properties
+    @else {
+      $webkit:  append($webkit, $list, comma);
+      $moz:     append($moz,    $list, comma);
+      $spec:    append($spec,   $list, comma);
+    }
+  }
+
+  @if $needs-prefixes {
+    -webkit-transition: $webkit;
+       -moz-transition: $moz;
+            transition: $spec;
+  }
+  @else {
+    @if length($properties) >= 1 {
+      @include prefixer(transition, $properties, webkit moz spec);
+    }
+
+    @else {
+      $properties: all 0.15s ease-out 0s;
+      @include prefixer(transition, $properties, webkit moz spec);
+    }
+  }
+}
+
+@mixin transition-property ($properties...) {
+   -webkit-transition-property: transition-property-names($properties, 'webkit');
+      -moz-transition-property: transition-property-names($properties, 'moz');
+           transition-property: transition-property-names($properties, false);
+}
+
+@mixin transition-duration ($times...) {
+  @include prefixer(transition-duration, $times, webkit moz spec);
+}
+
+@mixin transition-timing-function ($motions...) {
+// ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier()
+  @include prefixer(transition-timing-function, $motions, webkit moz spec);
+}
+
+@mixin transition-delay ($times...) {
+  @include prefixer(transition-delay, $times, webkit moz spec);
+}
+
+//************************************************************************//
+// Custom
+//************************************************************************//
+
+@mixin font-smoothing($value: antialiased) {
+  // Values: none, antialiased (default)
+  @if $value == antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+@mixin css3-prefix($property, $value, $important:'no') {
+  @if $important == 'no' {
+    -webkit-#{$property}: #{$value};
+    -khtml-#{$property}: #{$value};
+    -moz-#{$property}: #{$value};
+    -ms-#{$property}: #{$value};
+    -o-#{$property}: #{$value};
+    #{$property}: #{$value};
+  } @else {
+    -webkit-#{$property}: #{$value} !important;
+    -khtml-#{$property}: #{$value} !important;
+    -moz-#{$property}: #{$value} !important;
+    -ms-#{$property}: #{$value} !important;
+    -o-#{$property}: #{$value} !important;
+    #{$property}: #{$value} !important;
+  }
+}
+
+@mixin media($max: false, $min: false) {
+  @if $max {
+    @if $min {
+      @media screen and (max-width: $max) and (min-width: $min + 1) { @content; }
+    } @else {
+      @media screen and (max-width: $max) { @content; }
+    }
+  } @else {
+    @media screen and (min-width: $min + 1) { @content; }
+  }
+}
+
+@mixin breakpoint($point) {
+  @if $point == xl {
+    @include media($min: $l) { @content; }
+  } @else if $point == l {
+    @include media($max: $l) { @content; }
+  } @else if $point == md-up {
+    @include media($min: $md) { @content; }
+  } @else if $point == md {
+    @include media($max: $md) { @content; }
+  } @else if $point == sm-up {
+    @include media($min: $sm) { @content; }
+  } @else if $point == sm {
+    @include media($max: $sm) { @content; }
+  } @else if $point == xs-up {
+    @include media($min: $xs) { @content; }
+  } @else if $point == xs {
+    @include media($max: $xs) { @content; }
+  } @else {
+    @media (max-width: $point) { @content; }
+  }
+}
+
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+  -webkit-animation: $animations;
+  -moz-animation:    $animations;
+  -o-animation:      $animations;
+  animation:         $animations;
+}
+
+@mixin transform($params) {
+  @include css3-prefix('transform', $params);
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin order($val) {
+  -webkit-box-ordinal-group: $val;
+  -moz-box-ordinal-group: $val;
+  -ms-flex-order: $val;
+  -webkit-order: $val;
+  order: $val;
+}
+
+@mixin share-icons($font-size: 16px, $line-height: 1) {
+  @include font-smoothing();
+  font-family: "Share Icons", sans-serif;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+
+@mixin launch-icons($font-size: 14px) {
+  @include font-smoothing();
+  font-family: "launch-icons", sans-serif;
+  speak: none;
+  font-size: $font-size;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+
+@mixin placeholder {
+  $placeholders: '-webkit-input-placeholder',
+                 '-moz-placeholder',
+                 '-ms-input-placeholder';
+  @each $placeholder in $placeholders {
+    @if $placeholder == "-webkit-input-placeholder" {
+      &::#{$placeholder} {
+        @content;
+      }
+    }
+    @else if $placeholder == "-moz-placeholder" {
+      // FF 18-
+      &:#{$placeholder} {
+        @content;
+      }
+
+      // FF 19+
+      &::#{$placeholder} {
+        @content;
+      }
+    }
+    @else {
+      &:#{$placeholder} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin lt-ie9 {
+  .lt-ie9 & {
+    @content;
+  }
+}
+
+@mixin lt-ie10 {
+
+  .lt-ie10 & {
+    @content;
+  }
+}
+
+@mixin background-size($width: 100%, $height: $width) {
+  @if type-of($width) == 'number' and $height != null {
+    @include css3-prefix('background-size', $width $height);
+  } @else {
+    @include css3-prefix('background-size', $width);
+  }
+}
+
+@mixin gradient-horizontal($start-color: $primary-color, $end-color: $secondary-color, $start-percent: 0%, $end-percent: 100%) {
+  background-image: -webkit-linear-gradient(left, $start-color $start-percent, $end-color $end-percent); // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient(left, $start-color $start-percent, $end-color $end-percent); // Opera 12
+  background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1); // IE9 and down
+}
+
+@mixin border-radius($radius: 5px) {
+  @include css3-prefix('border-radius', $radius);
+}
+
+@mixin box-sizing($type: border-box) {
+  @include css3-prefix('box-sizing', $type);
+}
+
+@mixin box-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0, 0, 0, 0.4), $inset: false, $spread: false) {
+  $single-line: "#{$x} #{$y}";
+
+  @if ($inset){
+    $single-line: "#{$inset} #{$single-line}";
+  }
+
+  $single-line: "#{$single-line} #{$blur}";
+
+  @if ($spread){
+    $single-line: "#{$single-line} #{$spread}";
+  }
+
+  $single-line: "#{$single-line} #{$color}";
+
+  @include css3-prefix('box-shadow', $single-line);
+}
+
+@mixin ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin word-break($type: break-all) {
+  @include css3-prefix('word-break', $type);
+  word-break: break-word;
+}
+
+@mixin hyphens($type: manual) {
+  @include css3-prefix('hyphens', $type);
+}
+
+@mixin no-select() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin dummy($aspect: 100%, $background: cover) {
+  overflow: hidden;
+  @if($background){
+    background-position: center;
+    background-repeat: no-repeat;
+    @include background-size($background);
+  }
+
+  &::before {
+    display: block;
+    width: 100%;
+    padding-top: $aspect;
+    content: "";
+  }
+
+  img { display: none; }
+}
+
+//************************************************************************//
+// Clearfix
+//************************************************************************//
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+//************************************************************************//
+// Custom Class
+//************************************************************************//
+
+.show-md {
+  display: none;
+
+  @include breakpoint(l) {
+    display: inline-block;
+  }
+}
+
+.show-sm {
+  display: none;
+
+  @include breakpoint(md) {
+    display: inline-block;
+  }
+}
+
+.show-xs {
+  display: none;
+
+  @include breakpoint(sm) {
+    display: inline-block;
+  }
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+
+/* Icons
+-------------------------------- */
+
+@font-face {
+  font-family: 'Share Icons';
+  src: url('{{ "launch-social-icons.eot" | asset_url }}');
+  src: url('{{ "launch-social-icons.eot?#iefix" | asset_url }}') format('embedded-opentype'),
+       url('{{ "launch-social-icons.woff" | asset_url }}') format('woff'),
+       url('{{ "launch-social-icons.ttf" | asset_url }}') format('truetype'),
+       url('{{ "launch-social-icons.svg#launch-social-icons" | asset_url }}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'social-icons';
+  src: url('{{ "socicon.eot" | asset_url }}');
+  src: url('{{ "socicon.eot?#iefix" | asset_url }}') format('embedded-opentype'),
+       url('{{ "socicon.woff" | asset_url }}') format('woff'),
+       url('{{ "socicon.ttf" | asset_url }}') format('truetype'),
+       url('{{ "socicon.svg#socicon" | asset_url }}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'launch-icons';
+  src: url("{{ 'launch-icons.eot?rm9bkq' | asset_url }}");
+  src: url("{{ 'launch-icons.eot?rm9bkq#iefix' | asset_url }}") format('embedded-opentype'),
+       url("{{ 'launch-icons.ttf?rm9bkq' | asset_url }}") format('truetype'),
+       url("{{ 'launch-icons.woff?rm9bkq' | asset_url }}") format('woff'),
+       url("{{ 'launch-icons.svg?rm9bkq#launch' | asset_url }}") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* General
+-------------------------------- */
+
+body {
+  font-family: $body-font;
+  color: $body-text-color;
+  font-weight: $body-weight;
+  font-size: $body-font-size-1;
+  line-height: 1.625;
+
+  @if($use-font-smoothing) {
+    @include font-smoothing();
+  }
+}
+
+.icon {
+  @include launch-icons();
+}
+
+/* Links */
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  cursor: pointer;
+  @include transition(all 0.2s $ease);
+
+  &:focus,
+  &:hover {
+    color: $primary-color;
+  }
+
+  &.disabled {
+    color: $body-text-color;
+    cursor: default;
+
+    &:focus,
+    &:hover {
+      color: $body-text-color;
+      cursor: default;
+    }
+  }
+}
+
+/* Headers */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font;
+  font-weight: $heading-weight;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: initial;
+
+  @if($use-font-smoothing) {
+    @include font-smoothing();
+  }
+}
+
+/* Basic text */
+
+img {
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+ul, ol, dl {
+  padding: 0;
+  margin: 23px 0;
+}
+
+ul {
+  list-style: outside none;
+}
+
+ol {
+  list-style: outside decimal;
+}
+
+li {
+  margin: 12px 0;
+}
+
+hr {
+  height: 2px;
+  background: $border-color;
+  border: 0;
+}
+
+p {
+  margin: 0;
+  padding: $gutter/2 0;
+}
+
+strong {
+  font-weight: 700;
+
+  @if($use-font-smoothing) {
+    @include font-smoothing();
+  }
+}
+
+.bold {
+  font-weight: 700;
+}
+
+/* Tables */
+
+table {
+  color: $body-text-color;
+  border: 1px solid $border-color;
+  border-top: none;
+  font-size: 14px;
+  border-collapse: separate;
+  margin: $gutter 0;
+  background: transparent;
+
+  &.clean {
+    border: 0;
+    border-radius: 0;
+    font-size: $body-font-size-1;
+  }
+
+  .column-title {
+    display: none;
+  }
+}
+
+th {
+  background: $border-color;
+  color: $heading-text-color;
+  font-weight: $heading-weight;
+  text-align: center;
+
+  .clean & {
+    background: none;
+  }
+}
+
+tr td, tr th {
+  border-top: 1px solid $border-color;
+  padding: $gutter/(3/2);
+}
+
+tr td {
+  border-left: 1px solid $border-color;
+
+  &:first-child {
+    border-left: none;
+  }
+}
+
+table.mobile-layout {
+  border-bottom: none;
+
+  .column-title {
+    font-weight: 700;
+    width: 114px;
+    padding-right: 23px;
+    display: inline-block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr td {
+    width: 100%;
+    display: block;
+    text-align: left;
+    border-top: 1px solid $border-color !important;
+    border-left: none;
+
+    /* < IE 10 fix */
+    float: left;
+    clear: left;
+  }
+
+  tr:nth-child(even) td {
+    background: $border-color;
+  }
+}
+
+/* Buttons */
+
+.button,
+.submit,
+button {
+  @include border-radius($button-height/2);
+  @include box-sizing(border-box);
+  @include transition(all 0.2s $ease);
+  @include font-smoothing(none);
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  padding: $gutter/2 $gutter;
+  font-family: $button-font;
+  font-weight: $button-weight;
+  color: $primary-color;
+  font-size: 12px;
+  line-height: 22px;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 1px solid $primary-color;
+  cursor: pointer;
+
+  @include breakpoint(sm) {
+    text-align: center;
+  }
+
+  .product-form-submit-wrap & {
+    background-color: $white;
+  }
+
+  &:focus,
+  &:hover {
+    background: $primary-color;
+    border-color: $primary-color;
+    color: $white;
+  }
+
+  &.secondary {
+    background: transparent;
+    border-color: $secondary-color;
+    color: $secondary-color;
+
+    &:focus,
+    &:hover {
+      background: $secondary-color;
+      border-color: $secondary-color;
+      color: $white;
+    }
+
+    &.inverse {
+      background: $secondary-color;
+      border-color: $secondary-color;
+      color: $white;
+
+      &:focus,
+      &:hover {
+        background: transparent;
+        border-color: $secondary-color;
+        color: $secondary-color;
+      }
+    }
+  }
+
+  &.disabled {
+    background: $border-color;
+    color: $body-text-color;
+    border-color: $border-color;
+    opacity: 1;
+    cursor: default;
+
+    &:focus,
+    &:hover {
+      background: $border-color;
+      color: $body-text-color;
+      border-color: $border-color;
+      opacity: 1;
+      cursor: default;
+    }
+  }
+
+  .style-color &,
+  .style-gradient &,
+  .overlay-none &,
+  .overlay-black &,
+  .overlay-color &,
+  .overlay-gradient &,
+  .overlay-primary & {
+    background: $white;
+    border-color: $white;
+    color: $primary-color;
+
+    &:focus,
+    &:hover {
+      background: $primary-color;
+      border-color: $primary-color;
+      color: $white;
+    }
+  }
+
+  .overlay-secondary & {
+    background: $white;
+    border-color: $white;
+    color: $secondary-color;
+
+    &:focus,
+    &:hover {
+      background: $secondary-color;
+      border-color: $white;
+      color: $white;
+    }
+  }
+
+  .icon {
+    @include launch-icons();
+    display: inline-block;
+    vertical-align: top;
+    font-size: 18px;
+    color: inherit;
+  }
+
+  .icon-arrow-right {
+    font-size: 13px;
+  }
+}
+
+/* Forms & buttons */
+
+form {
+  font-size: 14px;
+}
+
+label {
+
+  &:hover { cursor: pointer; }
+
+  .inline-input-wrapper & {
+    font-weight: normal;
+    font-size: 14px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.input-wrapper {
+  margin: $gutter 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.inline-input-wrapper {
+  margin: $gutter / 3 0;
+
+  input + .inline-label {
+    margin-left: $gutter / 4;
+  }
+}
+
+input, textarea {
+  border-radius: 0;
+
+  label ~ & {
+    margin-top: $gutter/3;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="telephone"],
+input[type="tel"],
+input[type="number"],
+textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid $border-color;
+  color: $body-text-color;
+  font-family: $body-font;
+  border-radius: 5px;
+  -webkit-appearance: none;
+
+  @include placeholder {
+    color: $body-text-color;
+    opacity: 0.7;
+  }
+
+  &.error {
+    color: $error-color;
+    @include placeholder {
+      color: $error-color;
+      opacity: 0.7;
+    }
+  }
+}
+
+.error-message .errors {
+  color: $error-color;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="telephone"],
+input[type="tel"],
+input[type="number"] {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px;
+
+  @include lt-ie9 {
+    padding: 0 15px;
+    line-height: 50px;
+  }
+}
+
+input[type="password"] {
+  @include lt-ie9 {
+    font-family: Arial, sans-serif;
+  }
+}
+
+// Checkboxes
+input[type="checkbox"] {
+  &:focus {
+    outline: $outline-setting;
+  }
+}
+
+// INPUT NUMBER CUSTOM STYLING
+
+input[type="number"] {
+  @include border-radius(0);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: $body-text-color;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+
+    .no-js & {
+      -webkit-appearance: number;
+      -moz-appearance: number;
+    }
+  }
+
+  .no-js & {
+    height: auto;
+    line-height: 1;
+    padding: 5px 0;
+    color: $black;
+    -webkit-appearance: number;
+    -moz-appearance: number;
+  }
+}
+
+.number-input-wrapper {
+  @include border-radius(5px);
+  position: relative;
+  display: inline-block;
+  border: 1px solid $border-color;
+  overflow: hidden;
+
+  .no-js & {
+    margin: $gutter/2 0 0;
+  }
+}
+
+.number-input-field {
+  float: left;
+  width: $input-number-width - $input-number-nav-width;
+  height: $input-number-height;
+  background-color: $white;
+  line-height: $input-number-height;
+
+  @include breakpoint(sm) {
+    text-align: center;
+    width: 100%;
+  }
+
+  .cart-item-td & {
+    @include breakpoint(md) {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  input[type="number"] {
+    float: left;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 0;
+  }
+
+  .no-js & {
+    height: auto;
+    line-height: 1;
+  }
+}
+
+.number-input-label { display: none; }
+
+.number-input-nav {
+  float: left;
+  height: $input-number-height;
+  width: $input-number-nav-width;
+  border-left: 1px solid $border-color;
+
+  @include breakpoint(sm) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: 0;
+  }
+
+  .cart-item-td & {
+    @include breakpoint(md) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border: 0;
+    }
+  }
+
+  .no-js & {
+    display: none;
+  }
+}
+
+.number-input-nav-item {
+  float: left;
+  height: $input-number-height/2;
+  line-height: $input-number-height/2;
+  width: $input-number-nav-width;
+  color: $body-text-color;
+  background-color: $white;
+  text-align: center;
+  cursor: pointer;
+
+  @include breakpoint(sm) {
+    position: absolute;
+    height: $input-number-height;
+    width: $input-number-height;
+    line-height: $input-number-height;
+  }
+
+  .cart-item-td & {
+    @include breakpoint(md) {
+      position: absolute;
+      height: $input-number-height;
+      width: $input-number-height;
+      line-height: $input-number-height;
+    }
+  }
+
+  &:focus,
+  &:hover {
+    color: $primary-color;
+  }
+
+  &:first-child {
+    border-bottom: 1px solid $border-color;
+
+    @include breakpoint(sm) {
+      right: 0;
+      border-left: 1px solid $border-color;
+      border-bottom: none;
+    }
+
+    .cart-item-td & {
+      @include breakpoint(md) {
+        right: 0;
+        border-left: 1px solid $border-color;
+        border-bottom: none;
+      }
+    }
+  }
+
+  &:last-child {
+    @include breakpoint(sm) {
+      left: 0;
+      border-right: 1px solid $border-color;
+    }
+
+    .cart-item-td & {
+      @include breakpoint(md) {
+        left: 0;
+        border-right: 1px solid $border-color;
+      }
+    }
+  }
+}
+
+// SELECT CUSTOM STYLING
+
+.select-wrapper {
+  @include border-radius(5px);
+  @include transition(border-color 0.4s $ease);
+  position: relative;
+  height: $select-height;
+  line-height: $select-height;
+  border: 1px solid $border-color;
+  color: $body-text-color;
+  background-color: $white;
+  padding: 0 30px 0 0;
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  z-index: 55;
+
+  &.active {
+    border-color: $primary-color;
+  }
+
+  .customer-address-edit-form & { width: 100% !important; }
+
+  .no-js & {
+    padding: 0 !important;
+    margin-bottom: -2px;
+  }
+
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    height: 100%;
+    line-height: inherit;
+    color: $body-text-color;
+    content: "\F107";
+    @include launch-icons(24px);
+
+    .no-js & {
+      display: none;
+    }
+  }
+
+  select {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%; // needed for Firefox
+    height: 100%; // needed for IE
+    padding: 0;
+    text-transform: none;
+    cursor: pointer;
+    opacity: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .selected-text {
+    @include ellipsis();
+    padding: 0 15px;
+    height: $select-height;
+    line-height: $select-height;
+    width: 100%;
+    z-index: 2;
+
+    .no-js & {
+      display: none;
+    }
+  }
+}
+
+// TEXTAREA
+
+textarea {
+  padding: $gutter/2;
+  max-width: 100%;
+}
+
+/* IFRAMES */
+
+iframe {
+  border: 0;
+  max-width: 100%;
+}
+
+.rte {
+  ul {
+    list-style-type: disc;
+  }
+
+  ul li,
+  ol li {
+    list-style-position: inside;
+  }
+
+  h1 {
+    margin: 0.67em 0;
+    font-size: 2em;
+  }
+
+  h2 {
+    margin: 0.83em 0;
+    font-size: 1.5em;
+  }
+
+  h3 {
+    margin: 1em 0;
+    font-size: 1.17em;
+  }
+
+  h4 {
+    margin: 1.33em 0;
+    font-size: 1em;
+  }
+
+  h5 {
+    margin: 1.67em 0;
+    font-size: 0.83em;
+  }
+
+  h6 {
+    margin: 2.33em 0;
+    font-size: 0.67em;
+  }
+}
+
+.gift-card-template {
+  margin: 0;
+  font-family: $body-font;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      color: $primary-color-hover;
+    }
+  }
+
+  .btn {
+    font-family: $button-font;
+    background-color: $primary-color;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 1.5em;
+    font-size: 0.875em;
+    font-weight: $button-weight;
+    line-height: 1;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
+  }
+
+  .btn:hover {
+    color: #fff;
+    background-color: $primary-color-hover;
+  }
+
+  .wrap {
+    width: 95%;
+    max-width: 540px;
+    margin: 0 auto;
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  @-webkit-keyframes slideup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(2000px) rotate(10deg);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-30px);
+    }
+
+    80% {
+      -webkit-transform: translateY(10px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0) rotate(0deg);
+    }
+  }
+
+  @-ms-keyframes slideup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(2000px) rotate(10deg);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-30px);
+    }
+
+    80% {
+      -webkit-transform: translateY(10px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0) rotate(0deg);
+    }
+  }
+
+  @keyframes slideup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(2000px) rotate(10deg);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-30px);
+    }
+
+    80% {
+      -webkit-transform: translateY(10px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0) rotate(0deg);
+    }
+  }
+
+  @-webkit-keyframes popup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(30px);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-10px);
+    }
+
+    80% {
+      -webkit-transform: translateY(2px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0);
+    }
+  }
+
+  @-ms-keyframes popup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(30px);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-10px);
+    }
+
+    80% {
+      -webkit-transform: translateY(2px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0);
+    }
+  }
+
+  @keyframes popup {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(30px);
+    }
+
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(-10px);
+    }
+
+    80% {
+      -webkit-transform: translateY(2px);
+    }
+
+    100% {
+      -webkit-transform: translateY(0);
+    }
+  }
+
+  @-webkit-keyframes container-slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(0deg);
+    }
+  }
+
+  @-ms-keyframes container-slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(0deg);
+    }
+  }
+
+  @keyframes container-slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(0deg);
+    }
+  }
+
+  @-webkit-keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 100;
+    }
+  }
+
+  @-ms-keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 100;
+    }
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 100;
+    }
+  }
+
+  header {
+    text-align: center;
+    padding: 3em 0;
+    -webkit-animation: fadein 0.5s ease-in-out both 0.4s;
+    animation:fadein 0.5s ease-in-out both 0.4s
+  }
+
+  .shop-title {
+    font-family: $heading-font;
+    font-size: 2.25em;
+    font-weight: $heading-weight;
+    color: $primary-color;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+
+    &:hover {
+      color: $primary-color-hover;
+    }
+
+    img {
+      max-height: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  main {
+    padding-bottom: 3em;
+    -webkit-animation: slideup 0.8s ease-in-out;
+    animation: slideup 0.8s ease-in-out;
+  }
+
+  .gift-card-outer-container {
+    background-color: #34aadc;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.1) inset;
+    padding: 1em;
+    -webkit-animation: container-slide 0.8s ease-in-out;
+    animation: container-slide 0.8s ease-in-out;
+  }
+
+  .gift-card-inner-container {
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    -webkit-animation: cardslide 0.8s ease-in-out;
+    animation: cardslide 0.8s ease-in-out;
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  .gift-card-header {
+    border-bottom: 1px solid #f2f2f2;
+    padding: 0.75em;
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    h2 {
+      float: left;
+      margin: 0.12em 0;
+    }
+
+    .tag {
+      float: right;
+    }
+  }
+
+  .tag {
+    background-color: $primary-color;
+    padding: 0.5em;
+    padding-bottom: 0.35em;
+    border-radius: 4px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+    line-height: 1;
+
+    &.light {
+      background: transparent;
+      color: #bfbfbf;
+      border: 1px solid $primary-color;
+    }
+  }
+
+  .gift-card-holder {
+    margin: 0.75em;
+    margin-bottom: 1.25em;
+    margin-top: 1.25em;
+    position: relative;
+
+    .corner {
+      display: block;
+      width: 47px;
+      height: 47px;
+      position: absolute;
+      z-index: 2;
+
+      &.top-left {
+        background: url("//cdn.shopify.com/s/assets/gift-card/corner-top-left-1585103bdd46bf1297b88f31bdfce999.png") 0 0 no-repeat;
+        top: -1px;
+        left: -1px;
+      }
+
+      &.bottom-right {
+        background: url("//cdn.shopify.com/s/assets/gift-card/corner-bottom-right-ba899b18631cb91859e186c2cc1c6970.png") 0 0 no-repeat;
+        bottom: -1px;
+        right: -1px;
+      }
+    }
+  }
+
+  .gift-card {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+
+    &:before {
+      content:  '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1);
+      box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      z-index: 1;
+      pointer-events: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      display: block;
+    }
+
+    img {
+      border-radius: 10px;
+      max-width: 100%;
+    }
+  }
+
+  .gift-card-code-outer {
+    position: absolute;
+    bottom: 1em;
+    text-align: center;
+    width: 100%;
+
+    &.medium {
+      font-size: 0.875em;
+    }
+
+    &.small {
+      font-size: 0.75em;
+    }
+  }
+
+  .gift-card-code-inner {
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
+    background-color: #fff;
+    padding: 0.5em;
+    border-radius: 4px;
+    max-width: 450px;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+
+    strong {
+      font-weight: 400;
+      font-size: 1.875em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      border: 1px dashed #e5e5e5;
+      padding: 0.4em 0.5em;
+      display: inline-block;
+      vertical-align: baseline;
+      zoom: 1;
+      *display: inline;
+      *vertical-align: auto;
+      color: #777;
+      line-height: 1;
+    }
+  }
+
+  .small .gift-card-code-inner {
+    overflow: auto;
+  }
+
+  .disabled .gift-card-code-inner strong {
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .gift-card-code-inner span+span {
+    margin-left: 0.25em;
+  }
+
+  .gift-card-amount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 2.75em;
+    padding: 0.4em 0.5em;
+  }
+
+  .gift-card-amount.medium {
+    font-size: 2.25em;
+  }
+
+  .gift-card-amount strong {
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+    display: block;
+  }
+
+  .tooltip {
+    position: relative;
+
+    &:hover .tooltip-container {
+      display: block;
+    }
+  }
+
+  .tooltip-container {
+    display: block;
+    position: absolute;
+    top: -100%;
+    right: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-animation: popup 0.5s ease-in-out both 0.7s;
+    animation: popup 0.5s ease-in-out both 0.7s;
+    top: -50%;
+    margin-top: 0.25em;
+  }
+
+  .tooltip-triangle {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 5px solid #333;
+    border-top: 5px solid rgba(51,51,51,0.9);
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    margin-left: -5px;
+    margin-bottom: -5px;
+  }
+
+  .tooltip-label {
+    display: block;
+    position: relative;
+    right: -50%;
+    border: none;
+    border-radius: 4px;
+    background: #333;
+    background: rgba(51,51,51,0.9);
+    color: #fff;
+    min-height: 14px;
+    font-weight: 400;
+    font-size: 0.4em;
+    text-decoration: none;
+    line-height: 16px;
+    text-shadow: none;
+    padding: 0.5em 0.75em;
+    margin-left: 0.25em;
+  }
+
+  .gift-card-instructions {
+    font-size: 0.875em;
+    text-align: center;
+    color: #999;
+    margin: 0 0.75em 1.5em;
+  }
+
+  .gift-card-qr-code{
+    display: block;
+
+    img {
+      padding: 1.25em;
+      border: 1px solid #f2f2f2;
+      border-radius: 10px;
+      margin: 0 auto 1.25em;
+    }
+  }
+
+  .gift-card-actions {
+    border-top: 1px solid #f2f2f2;
+    padding: 1.25em 0.75em;
+    text-align: center;
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+
+  .action-link {
+    font-size: 0.875em;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #bfbfbf;
+    margin-top: 1.75em;
+    position: absolute;
+    left: 1.25em;
+    top: 1.25em;
+
+    &:hover {
+      color: #999;
+
+      .ico-16 {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .ico-16 {
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
+    width: 17px;
+    height: 17px;
+    vertical-align: bottom;
+    margin-bottom: -1px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-right: 0.5em;
+    opacity: 0.25;
+    -webkit-transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+
+    &.print {
+      background-image: url("//cdn.shopify.com/s/assets/gift-card/icon-print-164daa1ae32d10d1f9b83ac21b6f2c70.png");
+    }
+  }
+
+  footer[role='contentinfo'] {
+    padding-bottom: 3em;
+    text-align: center;
+    -webkit-animation: fadein 0.5s ease-in-out both 0.4s;
+    animation: fadein 0.5s ease-in-out both 0.4s;
+  }
+
+  .gift-card-apple-wallet-badge {
+    display: inline-block;
+  }
+
+  .gift-card-apple-wallet-badge-image {
+    display: block;
+  }
+
+  @media screen and (max-width: 580px){
+    body {
+      font-size: 12px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
+
+    .gift-card-outer-container {
+      padding: 0.5em;
+    }
+
+    .tooltip-container {
+      top: -65%;
+    }
+
+    .gift-card-actions .btn {
+      width: 100%;
+      padding-left: 0
+      ;padding-right: 0;
+      font-size: 1.125em;
+    }
+
+    .action-link {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      font-size: 1.125em;
+      display: none;
+    }
+
+    .action-link + .action-link {
+      margin-left: 1.5em;
+    }
+  }
+
+  @media screen and (max-width: 400px){
+    h2 {
+      font-size: 1.25em;
+    }
+
+    .gift-card {
+      font-size: 10px;
+    }
+
+    .gift-card-holder .corner {
+      display: none;
+
+      &.bottom-right {
+        background-position: bottom right !important;
+      }
+    }
+
+    .gift-card-amount strong {
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    }
+
+    .tooltip-container {
+      top: -75%;
+    }
+  }
+
+  @media screen and (max-height: 800px){
+    .shop-title {
+      max-height: 100px;
+    }
+  }
+
+  @media screen and (max-height: 750px){
+    .shop-title {
+      max-height: 80px;
+    }
+
+    header {
+      padding: 2em 0;
+    }
+
+    footer[role='contentinfo'],
+    main {
+      padding-bottom: 2em;
+    }
+  }
+
+  @media print{
+    @page {
+      margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+      orphans: 3;
+      widows: 3;
+    }
+
+    h2,
+    h3 {
+      page-break-after: avoid;
+    }
+
+    body {
+      background-color: #fff;
+    }
+
+    .gift-card-actions,
+    .gift-card-holder .corner,
+    .tooltip-container,
+    .gift-card:before {
+      display: none;
+    }
+
+    .gift-card-code-inner strong {
+      color: #555;
+    }
+
+    .gift-card-amount .tooltip {
+      color: #fff !important;
+    }
+
+    .shop-title {
+      color: #58686f;
+    }
+
+    .gift-card-outer-container,
+    .gift-card-inner-container,
+    .gift-card-code-inner,
+    .gift-card:before {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+  }
+}

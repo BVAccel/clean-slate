@@ -1,0 +1,212 @@
+{% unless template contains 'index' %}
+  {% if settings.display-mailing-list %}
+    {% include 'mailing-list' %}
+  {% endif %}
+{% endunless %}
+
+{% assign widget_fullwidth = true %}
+{% if settings.instagram-widget and settings.twitter-widget %}
+  {% assign widget-two-column = true %}
+  {% assign widget_fullwidth = false %}
+{% endif %}
+
+{% assign instagram = false %}
+{% if settings.instagram-widget and settings.home-instagram-access-token != blank %}
+  {% assign instagram = true %}
+{% endif %}
+
+{% assign twitter = false %}
+{% if settings.twitter-widget and settings.twitter-widget-id != blank %}
+  {% assign twitter = true %}
+{% endif %}
+
+{% comment %} Determine whether to show footer links or not {% endcomment %}
+{% assign hasFooterLists = false %}
+{% assign footerMenuCount = 0 %}
+{% for x in (1..2) %}
+  {% capture list %}footer-link-list-{{x}}{% endcapture %}
+  {% capture listname %}{{ settings[list] }}{% endcapture %}
+  {% if linklists[listname].links != blank %}
+    {% assign hasFooterLists = true %}
+    {% assign footerMenuCount = footerMenuCount | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+{% assign showSocialMediaMenu = false %}
+{% if settings.use-social-media-in-footer %}
+  {% assign showSocialMediaMenu = true %}
+  {% assign footerMenuCount = footerMenuCount | plus: 1 %}
+{% endif %}
+
+{% assign showFooterSignup = false %}
+{% if settings.footer-signup-enable %}
+  {% assign showFooterSignup = true %}
+{% endif %}
+
+{% assign onlyOneMenuInFooter = false %}
+{% if footerMenuCount == 1 %}
+  {% unless showFooterSignup or settings.footer-logo %}
+    {% assign onlyOneMenuInFooter = true %}
+  {% endunless %}
+{% endif %}
+
+{% if instagram or twitter %}
+  <div class="module-wrapper">
+    <div class="module footer-widget {% if widget_fullwidth %}full-width{% endif %}">
+      <div class="module-body footer-widget-body {% if widget-two-column %}column-2{% endif %} <!--style-{{ settings.twitter-style }}--> clearfix">
+        {% if instagram %}
+          <div class="footer-widget-instagram-header clearfix serif-font">
+            <div class="footer-widget-instagram-header-left">Shop and share your favorite pics to be featured here</div>
+            <div class="footer-widget-instagram-header-right">#myoros</div>
+          </div>
+          <div class="footer-widget-item instagram">
+            {% include 'footer-instagram' %}
+          </div>
+        {% endif %}
+        {% if twitter %}
+          <div class="footer-widget-item twitter">
+            {% include 'footer-twitter' %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="footer-wrapper style-{{ settings.footer-background-style }} {% if settings.footer-enable-borders %}has-borders{% endif %}">
+  <footer class="main-footer">
+
+    {% if showFooterSignup or hasFooterLists or showSocialMediaMenu or settings.footer-logo %}
+      <div class="footer-row clearfix">
+
+        {% if settings.footer-logo %}
+          <div class="footer-site-logo-container main-footer-module {% unless hasFooterLists or showSocialMediaMenu or showFooterSignup %}wide-logo-container{% else %}normal-logo-container{% endunless %}">
+            <a class="footer-site-logo-anchor" href="/">
+              {% if settings.use-logo %}
+                {% if settings.use-alternate-logo and settings.footer-background-style == 'dark' %}
+                  <img class="footer-logo-image footer-logo-alternate" alt="{{ shop.name | escape }}" src="{{ 'alternate-logo.png' | asset_url }}" data-regular="{{ 'alternate-logo.png' | asset_url }}">
+                {% else %}
+                  <img class="footer-logo-image footer-logo-regular" alt="{{ shop.name | escape }}" src="{{ 'logo.png' | asset_url }}" data-regular="{{ 'logo.png' | asset_url }}">
+               {% endif %}
+              {% else %}
+                <h2 class="branding-logo">{{ shop.name }}</h2>
+              {% endif %}
+            </a>
+          </div>
+        {% endif %}
+
+        {% if hasFooterLists or showSocialMediaMenu %}
+          <div class="footer-link-list-container container-of-{{ footerMenuCount }} main-footer-module {% if onlyOneMenuInFooter and showSocialMediaMenu %}social-menu-only{% endif %}">
+            {% for x in (1..2) %}
+              {% capture list %}footer-link-list-{{x}}{% endcapture %}
+              {% capture listname %}{{ settings[list] }}{% endcapture %}
+              {% if linklists[listname].links != blank %}
+                <div class="footer-link-list">
+                  <h4 class="footer-title footer-link-list-title">{{ linklists[listname].title }}</h4>
+                  <ul class="footer-link-list-links">
+                    {% for link in linklists[listname].links %}
+                      <li class="footer-link-list-links-item">
+                        <a class="footer-link-list-links-item-anchor" href="{{ link.url }}">{{ link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+            {% if showSocialMediaMenu %}
+              <div class="footer-link-list">
+                <h4 class="footer-title footer-link-list-title">{{ "general.social.social" | t }}</h4>
+                <ul class="footer-link-list-links">
+                      <li class="footer-link-list-links-item">
+                        <a class="footer-link-list-links-item-anchor" target="_blank" href="https://www.facebook.com/orosapparel/?hc_ref=SEARCH&fref=nf">{{ 'Facebook_Icon.png' | asset_img_url: '25x' | img_tag }}</a>&nbsp;
+                        <a class="footer-link-list-links-item-anchor" target="_blank" href="https://www.instagram.com/orosapparel/">{{ 'Instagram_Icon.png' | asset_img_url: '25x' | img_tag }}</a>&nbsp;
+                        <a class="footer-link-list-links-item-anchor" target="_blank" href="https://twitter.com/orosapparel">{{ 'Twitter_Icon.png' | asset_img_url: '25x' | img_tag }}</a>&nbsp;
+                        <a class="footer-link-list-links-item-anchor" target="_blank" href="https://www.pinterest.com/orosapparel/">{{ 'Pintrest_Icon.png' | asset_img_url: '25x' | img_tag }}</a>&nbsp;
+                      </li>
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if showFooterSignup %}
+          <div class="footer-signup-container main-footer-module">
+            <div class="footer-signup">
+              {% if settings.footer-signup-title != blank %}
+                <h4 class="footer-title footer-signup-title">{{ settings.footer-signup-title }}</h4>
+              {% endif %}
+              {% if settings.footer-signup-content-pre != blank %}
+                <p class="footer-signup-pre">{{ settings.footer-signup-content-pre }}</p>
+              {% endif %}
+              <form id="footer-newsletter-klaviyo" class="footer-newsletter-form" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" target="_blank" method="GET" novalidate="novalidate">
+                <input type="hidden" name="utf8" value="✓">
+                <input type="hidden" name="g" value="{{ settings.footer-signup-list }}">
+                <input type="email" class="footer-newsletter-email" name="email" placeholder="Enter Your Email Address" required>
+                <input type="submit" class="footer-newsletter-submit" value="Sign Up">
+              </form>
+              {% if settings.footer-signup-content-post != blank %}
+                <p class="footer-signup-post">{{ settings.footer-signup-content-post }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+    
+    <div class="footer-featured clearfix">
+      <p><span>OROS featured in: </span> 
+        <img class="footer-featured-image" src="{{ 'footer-featured-mashable.png' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'footer-featured-gear-junkie.png' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'footer-featured-digital-trends.png' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'footer-featured-gear-patrol.png' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'forbes.jpg' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'Runners-World-1200x222.png' | asset_url }}"/>
+        <img class="footer-featured-image" src="{{ 'OutsideMagLogo_04.png' | asset_url }}"/>
+      </p>
+    </div>
+    
+    <!--
+    <div class="clearfix">
+		<div class="footer-payment-info">
+          <div class="footer-payment-shopify"><a href="//www.shopify.com/pci-compliant?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="//cdn.shopify.com/s/images/badges/shopify-secure-badge-light-shadow.png" alt="Shopify secure badge" /></a></div>
+      	</div>
+    </div>
+	-->
+
+    <div class="footer-row clearfix">
+      <div role="contentinfo"  class="footer-copyright">
+        {% capture year %}{{ "now" | date: "%Y" }}{% endcapture %}
+        <!--{{ 'general.general.copyright_text_html' | t: year: year }} {{ 'general.general.copyright_credit_html' | t }} {{ powered_by_link }}.-->
+        &#169; 2017 All Rights Reserved. Lukla LLC. &nbsp;|&nbsp; <a href="https://www.orosapparel.com/pages/privacy-policy">Privacy Policy</a> &nbsp;|&nbsp; <a href="https://www.orosapparel.com/pages/terms-and-conditions">Terms and Conditions</a>
+      	<div class="footer-payment-shopify"><a href="//www.shopify.com/pci-compliant?utm_source=secure&amp;utm_medium=shop" title="This online store is secured by Shopify" target="_blank"><img src="//cdn.shopify.com/s/images/badges/shopify-secure-badge-light-shadow.png" alt="Shopify secure badge" /></a></div>
+      </div>
+    </div>
+  </footer>
+  
+
+  
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 874398539;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/874398539/?value=1&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Bing Tag -->
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5713797"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5713797&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+
+</div>

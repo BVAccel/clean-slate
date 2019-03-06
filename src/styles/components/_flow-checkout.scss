@@ -1,0 +1,50 @@
+.flow-checkout {
+  .header {
+    height: 60px;
+
+    @include mq($screen-md-ipad) {
+      height: 90px;
+    }
+  }
+
+  .step__group.breadcrumb .step:first-child,
+  .customer-information-form__flat-cart-button {
+    display: none;
+  }
+
+  .flowio-localized-content-element__markdown a {
+    font-size: 16px;
+  }
+
+  .checkbox__label:before {
+    margin: 4px 0;
+  }
+
+  .checkbox__label:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 8px;
+    height: 14px;
+    border-radius: 1px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: rotate(45deg);
+    border-bottom: solid 3px $color-blue;
+    border-right: solid 3px $color-blue;
+  }
+
+  .checkbox__input:checked~label:after {
+    background-color: transparent;
+  }
+
+  .checkbox__label .flowio-localized-content-element__markdown p {
+    padding: 0;
+  }
+
+  .button--flat-default:focus,
+  .button--flat-default:hover {
+    color: $color-white;
+  }
+}

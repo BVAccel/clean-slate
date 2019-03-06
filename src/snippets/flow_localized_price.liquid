@@ -1,0 +1,159 @@
+{% comment %}
+  usage:
+    include 'flow_localized_price' with [variant], flow_tag_display: [string], classnames: [string]
+
+  Using `with` to assign a variable with the same name as the snippet (`flow_localized_price`).
+  It's expected that the value is the variant to localize.
+
+  Variables:
+    + `flow_tag_display`: Localized price to render in a flow formatted span
+    + `classnames`: CSS classes to be applied to the rendered span tag
+
+  Internal variable conventions
+  - Flow Internal Constant prefixed with `fic__`
+  - Flow Working Variable prefixed with `fwv__`
+
+{% endcomment %}
+
+{% comment %}
+ ████████
+░██░░░░░
+░██       ███████  ██   ██ ██████████   ██████
+░███████ ░░██░░░██░██  ░██░░██░░██░░██ ██░░░░
+░██░░░░   ░██  ░██░██  ░██ ░██ ░██ ░██░░█████
+░██       ░██  ░██░██  ░██ ░██ ░██ ░██ ░░░░░██
+░████████ ███  ░██░░██████ ███ ░██ ░██ ██████
+░░░░░░░░ ░░░   ░░  ░░░░░░ ░░░  ░░  ░░ ░░░░░░
+{% endcomment %}
+
+{% comment %}
+  Price to display
+{% endcomment %}
+{%- assign fic__ITEM_PRICE = 'item_price' -%}
+{%- assign fic__PRICE_INCLUDES = 'price_includes' -%}
+{%- assign fic__COMPARE_AT = 'compare_at' -%}
+{%- assign fic__TAX = 'tax' -%}
+{%- assign fic__TAX_AND_DUTY = 'tax_and_duty' -%}
+{%- assign fic__DUTY = 'duty' -%}
+
+{% comment %}
+  ████████           ██
+ ██░░░░░░           ░██           ██████
+░██         █████  ██████ ██   ██░██░░░██
+░█████████ ██░░░██░░░██░ ░██  ░██░██  ░██
+░░░░░░░░██░███████  ░██  ░██  ░██░██████
+       ░██░██░░░░   ░██  ░██  ░██░██░░░
+ ████████ ░░██████  ░░██ ░░██████░██
+░░░░░░░░   ░░░░░░    ░░   ░░░░░░ ░░
+{% endcomment %}
+
+{% comment %} ----- Get Variant ----- {% endcomment %}
+{%- unless flow_localized_price -%}
+	{%- assign fwv__variant = product.selected_or_first_available_variant -%}
+{%- else -%}
+	{%- assign fwv__variant = flow_localized_price -%}
+{%- endunless -%}
+
+{% comment %} ----- Populate Flow Localized Prices ----- {% endcomment %}
+{%- include 'flow_metafields_prices' with fwv__variant -%}
+
+{% comment %} ----- Determine display ----- {% endcomment %}
+{%- unless flow_tag_display -%}
+	{%- assign flow_tag_display = fic__ITEM_PRICE -%}
+{%- endunless -%}
+
+
+{% comment %} ----- Determine if server side rendered ----- {% endcomment %}
+{%- assign fwv__cart_geo_currency = cart.attributes.geo_currency -%}
+{%- assign fwv__serverSideRender = false -%}
+{%- if flow_localize_price and flow_localized_currency == fwv__cart_geo_currency -%}
+  {%- assign fwv__serverSideRender = true -%}
+{%- endif -%}
+
+
+{% comment %}
+   ███████             ██                     ██
+  ██░░░░░██           ░██   ██████           ░██
+ ██     ░░██ ██   ██ ██████░██░░░██ ██   ██ ██████
+░██      ░██░██  ░██░░░██░ ░██  ░██░██  ░██░░░██░
+░██      ░██░██  ░██  ░██  ░██████ ░██  ░██  ░██
+░░██     ██ ░██  ░██  ░██  ░██░░░  ░██  ░██  ░██
+ ░░███████  ░░██████  ░░██ ░██     ░░██████  ░░██
+  ░░░░░░░    ░░░░░░    ░░  ░░       ░░░░░░    ░░
+{% endcomment %}
+
+{%- if flow_tag_display == fic__ITEM_PRICE -%}
+ <span
+  class="flow-price flow-price__item {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+  flow-variant="{{fwv__variant.id}}"
+  flow-selector="prices.item.label"
+  flow-default="{{ fwv__variant.price | money }}">
+  {%- if fwv__serverSideRender -%}
+  {{ flow_localize_price }}
+  {%- endif -%}
+</span>
+{%- endif -%}
+
+{%- if flow_tag_display == fic__PRICE_INCLUDES -%}
+<span class="flow-price flow-price__includes {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+      flow-variant="{{fwv__variant.id}}"
+      flow-selector="prices.includes.label">
+  {%- if fwv__serverSideRender -%}
+  {{ flow_localized_price_includes }}
+  {%- endif -%}
+</span>
+{%- endif -%}
+
+{%- if flow_tag_display == fic__COMPARE_AT -%}
+<span
+   class="flow-price flow-price__compare-at {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+   flow-variant="{{fwv__variant.id}}"
+   flow-selector="prices.compare_at.label"
+   flow-default="{{ fwv__variant.compare_at_price | money }}">
+  {% if fwv__serverSideRender %}
+  {{ flow_localized_compare_at }}
+  {% endif %}
+</span>
+{%- endif -%}
+
+{%- if flow_tag_display == fic__TAX -%}
+<span>
+  <span
+    class="flow-price flow-price__vat {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+    flow-variant="{{fwv__variant.id}}"
+    flow-selector="prices.vat.label">
+    {% if fwv__serverSideRender %}
+    {{ flow_localized_tax }}
+    {% endif %}
+  </span>
+  <span
+    class="flow-price flow-price__vat-name {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+    flow-variant="{{fwv__variant.id}}"
+    flow-selector="prices.vat.name">
+    {% if fwv__serverSideRender %}
+    {{ flow_localized_tax_name }}
+    {% endif %}
+  </span>
+</span>
+{%- endif -%}
+
+{%- if flow_tag_display == fic__DUTY -%}
+<span>
+  <span
+    class="flow-price flow-price__duty {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+    flow-variant="{{fwv__variant.id}}"
+    flow-selector="prices.duty.label">
+    {% if fwv__serverSideRender %}
+    {{ flow_localized_duty }}
+    {% endif %}
+  </span>
+  <span
+    class="flow-price flow-price__duty-name {% if fwv__serverSideRender %}flow-localized{% endif %} {{ classnames }}"
+    flow-variant="{{fwv__variant.id}}"
+    flow-selector="prices.duty.name">
+    {% if fwv__serverSideRender and flow_localized_duty != "" %}
+    Duty
+    {% endif %}
+  </span>
+</span>
+{%- endif -%}

@@ -1,0 +1,101 @@
+<div class="collection-alternating-product clearfix media-aligned-{{ collection-alternating-cycle }} crop">
+  <div class="collection-alternating-section collection-alternating-media show-on-mobile {% if collection-alternating-cycle == 'left' %}show{% endif %}">
+    <a class="collection-alternating-cover" href="{{ item.url }}" style="background-image:url('{{ item.featured_image.src | product_img_url: '2048x2048' }}')"></a>
+    <img class="collection-alternating-image" alt="{{ settings[title] | strip_html | escape }}" src="{{ item.featured_image.src | product_img_url: 'grande' }}">
+  </div>
+  <div class="collection-alternating-section {{ collection-alternating-cycle }}">
+    <div class="collection-alternating-text-wrapper">
+      <a class="module-title collection-alternating-title" href="{{ item.url }}">
+        {{ item.title }}
+      </a>
+      <div class="module-meta collection-alternating-meta">
+        {% if item.available %}
+          {% if item.price_varies %}
+            <span class="price">
+
+
+
+              {% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %}
+
+              <span class="money">
+                {% comment %}{{ item.price_min | money }}{% endcomment %}
+                {% include 'flow_localized_price' with item %}
+              </span>
+
+
+
+            </span>
+          {% else %}
+            <span class="price">
+
+
+
+              <span class="money">
+                {% comment %}{{ item.price_min | money }}{% endcomment %}
+                {% include 'flow_localized_price' with item %}
+              </span>
+
+
+
+              {% unless item.compare_at_price_min <= item.price_min %}
+                <span class="original money">
+                  {% if item.compare_at_price_min > item.price_min %}
+
+
+
+                    {% comment %}{{ item.compare_at_price_min | money }}{% endcomment %}
+                    {% include 'flow_localized_price' with item, flow_tag_display: 'compare_at' %}
+
+
+
+                  {% endif %}
+                </span>
+                <span class="saving">
+                  {% if selectedVariant.compare_at_price > selectedVariant.price %}
+
+
+
+                    {{ "products.product.saving" | t }}
+
+                    <span class="saving-result money">
+                      {% comment %}{{ selectedVariant.compare_at_price | minus: selectedVariant.price | money }}{% endcomment %}
+                      {% include 'flow_localized_price_savings', _variant: selectedVariant %}
+                    </span>
+
+
+
+                  {% endif %}
+                </span>
+              {% endunless %}
+            </span>
+          {% endif %}
+        {% else %}
+          {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </div>
+      <div class="module-text collection-alternating-text">
+        {{ item.description | strip_html | truncate: 250 }}
+      </div>
+      <div class="module-text collection-alternating-cta">
+        <a class="button outline collection-button" href="{{ item.url | within: collection }}">
+          {{ "customer.orders.order" | t }}
+          <span class="icon icon-arrow-right"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="collection-alternating-section collection-alternating-media {% if collection-alternating-cycle == 'right' %}show{% endif %}">
+    <a class="collection-alternating-cover" href="{{ item.url }}" style="background-image:url('{{ item.featured_image.src | product_img_url: '2048x2048' }}')"></a>
+    <img class="collection-alternating-image" alt="{{ settings[title] | strip_html | escape }}" src="{{ item.featured_image.src | product_img_url: 'grande' }}">
+    {% if settings.product-stock-level-overlay and item.available and infinity == false and total < threshold %}
+      <div class="stock-badge">
+        {{ 'products.product.stock_level' | t: stock_count: total }}
+      </div>
+    {% endif %}
+    {% if item.compare_at_price_min > item.price_min and item.available %}
+      <div class="sale-badge">
+        {{ 'products.product.sale' | t }}
+      </div>
+    {% endif %}
+  </div>
+</div>

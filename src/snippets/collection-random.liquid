@@ -1,0 +1,47 @@
+{% if product_count < 8 %}
+  {% if product_count < 2 %}
+    {% assign column = 1 %}
+    {% assign list_class = "compact column-1" %}
+  {% else %}
+    {% if product_count_odd == 'false' %}
+      {% assign column = 2 %}
+      {% assign list_class = "compact column-2" %}
+    {% else %}
+    {% assign column = 3 %}
+      {% assign list_class = "compact column-3" %}
+    {% endif %}
+  {% endif %}
+{% else %}
+  {% assign list_class = "random" %}
+{% endif %}
+
+<div class="list collection-list clearfix {{ list_class }}">
+  {% if product_count > 0 %}
+    {% if product_count >= 8 %}
+      {% for product in collection.products %}
+        {% assign loopindex = forloop.index | modulo: 4 %}
+        {% if forloop.first == true %}
+          <div class="list-row">
+            {% include 'product-list-item' %}
+        {% endif %}
+        {% if loopindex == 1 and forloop.first == false and forloop.last == false %}
+          </div>
+          <div class="list-row">
+            {% include 'product-list-item' %}
+        {% elsif loopindex != 1 and forloop.first == false and forloop.last == false %}
+            {% include 'product-list-item' %}
+        {% endif %}
+        {% if forloop.last == true %}
+            {% include 'product-list-item' %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% for product in collection.products %}
+        {% include 'product-list-item' %}
+      {% endfor %}
+    {% endif %}
+  {% else %}
+    <p class="empty">{{ 'collections.collection.no_products' | t }}</p>
+  {% endif %}
+</div>

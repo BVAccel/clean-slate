@@ -1,0 +1,16 @@
+{% for p in mw_PO_order.properties %}
+    {% unless p.last == blank %}
+         <br>
+         {% if p.first contains '_mw_option_relation' %}{% continue %}{% endif; %}
+         {% if p.first contains '_replaced_image' %}{% continue %}{% endif; %}
+         {% comment %} add BOLD properties {% endcomment %}
+         {% if p.first contains '_builder_id' %}{% continue %}{% endif; %}
+         {% if p.first contains '_master_builder' %}{% continue %}{% endif; %}
+         <span class="option-cart-title">{{ p.first }}:</span>
+		 {% if p.last contains '/uploads/' %}
+              <a class="lightbox" href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+         {% else %}
+              <span class="option-cart-title-content">{% for prop in p.last %}{{ prop }}{% if forloop.last == false %}, {% endif %}{% endfor %}</span>
+         {% endif %}
+    {% endunless %}
+{% endfor %}

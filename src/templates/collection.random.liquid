@@ -1,0 +1,41 @@
+{% assign enable-tag-filtering = false %}
+{% assign collection-background-style = 'default' %}
+
+{% paginate collection.products by settings.collection-products-per-page %}
+  <div class="module-wrapper style-{{ collection-background-style }}">
+    <div class="module collection {% if collection.handle == 'all' %}all{% endif %}">
+      <div class="module-header collection-header">
+        <div class="module-title">
+          {% if collection.handle == 'all' %}
+            <h1>{{ 'collections.collection.all_products' | t }}</h1>
+          {% else %}
+            <h1 class="module-title">{{ collection.title }}</h1>
+          {% endif %}
+        </div>
+        {% if collection.description != blank %}
+          <div class="module-subtitle collection-subtitle">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="module-body collection-body">
+        {% if collection.all_tags.size > 0 and enable-tag-filtering %}
+          {% include 'collection-tag-selector' %}
+        {% endif %}
+        {% assign product_count = collection.products.size | plus: 0 %}
+        {% assign value = product_count | modulo: 2 %}
+        {% assign product_count_odd = 'true' %}
+        {% if value == 0 %}
+          {% assign product_count_odd = 'false' %}
+        {% endif %}
+        {% include 'collection-random' %}
+        {% if  product_count == 0 %}
+          <p>{{ "products.product.no_product" | t }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if paginate.previous or paginate.next %}
+    {% include 'pagination' %}
+  {% endif %}
+{% endpaginate %}

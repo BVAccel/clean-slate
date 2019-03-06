@@ -1,0 +1,34 @@
+<!-- place snippet where you want the star rating to appear in top product section -->
+{% if settings.product-show-reviews %}
+  <a href="#" data-scroll-to="reviews-section" class="yotpo-star-badge-container" id="yotpo">
+    <div class="avg-review-stars"></div>
+    <div class="product-reviews-amount">
+      <p class="product-reviews-amount-number">
+        <span class="num-reviews"></span>
+        <span class="num-reviews-title"></span>
+      </p>
+    </div>
+  </a>
+{% endif %}
+
+
+<!-- place snippet below were the yotpo slide appears -->
+{% if settings.product-show-reviews %}
+  <section class="product-reviews-section" data-scroll-position="reviews-section">
+    <div class="product-reviews-main-title-stars-container" id="yotpo">
+      <div class="avg-review-stars"></div>
+      <div class="avg-review-title">
+        <span class="num-reviews"></span>
+        <span class="num-reviews-bottom-title"></span>
+      </div>
+    </div>  
+    {% include 'yotpo-slider' %} <!-- see snippet included -->
+  </section>  
+{% endif %}
+
+<!-- settings schema -->
+{  
+  "type":"checkbox",
+  "id":"product-show-reviews",
+  "label":"Enable"
+}

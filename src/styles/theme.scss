@@ -14,21 +14,62 @@
 // @import 'blocks/global-secondary-navigation';
 // @import 'blocks/global-header-search';
 
+
 // Components
-@import 'components/global';
-@import 'components/heading';
+// @import 'components/global';
+// @import 'components/heading';
 @import 'components/button';
-@import 'components/icon';
+// @import 'components/icon';
 @import 'components/link';
 @import 'components/svg';
 @import 'components/product-item';
 @import 'components/hero';
+@import 'components/accordion';
+@import 'components/brand-values';
+@import 'components/breadcrumbs';
+@import 'components/feature-collection';
+@import 'components/flow-checkout';
+@import 'components/flow-country-picker';
+@import 'components/footer';
+@import 'components/header';
+@import 'components/in-the-news';
+@import 'components/info-template';
+@import 'components/inline-cart';
+@import 'components/nav-animations';
+@import 'components/navigation';
+@import 'components/our-story';
+@import 'components/overlay';
+@import 'components/page';
+@import 'components/pdp';
+@import 'components/plp';
+@import 'components/product-reviews';
+@import 'components/promobar';
+@import 'components/rte';
+@import 'components/scroll';
+@import 'components/select3';
+@import 'components/shipping-guide';
+@import 'components/sizing-guide';
+@import 'components/square-image';
+@import 'components/super';
+
+
+// sections
+@import "components/50-50-split";
+@import "components/heading";
+@import "components/image-banner";
+@import "components/text-image-section";
+@import "components/text-overlay";
+@import "components/text-section";
+@import "components/yotpo-ugc";
+
+
 
 // Layout
 @import 'layout/global-header/index';
 @import 'layout/bottombar';
 @import 'layout/global-footer';
 @import 'layout/topbar';
+@import "layout/container";
 
 // Shame
 @import 'base/shame';
@@ -36,3 +77,4 @@
 #preview-bar-iframe {
   display: none;
 }
+

@@ -1,0 +1,37 @@
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if collection.products.size > 1 %}
+  <div class="module-wrapper style-{{ settings.related-products-style }}">
+    <div class="module related-products">
+      <div class="module-header related-products-header">
+        <h3 class="module-title related-products-title">
+          We Also Suggest
+        </h3>
+      </div>
+      <div class="module-body related-products-body">
+        <div class="list compact crop image-contain column-3">
+          {% assign current_product_found = false %}
+          {% assign count = 0 %}
+          {% for prod in collection.products %}
+            {% if count < 3 and prod.title != product.title %}
+              {% include 'product-list-item', excludeCover: true %}
+              {% assign clear = settings.related-products-column %}
+              {% assign group = 'related' %}
+              {% include 'clear' %}
+              {% assign count = count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+

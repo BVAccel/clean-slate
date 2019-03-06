@@ -1,18 +1,18 @@
-import PubSub from 'pubsub-js';
-
-import 'lazysizes';
-import { focusHash, bindInPageLinks } from '@shopify/theme-a11y';
-
-import Toggle from 'components/Toggle';
-import Overlay from 'components/Overlay';
-import InlineCart from 'components/InlineCart';
+import { bindInPageLinks, focusHash } from '@shopify/theme-a11y';
 import CartControls from 'components/CartControls';
+import InlineCart from 'components/InlineCart';
+import Overlay from 'components/Overlay';
 import QuantitySelect from 'components/QuantitySelect';
-
+import Toggle from 'components/Toggle';
+import 'lazysizes';
+import PubSub from 'pubsub-js';
 import State from 'state';
-
 import 'styles/theme.scss';
 import 'styles/theme.scss.liquid';
+
+
+
+
 
 PubSub.immediateExceptions = true;
 

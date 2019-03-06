@@ -1,0 +1,153 @@
+//HOVER INSIDE ANIMATIONS
+@keyframes InsideImagesTranslate {
+  0% {
+  	top: 30px;
+  }
+  10% {
+  	top: 30px;
+  }
+  100% {
+  	top: 0;
+  }
+}
+@keyframes InsideImagesOpacity{
+	0% {
+  	opacity: 0;
+  }
+  20% {
+  	opacity: 0;
+  }
+  100% {
+  	opacity: 1;
+  }
+}
+//HOVER OUTSIDE ANIMATIONS
+@keyframes OutsideImagesTranslate {
+  0% {
+  	top: 0;
+  }
+  33% {
+  	top: 0;
+  }
+  100% {
+  	top: 30px;
+  }
+}
+@keyframes OutsideImagesOpacity{
+	0% {
+  	opacity: 1;
+  }
+  100% {
+  	opacity: 0;
+  }
+}
+
+//HOVER BETWEEN ANIMATIONS
+@keyframes BetweenActiveImagesOpacity{
+	0% {
+  	opacity: 0;
+  }
+  20% {
+  	opacity: 0;
+  }
+  100% {
+  	opacity: 1;
+  }
+}
+@keyframes BetweenInactiveImagesOpacity{
+	0% {
+  	opacity: 1;
+  }
+  100% {
+  	opacity: 0;
+  }
+}
+
+//Category Animations
+@keyframes ImageScale{
+	0% {
+  	transform: scale(1);
+  }
+  100% {
+  	transform: scale(1.03);
+  }
+}
+
+@keyframes HeaderBackground{
+	0% {
+  	background-color: transparent;
+  }
+  90% {
+  	background-color: transparent;
+  }
+  100%{
+		background-color: $color-white;
+  }
+}
+
+//Apply Animations
+.hover-inside--active{
+	.header-nav-item--sub-images-container{
+		@include mq($screen-md){
+			animation: InsideImagesTranslate 1000ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00), InsideImagesOpacity 750ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00);
+		}
+	}
+}
+.hover-outside--active{
+	.header-nav-item--sub-images-container{
+		@include mq($screen-md){
+			animation: OutsideImagesTranslate 300ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00), OutsideImagesOpacity 150ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00);
+		}
+	}
+}
+
+.hover-between--active{
+	.header-nav-item--sub-images-container{
+		@include mq($screen-md){
+			top: 0;
+			animation: BetweenActiveImagesOpacity 750ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00);
+		}
+	}
+}
+
+.hover-between--inactive{
+	@include mq($screen-md){
+		background-color: transparent;
+	}
+	.header-nav-item--sub-images-container{
+		@include mq($screen-md){
+			animation: BetweenInactiveImagesOpacity 150ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00);
+		}
+	}
+}
+
+.meganav-image-link-container{
+	img, .meganav-link-content, .meganav-link-content p{
+		transition: all 400ms cubic-bezier(0.33, 0, 0.33, 1.00);
+	}
+	&:hover{
+		img{
+			@include mq($screen-md){
+				transform: scale(1.03);
+			}
+		}
+		.meganav-link-content{
+			@include mq($screen-md){
+				background-color: $color-white;
+			}
+			p{
+				@include mq($screen-md){
+					color: $color-offblack;
+				}
+			}
+		}
+	}
+}
+
+.main-header-is-active.main-nav-is-active{
+  animation: HeaderBackground 500ms forwards cubic-bezier(0.33, 1.00, 0.33, 1.00);
+}
+
+
+
+

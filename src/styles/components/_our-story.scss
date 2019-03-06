@@ -1,0 +1,105 @@
+.story{
+	padding-top: 300px;
+	background-size: 100%;
+	background-position: top;
+	background-repeat: no-repeat;
+	@include mq($screen-xxs){
+		padding-top: 360px;
+	}
+	@include mq($sm){
+		padding-top: 768px;
+	}
+	@include mq($md){
+		background-size: cover;
+		padding: 295px 0;
+	}
+	.container{
+		@include mq($xs){
+			width: 100%;
+			padding: 0;
+		}
+		@include mq($md){
+			width: 1200px;
+		}
+		.col-12{
+			padding: 0;
+			@include mq($md){
+				padding: 0 15px;
+			}
+		}
+		.row{
+			@include mq($xs){
+				width: 100%;
+				margin-left: 0;
+				margin-right: 0;
+				display: block;
+			}
+		}
+	}
+	.story__content{
+		background-color: $color-white;
+		padding: 60px 30px;
+		@include mq($sm){
+			padding: 96px;
+		}
+		@include mq($md){
+			background-color: transparent;
+			max-width: 470px;
+			padding: 0;
+		}
+		h2{
+			color: $color-offblack;
+			font-size: 26px;
+			line-height: 36px;
+			margin-bottom: 24px;
+			@include mq($sm){
+				font-size: 40px;
+				line-height: 56px;
+			}
+			@include mq($md){
+				color: $color-white;
+				margin-bottom: 16px;
+			}
+		}
+		p{
+			color: $color-offblack;
+			font-size: 18px;
+			line-height: 28px;
+			margin-bottom: 24px;
+			padding: 0;
+			@include mq($sm){
+				font-size: 20px;
+				line-height: 32px;
+				margin-bottom: 30px;
+			}
+			@include mq($md){
+				color: $color-white;
+				margin-bottom: 24px;
+			}
+		}
+		.btn{
+			width: 100%;
+			@include mq($sm){
+				max-width: 240px;
+			}
+			@include mq($md){
+				color: $color-white;
+			  background-image: $color-grey-gradient;
+			  -webkit-backdrop-filter: blur(5px);
+			  backface-visibility: hidden;
+			}
+			&:before{
+				@include mq($md){
+			  	background: $color-white;
+			  }
+		  }
+		  &:hover,
+		  &:focus{
+		  	@include mq($md){
+			    color: $color-offblack;
+			    box-shadow: 0 1px 0 0 rgba(0,0,0,0);
+			  }
+		  }
+		}
+	}
+}

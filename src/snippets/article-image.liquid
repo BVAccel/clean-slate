@@ -1,0 +1,13 @@
+{% if article.image %}
+  <img class="post-image" src="{{ article.image | img_url: 'large' }}" alt="{{ article.title | strip_html | escape }}"/>
+{% else %}
+  {% assign src = false %}
+  {% assign img_tag = '<img' %}
+  {% if article.excerpt_or_content contains img_tag %}
+    {% assign src = article.excerpt_or_content | split: 'src="' %}
+    {% assign src = src[1] | split: '"' | first %}
+  {% endif %}
+  {% if src %}
+    <img class="post-image" src="{{ src }}" />
+  {% endif %}
+{% endif %}
