@@ -1,3 +1,13 @@
+import * as FlowCart from "components/FlowCart";
+import * as Select3 from "components/Select3";
+import * as SetInternational from "components/SetInternational";
+import {
+  addClass,
+  penniesToDollars,
+  removeClass,
+  toggleClass
+} from "components/Utils";
+
 let $dom = {};
 
 const cacheDom = () => {
@@ -199,6 +209,7 @@ const addListeners = ({ isFlowCart }) => {
 };
 
 export const init = ({ isFlowCart }) => {
+  console.log("%cinit: InlineCart.js", "color: green;");
   cacheDom();
   addListeners({ isFlowCart });
 };

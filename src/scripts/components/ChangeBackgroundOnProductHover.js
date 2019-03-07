@@ -34,6 +34,7 @@ const setHovers = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: ChangeBackgroundOnProductHover.js", "color: green;");
   if (!is_touch_device()) {
     setHovers();
   }

@@ -53,13 +53,14 @@ const bindUIActions = () => {
 export const replaceWithCustomContent = () => {
   if (hasCustomFitGuide()) {
     return GetPageData();
-  } else {
-    console.log("does not have page data");
-    return;
   }
+
+  console.log("does not have page data");
+  return;
 };
 
 export const init = function() {
+  console.log("%cinit: FitGuide.js", "color: green;");
   // console.log('custom fit guide loaded');
   cacheDom();
   hasCustomFitGuide();

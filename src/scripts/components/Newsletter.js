@@ -57,6 +57,7 @@ var bindUIActions = function() {
 };
 
 export const init = function() {
+  console.log("%cinit: Newsletter.js", "color: green;");
   cacheDom();
   bindUIActions();
 };

@@ -1,3 +1,10 @@
+import {
+  addClass,
+  deepCopy,
+  getRandomElementInArray,
+  removeClass
+} from "components/Utils";
+
 let upsellAdded = false;
 
 const $dom = {};
@@ -139,9 +146,7 @@ const filterProductsAlreadyInCart = productJSON => {
 const updateUpsell = async (product, variant, isFlowCart) => {
     const { title } = product;
     const { id, featured_image: { src }, option1, option2, price } = variant;
-    console.log('before localizedPrice')
     const localizedPrice = (!isFlowCart) ? penniesToDollars(price) : await internationalPrice(id);
-    console.log('after localizedPrice')
 
     $dom.upsell.innerHTML = `
     <div class="inline-cart__upsell-img">
@@ -217,6 +222,7 @@ const bindUIActions = ({ isFlowCart }) => {
 };
 
 export const init = ({ isFlowCart }) => {
+  console.log("%cinit: CartUpsell.js", "color: green;");
   cacheDom();
   bindUIActions({ isFlowCart });
 };

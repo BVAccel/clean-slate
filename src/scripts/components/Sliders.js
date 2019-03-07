@@ -91,6 +91,7 @@ const MobileSlidersInit = () => {
 const bindUIActions = () => {};
 
 export const init = function() {
+  console.log("%cinit: Sliders.js", "color: green;");
   cacheDom();
   SlidersInit();
   $(window).on("load", function() {

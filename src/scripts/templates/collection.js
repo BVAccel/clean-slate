@@ -1,6 +1,9 @@
 import * as ChangeBackgroundOnProductHover from "components/ChangeBackgroundOnProductHover.js";
+import * as Parallax from "components/Parallax";
 import "components/_Collection";
 import "styles/templates/collection/index.scss";
+
+console.log("collection.js running?");
 
 // Quickshop.initSubscribers();
 // Modal.initSubscribers();
@@ -8,6 +11,7 @@ import "styles/templates/collection/index.scss";
 document.addEventListener("DOMContentLoaded", () => {
   // Quickshop.bindActions();
   // Modal.bindActions();
+  Parallax.init();
   ChangeBackgroundOnProductHover.init();
 });
 

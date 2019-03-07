@@ -25,6 +25,8 @@ const MobileImage = currentBg => {
 };
 
 export const init = function() {
+  console.log("%cinit: MobileImageCheck.js", "color: green;");
+
   cacheDom();
   $dom.MobileImageCheck.each(function() {
     let currentBg = $(this);

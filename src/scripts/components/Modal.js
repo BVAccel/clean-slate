@@ -39,6 +39,8 @@ export const hide = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: Modal.js", "color: green;");
+
   cacheDom();
   bindUIActions();
 };

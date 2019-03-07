@@ -1,5 +1,12 @@
+import { removeClass, toggleClass } from "components/Utils";
+
 // this module will hide native select
-export const init = root => {
+export const init = (root = document.body) => {
+  if (root === document.body)
+    console.log("%cinit: Select3.js", "color: green;");
+  if (root !== document.body)
+    console.log("%creinit: Select3.js", "color: green;");
+
   const selects = [...root.querySelectorAll("select.select3")];
 
   selects.forEach((select, index) => {

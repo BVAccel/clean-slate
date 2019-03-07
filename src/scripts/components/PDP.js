@@ -1,3 +1,5 @@
+import { addClass, removeClass, toggleClass } from "components/Utils";
+
 let variants;
 
 const $dom = {};
@@ -317,6 +319,8 @@ const addListeners = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: PDP.js", "color: green;");
+
   cacheDom();
   addListeners();
   initProductSlider();

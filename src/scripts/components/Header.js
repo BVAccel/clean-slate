@@ -23,15 +23,12 @@ var hideMobile = function() {
 };
 
 var bindUIActions = function() {
-  $(window).scroll(function() {
-    miniHeader();
-  });
-  $(window).resize(function() {
-    miniHeader();
-  });
+  $(window).scroll(miniHeader);
+  $(window).resize(miniHeader);
 };
 
-export const init = function(show) {
+export const init = function() {
+  console.log("%cinit: Header.js", "color: green;");
   bindUIActions();
   miniHeader();
   hideMobile();

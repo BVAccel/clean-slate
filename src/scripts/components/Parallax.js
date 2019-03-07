@@ -12,6 +12,8 @@ const isInViewPort = el => {
 };
 
 export const init = () => {
+  console.log("%cinit: Parallax.js", "color: green;");
+
   const elements = [...document.querySelectorAll("[data-parallax]")];
 
   if (!elements.length) return;

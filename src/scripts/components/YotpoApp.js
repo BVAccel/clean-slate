@@ -121,7 +121,7 @@ var buildReview = function(review, productID) {
 
   /* Build review stars - font awesome */
   var reviewStars = '<span class="start-wrap">';
-  for (i = 0; i < score; i++) {
+  for (let i = 0; i < score; i++) {
     reviewStars += '<i class="fa fa-star"></i>';
   }
   reviewStars += "</span>";
@@ -178,10 +178,10 @@ var buildReview = function(review, productID) {
 var buildAVGRatings = function(avgScore) {
   var avgScoreInt = Math.floor(avgScore);
   var totalScore = "";
-  for (i = 0; i < avgScoreInt; i++) {
+  for (let i = 0; i < avgScoreInt; i++) {
     totalScore += '<i class="fa fa-star"></i>';
   }
-  avgScoreDec = avgScore % 1;
+  const avgScoreDec = avgScore % 1;
   if (avgScoreDec < 0.25) {
     totalScore = totalScore;
   } else if (avgScoreDec > 0.249 && avgScoreDec < 0.75) {
@@ -319,7 +319,7 @@ var bindUIActions = function() {
     $(".star-score i")
       .removeClass("fa-star")
       .addClass("fa-star-o");
-    for (i = 1; i <= newScore; i++) {
+    for (let i = 1; i <= newScore; i++) {
       $(`.star-score[data-score="${i}"]`)
         .find("i")
         .removeClass("fa-star-o")
@@ -371,6 +371,7 @@ var bindUIActions = function() {
 };
 
 export const init = function() {
+  console.log("%cinit: YotpoApp.js", "color: green;");
   yotpoVariables();
   sendReviewsRequest();
   bindUIActions();

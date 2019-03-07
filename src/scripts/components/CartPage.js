@@ -1,3 +1,7 @@
+console.log("%cmodule: CartPage", "color: green;");
+
+import * as SetInternational from "components/SetInternational";
+
 const $dom = {};
 
 const cacheDom = () => {
@@ -205,6 +209,7 @@ const addListeners = ({ isFlowCart }) => {
 };
 
 export const init = ({ isFlowCart }) => {
+  console.log("%cinit: CartPage.js", "color: green;");
   cacheDom();
   addListeners({ isFlowCart });
 };

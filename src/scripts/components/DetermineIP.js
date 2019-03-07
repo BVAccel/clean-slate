@@ -1,6 +1,8 @@
 import Cookies from "../vendor/Cookies";
 
 export const init = async () => {
+  console.log("%cinit: DetermineIP.js", "color: green;");
+
   let ipData;
 
   if (Cookies.get("ipData")) {

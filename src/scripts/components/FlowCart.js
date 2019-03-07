@@ -27,18 +27,8 @@ Flow.set("on", "ready", function() {
   InlineCart.init({ isFlowCart });
   CartUpsell.init({ isFlowCart });
 
-  // {% if template contains 'cart' %}
-  //   CartPage.init({ isFlowCart });
-  // {% endif %}
-
-  // {% if template contains 'product' %}
-  //   PDP.init();
-  // {% endif %}
-
   if (isFlowCart) {
     console.log(`using flowcart instead of cartjs`);
-
-    init();
 
     $("head").append(
       '<style type="text/css">[id$="_ribbon_container"] { display: none; }</style>'
@@ -63,8 +53,8 @@ export const genericFlowOptions = {
   }
 };
 
-const getFlowCart = () => {
-  return new Promise((resolve, reject) => {
+const getFlowCart = () =>
+  new Promise((resolve, reject) => {
     Flow.cart.getCart({
       success: (status, cart) => {
         resolve(cart);
@@ -74,20 +64,6 @@ const getFlowCart = () => {
       }
     });
   });
-};
-
-const getFlowCartHtml = () => {
-  return new Promise((resolve, reject) => {
-    Flow.cart.getCartHtml({
-      success: (status, html) => {
-        resolve(html);
-      },
-      error: (status, error) => {
-        reject(error);
-      }
-    });
-  });
-};
 
 const flowAddToCart = ({ currentTarget: self }) => {
   const variantId = self.dataset.cartAdd;
@@ -95,12 +71,7 @@ const flowAddToCart = ({ currentTarget: self }) => {
   const quantity = 1;
   const properties = {};
 
-  Flow.cart.addItem(
-    variantId,
-    quantity,
-    properties,
-    FlowCart.genericFlowOptions
-  );
+  Flow.cart.addItem(variantId, quantity, properties, genericFlowOptions);
   logFlowAdd(variantId, productPrice, quantity);
 };
 
@@ -118,17 +89,18 @@ const logFlowAdd = (variantId, productPrice, quantity) => {
   window.Flow.beacon.processEvent("cart_add", params, { xhr: true });
 };
 
-const redirecctToFlowCheckout = () => {
+const redirectToFlowCheckout = () => {
   Flow.cart.redirectToCheckout();
   return false;
 };
 
 const bindUIActions = () => {
-  $(document).on("click", dom.checkoutLink, redirecctToFlowCheckout);
+  $(document).on("click", dom.checkoutLink, redirectToFlowCheckout);
   $(dom.addToCart).on("click", flowAddToCart);
 };
 
 export const init = () => {
+  console.log("%cinit: FlowCart.js", "color: green;");
   bindUIActions();
   getFlowCart().then(cart => {
     CartJS.cart = cart;

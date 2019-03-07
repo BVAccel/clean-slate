@@ -31,6 +31,8 @@ const affixSection = (sections, elements) => {
 };
 
 export const init = () => {
+  console.log("%cinit: AffixInParent.js", "color: green;");
+
   cacheDom();
 
   if ($dom.affixSections.length) {

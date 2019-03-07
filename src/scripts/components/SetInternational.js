@@ -42,6 +42,8 @@ const setUnits = country => {
 export const isItInternational = () => isInternational;
 
 export const init = async () => {
+  console.log("%cinit: SetInternational.js", "color: green;");
+
   $(document).on("ip.set", (e, json) => {
     const country = json.country_name ? json.country_name : json;
     // console.log(json);

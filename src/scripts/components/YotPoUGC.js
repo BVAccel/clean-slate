@@ -208,6 +208,8 @@ const bindUIActions = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: YotpoUGC.js", "color: green;");
+
   cacheDom();
   if (!$dom.defaultSlider) {
     return;

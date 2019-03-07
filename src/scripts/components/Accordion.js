@@ -1,3 +1,5 @@
+import { removeClass, toggleClass } from "components/Utils";
+
 const $dom = {
   accordionElements: [],
   accordionToggles: []
@@ -45,6 +47,7 @@ const closeAccordion = Accordion => {
 };
 
 export const init = () => {
+  console.log("%cinit: Accordion.js", "color: green;");
   cacheDom();
   bindUIActions();
 };

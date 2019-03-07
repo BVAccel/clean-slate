@@ -200,6 +200,7 @@ const bindUIActions = function() {
 };
 
 export const init = function(show) {
+  console.log("%cinit: Meganav.js", "color: green;");
   bez();
   cacheDom();
   bindUIActions();

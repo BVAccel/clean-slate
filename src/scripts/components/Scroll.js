@@ -59,6 +59,7 @@ export const toggle = menuName => {
 };
 
 export const init = () => {
+  console.log("%cinit: Scroll.js", "color: green;");
   cacheDom();
   bindUIActions();
 };

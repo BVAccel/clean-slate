@@ -15,6 +15,7 @@ const addListeners = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: SquareImage.js", "color: green;");
   cacheDom();
   addListeners();
 };

@@ -1,3 +1,5 @@
+import Cookies from "../vendor/Cookies";
+
 let $dom = {};
 var isCollapsed = Cookies.get("bva_bar_collapsed") === "true";
 var isSignedUp = Cookies.get("bva_bar_complete") === "true";
@@ -100,6 +102,7 @@ export const success = $form => {
 };
 
 export const init = function() {
+  console.log("%cinit: PromotionBar.js", "color: green;");
   cacheDom();
   bindUIActions();
 

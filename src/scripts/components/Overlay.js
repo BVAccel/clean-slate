@@ -32,6 +32,7 @@ const bindUIActions = () => {
 };
 
 export const init = () => {
+  console.log("%cinit: Overlay.js", "color: green;");
   cacheDom();
   bindUIActions();
 };
