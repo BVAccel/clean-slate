@@ -1,3 +1,5 @@
+import { addClass } from "components/Utils";
+
 let isInternational = false;
 
 const countriesThatUseImperial = [
@@ -11,15 +13,15 @@ const countriesThatUseImperial = [
   "Liberia"
 ];
 
-const countriesThatUseLocalCheckout = [
-  "US",
-  "USA",
-  "America",
-  "United States",
-  "United States of America",
-  "Canada",
-  "CA"
-];
+// const countriesThatUseLocalCheckout = [
+//   "US",
+//   "USA",
+//   "America",
+//   "United States",
+//   "United States of America",
+//   "Canada",
+//   "CA"
+// ];
 
 // const setCheckoutButton = country => {
 //   if (!countriesThatUseLocalCheckout.includes(country)) {

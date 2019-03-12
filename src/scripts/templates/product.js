@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   SquareImage.init();
   AffixInParent.init();
   FitGuide.init();
-  SetInternational.init();
+  // SetInternational.init();
 
   Slider.initSliders()
     .then(sliders => Slider.filterSlides())

@@ -228,8 +228,6 @@ var postNewReview = function(form) {
 var sendReviewsRequest = function() {
   var reviewRequestURL = `${appURL}/yotpo-fetch?shop=${shopUrl}&pid=${productId}`;
 
-  console.log({ reviewRequestURL });
-
   var appRequest = $.get(reviewRequestURL)
     /* On fail, log and send error */
     .fail(function(error) {

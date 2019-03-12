@@ -1,6 +1,7 @@
 console.log("%cmodule: CartPage", "color: green;");
 
 import * as SetInternational from "components/SetInternational";
+import { addClass, removeClass, toggleClass } from "components/Utils";
 
 const $dom = {};
 
@@ -187,7 +188,7 @@ const addListeners = ({ isFlowCart }) => {
     updateCartItems({ isFlowCart });
     addSelectListeners({ isFlowCart });
 
-    Select3.init(document.querySelector(".cart"));
+    Select3.reInit(document.querySelector(".cart"));
 
     if (SetInternational.isItInternational()) {
       updateInternationalForm();

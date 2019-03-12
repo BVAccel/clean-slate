@@ -1,5 +1,3 @@
-import * as CartUpsell from "components/CartUpsell";
-import * as InlineCart from "components/InlineCart";
 /**
  *  Dependency: <div class="Flow" data-Flow></div> in theme.liquid,
  *              components/_Flow.scss
@@ -15,31 +13,6 @@ const dom = {
   checkoutLink: 'a[href="/checkout"]',
   addToCart: "[data-cart-add]"
 };
-
-Flow.set("on", "ready", function() {
-  window.isFlowCart = Flow.getExperience() ? true : false;
-
-  window.flow.countryPicker.createCountryPicker({});
-  window.flow.countryPicker.createCountryPicker({
-    containerId: "country-picker-mobile"
-  });
-
-  InlineCart.init({ isFlowCart });
-  CartUpsell.init({ isFlowCart });
-
-  if (isFlowCart) {
-    console.log(`using flowcart instead of cartjs`);
-
-    $("head").append(
-      '<style type="text/css">[id$="_ribbon_container"] { display: none; }</style>'
-    );
-    $('a[href="/pages/referral"]')
-      .parent()
-      .hide();
-  } else {
-    CartJS.init(window.BVA.cartJSON);
-  }
-});
 
 export const genericFlowOptions = {
   success: (status, data) => {
@@ -75,14 +48,14 @@ const flowAddToCart = ({ currentTarget: self }) => {
   logFlowAdd(variantId, productPrice, quantity);
 };
 
-const logFlowAdd = (variantId, productPrice, quantity) => {
+const logFlowAdd = (variantId, productPrice, quantity = 1) => {
   const params = {
     item_number: variantId,
     price: {
       amount: productPrice,
       currency: "USD"
     },
-    quantity: quantity ? quantity : 1
+    quantity
   };
 
   //send cart_add event to Beacon
@@ -101,9 +74,10 @@ const bindUIActions = () => {
 
 export const init = () => {
   console.log("%cinit: FlowCart.js", "color: green;");
+
   bindUIActions();
   getFlowCart().then(cart => {
-    CartJS.cart = cart;
+    if (isFlowCart) CartJS.cart = cart;
     $(document).trigger("cart.ready");
   });
 };

@@ -1,4 +1,9 @@
-import { addClass, removeClass, toggleClass } from "components/Utils";
+import {
+  addClass,
+  penniesToDollars,
+  removeClass,
+  toggleClass
+} from "components/Utils";
 
 let variants;
 

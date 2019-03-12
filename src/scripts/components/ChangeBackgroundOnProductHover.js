@@ -1,4 +1,4 @@
-import { is_touch_device } from "components/Utils.js";
+import { addClass, is_touch_device, removeClass } from "components/Utils.js";
 
 const setHovers = () => {
   const hoverImage = document.querySelector(".plp__hover-image");

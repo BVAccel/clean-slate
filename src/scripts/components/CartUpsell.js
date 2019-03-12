@@ -146,7 +146,7 @@ const filterProductsAlreadyInCart = productJSON => {
 const updateUpsell = async (product, variant, isFlowCart) => {
     const { title } = product;
     const { id, featured_image: { src }, option1, option2, price } = variant;
-    const localizedPrice = (!isFlowCart) ? penniesToDollars(price) : await internationalPrice(id);
+    const localizedPrice = (!isFlowCart) ? `$${price}` : await internationalPrice(id);
 
     $dom.upsell.innerHTML = `
     <div class="inline-cart__upsell-img">
@@ -172,7 +172,7 @@ const clearUpsell = () => {
   $dom.upsell.innerHTML = "";
 };
 
-const generateRecommendation = async ({ isFlowCart }) => {
+const generateRecommendation = async () => {
   if (upsellAdded) {
     clearUpsell();
     return;
@@ -202,9 +202,9 @@ const generateRecommendation = async ({ isFlowCart }) => {
   updateUpsell(product, variant, isFlowCart);
 };
 
-const bindUIActions = ({ isFlowCart }) => {
+const bindUIActions = () => {
   $(document).on("cart.ready cart.requestComplete", () =>
-    generateRecommendation({ isFlowCart })
+    generateRecommendation()
   );
 
   window.addEventListener("click", e => {
@@ -221,8 +221,8 @@ const bindUIActions = ({ isFlowCart }) => {
   });
 };
 
-export const init = ({ isFlowCart }) => {
+export const init = () => {
   console.log("%cinit: CartUpsell.js", "color: green;");
   cacheDom();
-  bindUIActions({ isFlowCart });
+  bindUIActions();
 };

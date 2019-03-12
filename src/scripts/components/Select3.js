@@ -1,12 +1,7 @@
 import { removeClass, toggleClass } from "components/Utils";
 
 // this module will hide native select
-export const init = (root = document.body) => {
-  if (root === document.body)
-    console.log("%cinit: Select3.js", "color: green;");
-  if (root !== document.body)
-    console.log("%creinit: Select3.js", "color: green;");
-
+export const reInit = (root = document.body) => {
   const selects = [...root.querySelectorAll("select.select3")];
 
   selects.forEach((select, index) => {
@@ -48,8 +43,8 @@ export const init = (root = document.body) => {
         el.addEventListener(
           "click",
           e => {
-            const { value } = e.target.dataset;
-            const { textContent } = e.target;
+            const { value } = e.currentTarget.dataset;
+            const { textContent } = e.currentTarget;
 
             const textNode = document.createTextNode(textContent);
             styledSelected.innerHTML = "";
@@ -93,4 +88,9 @@ export const init = (root = document.body) => {
       }
     });
   });
+};
+
+export const init = () => {
+  console.log("%cinit: Select3.js", "color: green;");
+  reInit();
 };
