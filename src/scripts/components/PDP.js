@@ -288,8 +288,6 @@ const addListeners = () => {
 
   // toggle sizing table section
   document.addEventListener("click", async e => {
-    // console.log("$dom.sizingTable.classList", $dom.sizingTable.classList)
-    // console.log("e.target", e.target)
     if (!e.target.matches("[data-sizing-unit]")) return;
     await FitGuide.replaceWithCustomContent();
     if ($dom.sizingTable.classList.contains("sizing__table--in")) {

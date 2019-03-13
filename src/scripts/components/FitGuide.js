@@ -45,7 +45,6 @@ const changeMeasurement = () => {
 
 const bindUIActions = () => {
   if (hasCustomFitGuide()) {
-    console.log("new trigger laoded for custom fit guide");
     $(document).on("click", "[data-sizing-unit]", changeMeasurement);
   }
 };
@@ -54,14 +53,10 @@ export const replaceWithCustomContent = () => {
   if (hasCustomFitGuide()) {
     return GetPageData();
   }
-
-  console.log("does not have page data");
-  return;
 };
 
 export const init = function() {
   console.log("%cinit: FitGuide.js", "color: green;");
-  // console.log('custom fit guide loaded');
   cacheDom();
   hasCustomFitGuide();
   bindUIActions();

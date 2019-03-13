@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   QuantitySelect.bindActions();
   DetermineDevice.init();
   DetermineIP.init();
-  Header.init();
   Meganav.init();
+  Header.init();
   Select3.init();
   PromotionBar.init();
   Newsletter.init();
@@ -62,7 +62,6 @@ Flow.set("on", "ready", function() {
   CartUpsell.init();
 
   if (isFlowCart) {
-    init();
     $("head").append(
       '<style type="text/css">[id$="_ribbon_container"] { display: none; }</style>'
     );
