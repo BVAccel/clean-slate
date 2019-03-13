@@ -1,13 +1,11 @@
 /* Theme Changes */
 .template-product .orion-sub-title {
-
   @include mq(720px) {
     padding-bottom: 0;
   }
 }
 
 .template-product .product-title {
-
   @include mq(720px) {
     margin-bottom: 0;
   }
@@ -44,7 +42,7 @@
 }
 
 .mobile .product-reviews-amount {
-  display: none;  
+  display: none;
 }
 
 .product-reviews-amount-number {
@@ -120,7 +118,7 @@
 
 .product-reviews-main-title-stars-container .fa-star,
 .product-reviews-main-title-stars-container .fa-star-o,
-.product-reviews-main-title-stars-container .fa-star-half, 
+.product-reviews-main-title-stars-container .fa-star-half,
 .review-stars-date-title-container .fa-star,
 .review-stars-date-title-container .fa-star-o,
 .review-stars-date-title-container .fa-star-half {
@@ -130,7 +128,6 @@
 .product-review-content-container .fa-star:before,
 .product-review-content-container .fa-star-o:before,
 .product-review-content-container .fa-star-half:before {
-
   @include mq-max($screen-sm) {
     font-size: 14px;
     margin: 0 2px;
@@ -141,13 +138,13 @@
   cursor: pointer;
 }
 
-.avg-review-title {   
+.avg-review-title {
   display: flex;
   align-items: center;
   color: $color-black;
   font-family: $gt-america-expanded-bold;
   font-size: 26px;
-  font-weight: 900;  
+  font-weight: 900;
 
   @include mq($screen-sm) {
     font-size: 36px;
@@ -219,7 +216,7 @@
 .review-user-container,
 .review-date {
   padding: 0;
-  color: #0B00AA;
+  color: #0b00aa;
   font-family: $gt-america-mono-regular;
   font-size: 14px;
   letter-spacing: 1px;
@@ -345,27 +342,33 @@
 }
 
 .all-reviews-entry-point .slick-list {
-
   @include mq-max(600px) {
     padding-right: 8vw;
     padding-left: 8vw;
   }
 }
 
-.all-reviews-entry-point .slick-next,
-.all-reviews-entry-point .slick-prev {
+body .all-reviews-entry-point .slick-next,
+body .all-reviews-entry-point .slick-prev {
   display: block;
   width: 60px;
   height: 60px;
   border-radius: 30px;
-  left: -60px;
-  background-image: repeating-linear-gradient(90deg, $color-light-blue, $color-white 2px);
+  background-image: repeating-linear-gradient(
+    90deg,
+    $color-light-blue,
+    $color-white 2px
+  );
   transform: none;
   position: absolute;
+  left: -60px;
   top: calc(50% - 30px);
   z-index: 1;
+  border: none;
+  font-size: 0;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     &:after {
       opacity: 1;
     }
@@ -377,12 +380,14 @@
     display: block;
     width: 0;
     height: 0;
-    margin-left: 23px;
     border-right: solid 9px $color-grey-dark;
     border-top: solid 6px transparent;
     border-bottom: solid 6px transparent;
     z-index: 1;
-    top: calc(50% - 7px);
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
   }
 
   &:after {
@@ -401,7 +406,7 @@
   }
 }
 
-.all-reviews-entry-point .slick-next {
+body .all-reviews-entry-point .slick-next {
   left: auto;
   right: -60px;
 
@@ -423,7 +428,7 @@
   left: 50%;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 101;
   padding: 20px;
   opacity: 0;
@@ -498,8 +503,7 @@
 }
 
 .product-review-submit-button {
-
-   @include mq-max($screen-xs) {
+  @include mq-max($screen-xs) {
     padding: 15px 30px;
     line-height: 10px;
   }

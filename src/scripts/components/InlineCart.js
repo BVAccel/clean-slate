@@ -66,7 +66,7 @@ const updateCartOptions = (inventoryQty, qtySelected, maxQty) => {
     .join("");
 };
 
-const updateCartItems = ({ isFlowCart }) => {
+const updateCartItems = () => {
   if (CartJS.cart.item_count > 0) {
     const CustomQty = $dom.products.getAttribute("data-max-item-qty");
     const CustomQtyNum = parseInt(CustomQty);
@@ -188,7 +188,7 @@ const addSelectListeners = () => {
   );
 };
 
-const addListeners = ({ isFlowCart }) => {
+const addListeners = () => {
   // cart toggles
   $("[data-toggle-cart]").on("click", function() {
     toggleClass($dom.cart, "inline-cart--toggled");
@@ -200,7 +200,7 @@ const addListeners = ({ isFlowCart }) => {
   $(document).on("cart.ready cart.requestComplete", (e, cart) => {
     updateCartPrice();
     updateCartItemCount();
-    updateCartItems({ isFlowCart });
+    updateCartItems();
     addSelectListeners();
     Select3.reInit(document.querySelector(".inline-cart"));
 
@@ -221,5 +221,5 @@ const addListeners = ({ isFlowCart }) => {
 export const init = () => {
   console.log("%cinit: InlineCart.js", "color: green;");
   cacheDom();
-  addListeners({ isFlowCart });
+  addListeners();
 };

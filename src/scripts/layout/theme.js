@@ -58,7 +58,7 @@ Flow.set("on", "ready", function() {
   });
 
   FlowCart.init();
-  InlineCart.init({ isFlowCart });
+  InlineCart.init();
   CartUpsell.init();
 
   if (isFlowCart) {

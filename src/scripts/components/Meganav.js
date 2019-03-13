@@ -115,8 +115,6 @@ const bindUIActions = function() {
       shopAllLinkHeight +
       94;
 
-    console.log($(this), $(this).find(".sub-nav-shop-all-link"));
-
     if ($(window).width() > 992) {
       if ($dom.MegaNav.hasClass("sub-header--active")) {
         $(this)
@@ -127,7 +125,6 @@ const bindUIActions = function() {
             height: submenuHeight
           });
 
-        console.log({ submenuHeight });
         $(this)
           .find(".header-nav-item--sub-menu")
           .removeClass("hover-between--inactive")
