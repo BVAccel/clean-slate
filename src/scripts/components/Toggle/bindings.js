@@ -4,7 +4,7 @@ import bva from 'common/Constants';
 const handleToggleClick = ({ currentTarget: self }) => {
   const selector = self.dataset.toggle;
   const action = self.dataset.toggleAction;
-  const animated = (self.dataset.toggleAnimated == 'true');
+  const animated = self.dataset.toggleAnimated == 'true';
   const group = self.dataset.toggleGroup;
   const className = self.dataset.activeClass || dom.isActiveClassName;
   const activeSelfClass = self.dataset.activeSelfClass || dom.isActiveClassName;

@@ -37,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   QuantitySelect.bindActions();
 });
 
-window.addEventListener('load', () => {
-
-});
+window.addEventListener('load', () => {});
 
 // PubSub.subscribe('BVA', (message, data) => console.log(message, data));
 

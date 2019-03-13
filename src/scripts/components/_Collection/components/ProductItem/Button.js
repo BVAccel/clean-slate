@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const Button = props => {
+const Button = (props) => {
   const {
     name = '',
     size = 'auto',
@@ -15,11 +15,9 @@ const Button = props => {
       className={`oo-button ${name} button--${type} flex-${size} ${modifier}`}
       data-action={action}
     >
-
       <p>{text}</p>
 
       {props.children}
-
     </button>
   );
 };

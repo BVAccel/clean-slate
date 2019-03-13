@@ -13,7 +13,7 @@ const withQuickshop = false;
 class ProductItem extends Component {
   state = {};
 
-  render () {
+  render() {
     const { props } = this;
     const { apollo, handle: collection, product } = props;
 
@@ -21,7 +21,6 @@ class ProductItem extends Component {
       <section
         className={`s-flex-6 m-flex-4 l-flex-3 vv-product-item with-quickshop-${withQuickshop}`}
       >
-
         <ProductImage {...props} />
 
         <OptionGroup option="Color" {...props} />
@@ -29,14 +28,14 @@ class ProductItem extends Component {
         <ProductMeta {...props} />
 
         <div className="product-item-quickshop-toggles">
-
           <Button
             name="product-item-button"
             size="6"
             type="primary--alt"
             modifier="u-push-down"
             action="open-quickshop"
-            text="Add to Cart" />
+            text="Add to Cart"
+          />
 
           <Button
             name="product-item-button"
@@ -46,16 +45,12 @@ class ProductItem extends Component {
             action="open-quickshop"
             text="Quickshop"
           >
-
             <AddIcon width="14px" />
-
           </Button>
-
         </div>
-
       </section>
-    )
+    );
   }
-};
+}
 
 export default ProductItem;

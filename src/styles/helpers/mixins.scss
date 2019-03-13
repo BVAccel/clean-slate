@@ -20,7 +20,7 @@
 
 @mixin mq($value, $direction: 'min') {
   @if type-of($value) == number and unitless($value) {
-    $value: $value + "px";
+    $value: $value + 'px';
   }
 
   @if type-of($value) == string {

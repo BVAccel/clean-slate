@@ -2,7 +2,7 @@ import { parseInitialData } from './parseData';
 
 export const defaults = {
   cursor: null,
-  collectionProducts: [ ...parseInitialData() ],
+  collectionProducts: [...parseInitialData()],
   _collectionProducts: [],
   productsLoaded: false,
   activeFilters: [],
@@ -19,9 +19,25 @@ export const defaults = {
   },
   activeSort: { value: null, __typename: 'SortValue' },
   sortOptions: [
-    {value: 'TITLE_DESCENDING', label: 'Title: A - Z', __typename: 'SortValue' },
-    {value: 'TITLE_ASCENDING', label: 'Title: Z - A', __typename: 'SortValue' },
-    {value: 'PRICE_DESCENDING', label: 'Price: High to Low', __typename: 'SortValue' },
-    {value: 'PRICE_ASCENDING', label: 'Price: Low to High', __typename: 'SortValue' },
+    {
+      value: 'TITLE_DESCENDING',
+      label: 'Title: A - Z',
+      __typename: 'SortValue',
+    },
+    {
+      value: 'TITLE_ASCENDING',
+      label: 'Title: Z - A',
+      __typename: 'SortValue',
+    },
+    {
+      value: 'PRICE_DESCENDING',
+      label: 'Price: High to Low',
+      __typename: 'SortValue',
+    },
+    {
+      value: 'PRICE_ASCENDING',
+      label: 'Price: Low to High',
+      __typename: 'SortValue',
+    },
   ],
 };

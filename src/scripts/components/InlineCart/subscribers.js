@@ -3,7 +3,8 @@ import {
   openInlineCart,
   closeInlineCart,
   toggleInlineCart,
-  updateInlineCartUI, } from './handlers';
+  updateInlineCartUI,
+} from './handlers';
 
 export const initSubscribers = () => {
   PubSub.subscribe(bva.openInlineCart, (message, data) => {

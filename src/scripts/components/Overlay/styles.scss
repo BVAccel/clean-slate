@@ -11,7 +11,8 @@ $oo-transition-timing: linear !default;
   left: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.3);
-  transition: visibility 0s $oo-transition-duration, opacity $oo-transition-duration $oo-transition-timing;
+  transition: visibility 0s $oo-transition-duration,
+    opacity $oo-transition-duration $oo-transition-timing;
 
   &.is-active {
     visibility: visible;

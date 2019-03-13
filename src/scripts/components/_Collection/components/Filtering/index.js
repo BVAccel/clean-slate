@@ -10,12 +10,21 @@ import {
   getActiveFilters,
   getFilteredProducts,
   getFilterOptions,
-  updateFilteredProducts } from './query.gql';
+  updateFilteredProducts,
+} from './query.gql';
 
-const generateOptions = values => {
+const generateOptions = (values) => {
   const __typename = 'CollectionProductFilter';
-  const groups = values.reduce((groups, { group, value, type = 'option' }) =>
-    ({ ...groups, [group]: [ ...groups[group] || [], {value, label: value, group, type, __typename } ]}), {});
+  const groups = values.reduce(
+    (groups, { group, value, type = 'option' }) => ({
+      ...groups,
+      [group]: [
+        ...(groups[group] || []),
+        { value, label: value, group, type, __typename },
+      ],
+    }),
+    {},
+  );
   return Object.entries(groups).map(([label, options]) => ({ label, options }));
 };
 
@@ -23,63 +32,74 @@ const parseTags = (tags, filterOptions) => {
   const { tagDelimiter, forbiddenTags } = filterOptions;
   return tags.reduce((legalTags, tag) => {
     const hasDelimiter = tag.includes(tagDelimiter);
-    const isForbidden = forbiddenTags.some(category => tag.toLowerCase().includes(category.toLowerCase()));
-    if (isForbidden || !hasDelimiter) return [ ...legalTags ];
-    const [ group, value ] = tag.split(tagDelimiter);
-    return [ ...legalTags, { group, value, type: 'tag' } ];
+    const isForbidden = forbiddenTags.some((category) =>
+      tag.toLowerCase().includes(category.toLowerCase()),
+    );
+    if (isForbidden || !hasDelimiter) return [...legalTags];
+    const [group, value] = tag.split(tagDelimiter);
+    return [...legalTags, { group, value, type: 'tag' }];
   }, []);
 };
 
-export const groupedOptions = ({products, apollo}) => {
+export const groupedOptions = ({ products, apollo }) => {
   if (!products.length) return [];
-  const {filterOptions} = apollo.client.readQuery({ query: getFilterOptions });
-  const options = uniqWith(products.reduce((options, product) => [ ...options, ...product.options], []), isEqual);
-  const tags = uniqWith(products.reduce((tags, product) =>
-    [ ...tags, ...parseTags(product.tags, filterOptions) ], []), isEqual);
-  return generateOptions([ ...options, ...tags ]);
+  const { filterOptions } = apollo.client.readQuery({
+    query: getFilterOptions,
+  });
+  const options = uniqWith(
+    products.reduce((options, product) => [...options, ...product.options], []),
+    isEqual,
+  );
+  const tags = uniqWith(
+    products.reduce(
+      (tags, product) => [...tags, ...parseTags(product.tags, filterOptions)],
+      [],
+    ),
+    isEqual,
+  );
+  return generateOptions([...options, ...tags]);
 };
 
-const CollectionFiltering = props => {
+const CollectionFiltering = (props) => {
   const { apollo, products, loaded } = props;
 
   return (
     <div className="collection-filtersort collection-filtering flex-half oo-grid">
-
-      <Mutation
-        mutation={updateFilteredProducts}>
-        {mutate => (
-
+      <Mutation mutation={updateFilteredProducts}>
+        {(mutate) => (
           <Select
             isMulti
             isDisabled={!loaded}
             isLoading={!loaded}
             removeSelected
-            options={groupedOptions({products, apollo})}
+            options={groupedOptions({ products, apollo })}
             components={makeAnimated()}
-            onChange={(activeFilters) => mutate({ variables: { filters: activeFilters }})}
+            onChange={(activeFilters) =>
+              mutate({ variables: { filters: activeFilters } })
+            }
             placeholder="Filters"
             className="flex-full"
             closeMenuOnSelect={false}
           />
-
         )}
       </Mutation>
-
     </div>
   );
 };
 
 export const filterProducts = (products, filters, tagDelimiter = '::') => {
-  if (!filters.length) return [ ...products ];
-  return products.filter(product => {
+  if (!filters.length) return [...products];
+  return products.filter((product) => {
     return filters.some(({ group, value, type }) => {
       if (type === 'option') {
-        return product.options.some(option => option.group === group && option.value === value);
+        return product.options.some(
+          (option) => option.group === group && option.value === value,
+        );
       }
       if (type === 'tag') {
         return product.tags.includes(`${group}${tagDelimiter}${value}`);
       }
-    })
+    });
   });
 };
 

@@ -6,7 +6,8 @@ import uniqby from 'lodash.uniqby';
 
 import {
   productData as PRODUCT_DATA,
-  fetchProducts as FETCH_PRODUCTS, } from './query.gql';
+  fetchProducts as FETCH_PRODUCTS,
+} from './query.gql';
 
 import CollectionGrid from 'collection/CollectionGrid';
 
@@ -16,7 +17,9 @@ import { parseProductDataFromApollo } from '../../parseData';
 
 const updateQuery = (prev, { fetchMoreResult: next }) => {
   const oldData = prev.collectionProducts;
-  const newData = parseProductDataFromApollo(next.collectionByHandle.products.edges);
+  const newData = parseProductDataFromApollo(
+    next.collectionByHandle.products.edges,
+  );
   const { edges } = next.collectionByHandle.products;
 
   if (edges.length) {
@@ -24,10 +27,10 @@ const updateQuery = (prev, { fetchMoreResult: next }) => {
 
     return {
       ...prev,
-      collectionProducts: uniqby([ ...oldData, ...newData ], 'handle'),
+      collectionProducts: uniqby([...oldData, ...newData], 'handle'),
       pageInfo: next.collectionByHandle.products.pageInfo,
       cursor,
-    }
+    };
   }
 
   return {
@@ -36,7 +39,7 @@ const updateQuery = (prev, { fetchMoreResult: next }) => {
   };
 };
 
-const fetchMoreProducts = apollo => {
+const fetchMoreProducts = (apollo) => {
   if (apollo.data.productsLoaded) return;
   const { data, fetchMore } = apollo;
 
@@ -47,20 +50,22 @@ const fetchMoreProducts = apollo => {
   const variables = { step, handle, cursor };
 
   if (cursor === false) {
-    apollo.client.writeData({ data: {
-      productsLoaded: true,
-      collectionProducts: data.collectionProducts,
-      _collectionProducts: data.collectionProducts,
-    }});
+    apollo.client.writeData({
+      data: {
+        productsLoaded: true,
+        collectionProducts: data.collectionProducts,
+        _collectionProducts: data.collectionProducts,
+      },
+    });
   } else {
     fetchMore({ query, updateQuery, variables });
   }
 };
 
-const App = props => {
+const App = (props) => {
   return (
     <Query query={PRODUCT_DATA}>
-      {apollo => {
+      {(apollo) => {
         const { collectionProducts: products, productsLoaded } = apollo.data;
         fetchMoreProducts(apollo);
 
@@ -69,7 +74,8 @@ const App = props => {
             products={products}
             loaded={productsLoaded}
             apollo={apollo}
-            {...props} />
+            {...props}
+          />
         );
       }}
     </Query>

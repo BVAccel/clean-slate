@@ -8,9 +8,15 @@ import State from 'state';
 const updateParentOptionValue = (parent, filterGroup, filterValue) => {
   if (!parent || !filterGroup || !filterValue) return false;
   const parentState = State.get(parent);
-  const option = parentState._data.options.find(option => option.name === filterGroup);
+  const option = parentState._data.options.find(
+    (option) => option.name === filterGroup,
+  );
 
-  if (option && option.values.includes(filterValue) && parentState[filterGroup] !== filterValue) {
+  if (
+    option &&
+    option.values.includes(filterValue) &&
+    parentState[filterGroup] !== filterValue
+  ) {
     const topic = `${bva.updateOptionGroupValue}.${filterGroup.toUpperCase()}`;
     const data = { id: parentState.id, name: filterGroup, value: filterValue };
 
@@ -28,7 +34,6 @@ export const updateContainerSliders = (container, index) => {
 
   PubSub.publish(topic, data);
 };
-
 
 const handleSliderThumbClick = ({ currentTarget: self }) => {
   const { filterValue, slideIndex } = self.dataset;

@@ -7,10 +7,10 @@ const modalSubtitle = (strings, ...values) =>
 const modalBody = (strings, ...values) =>
   `<div class="oo-modal-body">${strings[0]}</div>`;
 
-const modalClose = (classes = '', modalName= '', text = 'close') =>
+const modalClose = (classes = '', modalName = '', text = 'close') =>
   `<button class="oo-button ${classes}" data-close-modal="${modalName}">${text}</button>`;
 
-const notEnoughInventory = data => {
+const notEnoughInventory = (data) => {
   const { newQuantity, inventory } = data;
   const title = modalTitle`Oops...`;
   const subtitle = modalSubtitle`We currently don't have enough inventory of that Item.`;
@@ -25,13 +25,9 @@ const notEnoughInventory = data => {
   `;
 };
 
-const quickshop = data => {
+const quickshop = (data) => {
   console.log(data);
-
-
 };
-
-
 
 export default {
   ['not-enough-inventory']: notEnoughInventory,

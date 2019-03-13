@@ -4,14 +4,17 @@ import { setSearchParm } from 'common/Helpers';
 
 import { state } from 'state';
 
-export const getState = key => {
+export const getState = (key) => {
   if (key instanceof Element) {
     const { containerId } = dom.getContainer(key).dataset;
     return getState(containerId);
   }
 
   const { cart, ...states } = state;
-  const ids = Object.entries(states).reduce((allState, [name, values]) => ({ ...allState, ...values }), {});
+  const ids = Object.entries(states).reduce(
+    (allState, [name, values]) => ({ ...allState, ...values }),
+    {},
+  );
 
   if (state[key]) {
     return state[key];
@@ -22,7 +25,7 @@ export const getState = key => {
   return;
 };
 
-export const setState = data => {
+export const setState = (data) => {
   const { id, change, container, ...stateChange } = data;
   let newState;
 
@@ -36,18 +39,22 @@ export const setState = data => {
     state[container] = newState;
   }
 
-  const topic = (container === change)
-    ? `${bva.updateState}.${container.toUpperCase()}`
-    : `${bva.updateState}.${container.toUpperCase()}.${change.toUpperCase()}`;
+  const topic =
+    container === change
+      ? `${bva.updateState}.${container.toUpperCase()}`
+      : `${bva.updateState}.${container.toUpperCase()}.${change.toUpperCase()}`;
 
   PubSub.publish(topic, { id, data, state: newState });
 
   return newState;
 };
 
-export const clearState = key => {
+export const clearState = (key) => {
   const { cart, ...states } = state;
-  const [group] = Object.entries(states).find(([name, values]) => Object.keys(values).includes(key)) || [];
+  const [group] =
+    Object.entries(states).find(([name, values]) =>
+      Object.keys(values).includes(key),
+    ) || [];
 
   if (state[key]) {
     state[key] = {};

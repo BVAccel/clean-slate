@@ -39,8 +39,8 @@ button {
 input {
   font-family: $color-body-text;
 
-  &[type="number"]::-webkit-inner-spin-button,
-  &[type="number"]::-webkit-outer-spin-button {
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
     opacity: 1;
   }
 

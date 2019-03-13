@@ -7,6 +7,7 @@ const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const graphqlLoader = require('graphql-tag/loader');
+const PrettierPlugin = require('prettier-webpack-plugin');
 
 const sectionsBase = 'core';
 const snippetsBase = 'core';
@@ -34,6 +35,7 @@ const plugins = [
       flatten: true
     }
   ], { ignore: [ 'core/*' ] }),
+  new PrettierPlugin ()
 ];
 
 const alias = {

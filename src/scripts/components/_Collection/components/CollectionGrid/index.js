@@ -7,18 +7,15 @@ import ProductItem from 'collection/ProductItem';
 
 import { random } from 'common/Helpers';
 
-const CollectionGrid = props => {
+const CollectionGrid = (props) => {
   const { apollo, products } = props;
 
   return (
     <div className="collection-grid flex-full">
-
       <section className="collection-filtersort oo-grid flex-full">
-
         <CollectionFiltering products={products} {...props} />
 
         <CollectionSorting products={products} {...props} />
-
       </section>
 
       <section
@@ -27,14 +24,10 @@ const CollectionGrid = props => {
         data-container-name="Collection Grid"
         data-container-id={`grid-${random(9)}`}
       >
-
-        {products.map(product =>
-          <ProductItem {...props}
-            product={product}
-            key={product.handle} />)}
-
+        {products.map((product) => (
+          <ProductItem {...props} product={product} key={product.handle} />
+        ))}
       </section>
-
     </div>
   );
 };

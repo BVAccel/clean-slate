@@ -8,11 +8,10 @@ import {
   updateOptionGroupValue,
   updateVariant,
   updateInventory,
-  updatePrice, } from './product';
+  updatePrice,
+} from './product';
 
-import {
-  initLineItemContainers,
-  updateLineItemQuantity, } from './line-item';
+import { initLineItemContainers, updateLineItemQuantity } from './line-item';
 
 export const initSubscribers = () => {
   PubSub.subscribe(bva.updateInlineCartUI, (message, data) => {

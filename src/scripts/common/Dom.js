@@ -75,19 +75,19 @@ const dom = {
 
   getContainer: (key, asjQuery = false, context = document) => {
     if (key instanceof Element) {
-      return (asjQuery)
+      return asjQuery
         ? $(key).closest(dom.container)
         : $(key).closest(dom.container)[0];
     } else if ($(`[data-container-id="${key}"]`, context).length) {
-      return (asjQuery)
+      return asjQuery
         ? $(`[data-container-id="${key}"]`, context)
         : $(`[data-container-id="${key}"]`, context)[0];
     } else if ($(`[data-container-name="${key}"]`, context).length) {
-      return (asjQuery)
+      return asjQuery
         ? $(`[data-container-name="${key}"]`, context)
         : $(`[data-container-name="${key}"]`, context)[0];
     } else if ($(`[data-container="${key}"]`, context).length) {
-      return (asjQuery)
+      return asjQuery
         ? $(`[data-container="${key}"]`, context)
         : $(`[data-container="${key}"]`, context).get();
     }
@@ -95,23 +95,21 @@ const dom = {
     return;
   },
 
-  getContainers: type => $(`[data-container="${type}"]`).get(),
-  $getContainers: type => $(`[data-container="${type}"]`),
+  getContainers: (type) => $(`[data-container="${type}"]`).get(),
+  $getContainers: (type) => $(`[data-container="${type}"]`),
 
-  getSelf: self => $(self).closest(dom.container)[0],
-  $getSelf: self => $(self).closest(dom.container),
+  getSelf: (self) => $(self).closest(dom.container)[0],
+  $getSelf: (self) => $(self).closest(dom.container),
 
   getParentContainer: (self, levels = 1, asjQuery = false) => {
     if (levels !== 0) {
       const parentContainer = dom.getContainer($(self).parent()[0]);
       return dom.getParentContainer(parentContainer, levels - 1);
     }
-    return (asjQuery)
-      ? dom.getContainer(self, true)
-      : dom.getContainer(self);
+    return asjQuery ? dom.getContainer(self, true) : dom.getContainer(self);
   },
 
-  priceString: priceInCents => `$${(priceInCents / 100).toFixed(2)}`,
+  priceString: (priceInCents) => `$${(priceInCents / 100).toFixed(2)}`,
 };
 window.a = dom.getParentContainer;
 

@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-shopify": "^16.2.0",
     "eslint-plugin-shopify": "^19.0.0",
+    "prettier-webpack-plugin": "^1.2.0",
     "stylelint-config-prettier": "^3.0.4",
     "stylelint-config-shopify": "^5.0.0"
   },

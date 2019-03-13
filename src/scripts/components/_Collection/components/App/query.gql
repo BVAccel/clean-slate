@@ -32,9 +32,9 @@ query productData {
   }
 }
 
-query fetchProducts ($step: Int!, $handle: String!, $cursor: String) {
-  collectionByHandle (handle: $handle) {
-    products (first: $step, after: $cursor ) {
+query fetchProducts($step: Int!, $handle: String!, $cursor: String) {
+  collectionByHandle(handle: $handle) {
+    products(first: $step, after: $cursor) {
       pageInfo {
         hasNextPage
         hasPreviousPage

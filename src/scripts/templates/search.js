@@ -1,9 +1,5 @@
 import 'styles/templates/search/index.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {});
 
-});
-
-window.addEventListener('load', () => {
-
-});
+window.addEventListener('load', () => {});

@@ -40,8 +40,8 @@ const additionalProductImages = {
     'screen and (max-width: 480px)': {
       draggable: true,
       prevNextButtons: false,
-    }
-  }
+    },
+  },
 };
 
 export default {

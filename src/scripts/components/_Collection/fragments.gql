@@ -57,7 +57,7 @@ fragment ProductInfo on Product {
   handle
   title
   tags
-  collections (first: 100) {
+  collections(first: 100) {
     edges {
       collection: node {
         handle
@@ -80,7 +80,6 @@ fragment ProductInfo on Product {
   }
 }
 
-
 fragment PriceValues on ProductPriceRange {
   min: minVariantPrice {
     value: amount
@@ -100,10 +99,10 @@ fragment ProductPrices on Prices {
 
 fragment ImageSrc on Image {
   alt: altText
-  lqip: transformedSrc(maxWidth: 40 preferredContentType: JPG scale: 1)
-  src: transformedSrc(maxWidth: 400 preferredContentType: JPG scale: 1)
-  src2x: transformedSrc(maxWidth: 400 preferredContentType: JPG scale: 2)
-  src3x: transformedSrc(maxWidth: 400 preferredContentType: JPG scale: 3)
+  lqip: transformedSrc(maxWidth: 40, preferredContentType: JPG, scale: 1)
+  src: transformedSrc(maxWidth: 400, preferredContentType: JPG, scale: 1)
+  src2x: transformedSrc(maxWidth: 400, preferredContentType: JPG, scale: 2)
+  src3x: transformedSrc(maxWidth: 400, preferredContentType: JPG, scale: 3)
 }
 
 fragment ProductImage on Image {

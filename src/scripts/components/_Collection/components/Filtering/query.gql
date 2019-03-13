@@ -13,8 +13,8 @@ query getActiveFilters {
   }
 }
 
-query getFilteredProducts ($filter: [CollectionProductOption]!) {
-  collectionProducts (filter: $filter) @client {
+query getFilteredProducts($filter: [CollectionProductOption]!) {
+  collectionProducts(filter: $filter) @client {
     handle
     title
     tags
@@ -44,6 +44,6 @@ query getFilteredProducts ($filter: [CollectionProductOption]!) {
   }
 }
 
-mutation updateFilteredProducts ($filters: [FilterValues]!) {
-  updateFilteredProducts (filters: $filters) @client
+mutation updateFilteredProducts($filters: [FilterValues]!) {
+  updateFilteredProducts(filters: $filters) @client
 }

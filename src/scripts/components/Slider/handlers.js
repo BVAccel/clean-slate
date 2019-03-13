@@ -10,30 +10,36 @@ import settings from './settings';
 
 import State from 'state';
 
-export const isFlickity = slider => {
+export const isFlickity = (slider) => {
   return slider.constructor.name === 'Flickity';
 };
 
-export const updateSliderSlide = data => {
+export const updateSliderSlide = (data) => {
   const { slider, slideTo } = data;
   if (slider.isFlickity) {
     slider.slider.select(slideTo);
   }
 };
 
-export const updateContainerSliders = data => {
+export const updateContainerSliders = (data) => {
   const { id, name, value } = data;
   const { sliders } = State.get(id);
 
   sliders
-    .filter(slider => State.get(slider).isFlickity)
-    .forEach(slider => {
+    .filter((slider) => State.get(slider).isFlickity)
+    .forEach((slider) => {
       const sliderState = State.get(slider);
       const { filterGroupOptions = '' } = slider.dataset;
-      const includesFilterGroupOption = slider.dataset.filterGroupOptions.includes(name);
-      const attr = (includesFilterGroupOption) ? slider.dataset.filterAttr : 'data-slide-index';
+      const includesFilterGroupOption = slider.dataset.filterGroupOptions.includes(
+        name,
+      );
+      const attr = includesFilterGroupOption
+        ? slider.dataset.filterAttr
+        : 'data-slide-index';
       const sliderSlides = Array.from(sliderState.slider.slider.children);
-      const slideTo = sliderSlides.findIndex(slide => $(slide).attr(attr) === value);
+      const slideTo = sliderSlides.findIndex(
+        (slide) => $(slide).attr(attr) === value,
+      );
 
       if (slideTo > -1) {
         const topic = bva.updateSliderSlide;
@@ -44,13 +50,15 @@ export const updateContainerSliders = data => {
     });
 };
 
-const filterSlider = id => {
+const filterSlider = (id) => {
   const sliderState = State.get(id);
   if (!sliderState.isFilterable) return;
   const parentState = State.get(sliderState.parent);
   const filterValue = parentState[sliderState.filterGroup];
-  const newSlides = sliderState.slides.filter(slide => slide.dataset.filterValue === filterValue);
-  const allSlides = [ ...sliderState.slides ];
+  const newSlides = sliderState.slides.filter(
+    (slide) => slide.dataset.filterValue === filterValue,
+  );
+  const allSlides = [...sliderState.slides];
 
   if (sliderState.isFlickity) {
     sliderState.slider.remove(allSlides);
@@ -65,13 +73,17 @@ const filterSlider = id => {
 const checkiFFilterable = (sliderState, option) => {
   if (!option) return false;
   const filterAttr = sliderState.element.dataset.filterAttr;
-  const possibleFilterValues = sliderState.slides.map(slide => $(slide).attr(filterAttr));
+  const possibleFilterValues = sliderState.slides.map((slide) =>
+    $(slide).attr(filterAttr),
+  );
   const uniquePossibleFilterValues = unique(possibleFilterValues);
-  const everyValuePresent = option.values.every(value => uniquePossibleFilterValues.includes(value));
+  const everyValuePresent = option.values.every((value) =>
+    uniquePossibleFilterValues.includes(value),
+  );
 
-  const everyValueAtLeastTwice = option.values.every(value => {
+  const everyValueAtLeastTwice = option.values.every((value) => {
     const occurances = possibleFilterValues.reduce((count, possibleValue) => {
-      return (possibleValue === value) ? count + 1 : count;
+      return possibleValue === value ? count + 1 : count;
     }, 0);
     return occurances >= 2;
   });
@@ -82,22 +94,32 @@ const checkiFFilterable = (sliderState, option) => {
 const getOption = (parentState, filterGroup) => {
   if (!parentState || !filterGroup) return;
 
-  return parentState._data.options.find(option => option.name === filterGroup);
+  return parentState._data.options.find(
+    (option) => option.name === filterGroup,
+  );
 };
 
 const getFilterGroup = (parentState, filterGroupOptions) => {
   if (!filterGroupOptions) return;
-  const parentOptionNames = parentState._data.options.map(option => option.name);
+  const parentOptionNames = parentState._data.options.map(
+    (option) => option.name,
+  );
 
   return filterGroupOptions
     .split('|')
-    .find(option => parentOptionNames.includes(option));
+    .find((option) => parentOptionNames.includes(option));
 };
 
-const initSlider = sliderContainer => {
+const initSlider = (sliderContainer) => {
   sliderContainer.element = sliderContainer;
-  const { containerId: id, container, containerName: name, navFor, slidesToShow } = sliderContainer.dataset;
-  const slides = [ ...Array.from(sliderContainer.children) ];
+  const {
+    containerId: id,
+    container,
+    containerName: name,
+    navFor,
+    slidesToShow,
+  } = sliderContainer.dataset;
+  const slides = [...Array.from(sliderContainer.children)];
   const sliderSettings = settings[name] || settings.default;
 
   if (slides.length < slidesToShow || slides.length === 1) {
@@ -111,17 +133,22 @@ const initSlider = sliderContainer => {
   if (sliderSettings.mq) {
     Object.entries(sliderSettings.mq).forEach(([query, options]) => {
       if (matchMedia(query).matches) {
-        Object.entries(options).forEach(([option, value]) => sliderSettings[option] = value)
+        Object.entries(options).forEach(
+          ([option, value]) => (sliderSettings[option] = value),
+        );
       }
     });
   }
 
-  const slider = (sliderSettings.init === false)
-    ? sliderContainer
-    : new Flickity(sliderContainer, sliderSettings);
+  const slider =
+    sliderSettings.init === false
+      ? sliderContainer
+      : new Flickity(sliderContainer, sliderSettings);
 
   return State.set({
-    id, container, change: 'slider',
+    id,
+    container,
+    change: 'slider',
     element: sliderContainer,
     name,
     slider,
@@ -131,7 +158,7 @@ const initSlider = sliderContainer => {
   });
 };
 
-const initFiltering = sliderState => {
+const initFiltering = (sliderState) => {
   const { filterGroupOptions, container } = sliderState.element.dataset;
   const parentContainer = dom.getParentContainer(sliderState.element);
   const parentState = State.get(parentContainer);
@@ -163,7 +190,7 @@ const initFiltering = sliderState => {
 };
 
 export const initSliders = () => {
-  const promises = dom.getContainers('slider').map(sliderContainer => {
+  const promises = dom.getContainers('slider').map((sliderContainer) => {
     const slider = initSlider(sliderContainer);
     const withFiltering = initFiltering(slider);
 
@@ -175,8 +202,8 @@ export const initSliders = () => {
 
 export const filterSlides = () => {
   const promises = Object.values(State.get('slider'))
-    .filter(slider => slider.isFilterable)
-    .map(slider => filterSlider(slider.id));
+    .filter((slider) => slider.isFilterable)
+    .map((slider) => filterSlider(slider.id));
 
   return Promise.all(promises);
 };

@@ -1,10 +1,5 @@
 import 'styles/templates/customers/addresses.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {});
 
-});
-
-window.addEventListener('load', () => {
-
-});
-
+window.addEventListener('load', () => {});
