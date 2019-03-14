@@ -5,10 +5,10 @@ import Price from 'components/Price';
 import Slider from 'components/Slider';
 import Modal from 'components/Modal';
 
-// OptionGroup.initSubscribers();
-// Modal.initSubscribers();
+OptionGroup.initSubscribers();
 Price.initSubscribers();
 Slider.initSubscribers();
+Modal.initSubscribers();
 
 document.addEventListener('DOMContentLoaded', () => {
   OptionGroup.bindActions();

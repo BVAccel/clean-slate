@@ -1,18 +1,18 @@
 // Helpers
-// @import '../../helpers/index';
+@import '../../helpers/index';
 
-// // Vendor
-// @import '../../vendor/flickity/index';
+// Vendor
+@import '../../vendor/flickity/index';
 
-// // Layout
-// @import '../../base/grid';
+// Layout
+@import '../../base/grid';
 
-// // Components
-// @import '../../components/button';
-// @import '../../components/text';
-// @import '../../components/quantity-select';
-// @import '../../components/upsell-row';
+// Components
+@import '../../components/button';
+@import '../../components/text';
+@import '../../components/quantity-select';
+@import '../../components/upsell-row';
 
-// @import 'product-main/index';
-// @import 'product-additional-images';
-// @import 'product-secondary-details';
+@import 'product-main/index';
+@import 'product-additional-images';
+@import 'product-secondary-details';
