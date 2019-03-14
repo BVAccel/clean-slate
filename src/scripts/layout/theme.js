@@ -1,24 +1,18 @@
-import CartControls from "components/CartControls";
-import * as CartUpsell from "components/CartUpsell";
-import * as DetermineDevice from "components/DetermineDevice";
-import * as DetermineIP from "components/DetermineIP";
-import * as FlowCart from "components/FlowCart";
-import * as Header from "components/Header";
-import * as InlineCart from "components/InlineCart";
-import * as Meganav from "components/Meganav";
-import * as MobileImageCheck from "components/MobileImageCheck";
-import * as Newsletter from "components/Newsletter";
-import * as PromotionBar from "components/PromotionBar";
-import QuantitySelect from "components/QuantitySelect";
-import * as Select3 from "components/Select3";
-import * as SetInternational from "components/SetInternational";
-import * as Sliders from "components/Sliders";
-import Toggle from "components/Toggle";
-import "lazysizes";
-import PubSub from "pubsub-js";
-import State from "state";
-import "styles/theme.scss";
-import "styles/theme.scss.liquid";
+import PubSub from 'pubsub-js';
+
+import 'lazysizes';
+import { focusHash, bindInPageLinks } from '@shopify/theme-a11y';
+
+import Toggle from 'components/Toggle';
+import Overlay from 'components/Overlay';
+import InlineCart from 'components/InlineCart';
+import CartControls from 'components/CartControls';
+import QuantitySelect from 'components/QuantitySelect';
+
+import State from 'state';
+
+import 'styles/theme.scss';
+import 'styles/theme.scss.liquid';
 
 PubSub.immediateExceptions = true;
 

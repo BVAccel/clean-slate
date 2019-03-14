@@ -1,59 +1,33 @@
-/* ==========================================================================
-   # GLOBAL
-   ========================================================================== */
-
 /**
- * Simple page-level setup.
  *
- * 1. Set the default `font-size` and `line-height` for the entire project,
- *    sourced from our default variables. The `font-size` is calculated to exist
- *    in ems, the `line-height` is calculated to exist unitlessly.
- * 2. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
+ * 1. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
  *    navigating between pages that do/do not have enough content to produce
  *    scrollbars naturally.
- * 3. Ensure the page always fills at least the entire height of the viewport.
- * 4. https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/
- * 5. https://davidwalsh.name/font-smoothing
+ * 2. Ensure the page always fills at least the entire height of the viewport.
+ * 3. https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/
  */
 
- html {
-  font-size: $global-size-base;
-  line-height: $global-line-height;
-  overflow-y: scroll; /* [2] */
-  min-height: 100%; /* [3] */
-  -webkit-overflow-scrolling: touch; /* [4] */
-  padding-bottom: 0 !important;
+html {
+  overflow-y: scroll; /* [1] */
+  min-height: 100%; /* [2] */
+  -webkit-overflow-scrolling: touch; /* [3] */
+  min-width: 320px;
+  background-color: $color-body-background;
 }
 
-body {
-  overflow-x: hidden;
-  margin: 0;
+body,
+html {
+  height: 100%;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-[data-go-back] {
-  cursor: pointer;
-}
-
-.table {
-  display: table;
-  width: 100%;
-}
-.tr {
-  display: table-row;
-  width: 100%;
-}
-.td {
-  display: table-cell;
-  &--right {
-    text-align: right;
+@if ($enable-box-sizing-border-box) {
+  html {
+    box-sizing: border-box;
   }
-  &--vcenter {
-    vertical-align: middle;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
 }

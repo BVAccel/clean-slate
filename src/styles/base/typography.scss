@@ -1,134 +1,47 @@
-@import "../helpers/variables";
+/**
+ *
+ * 1. Set the default `font-size` and `line-height` for the entire project,
+ *    sourced from our default variables. The `font-size` is calculated to exist
+ *    in ems, the `line-height` is calculated to exist unitlessly.
+ * 2. Force scrollbars to always be visible to prevent awkward ‘jumps’ when
+ *    navigating between pages that do/do not have enough content to produce
+ *    scrollbars naturally.
+ * 5. https://davidwalsh.name/font-smoothing
+ */
 
-@function strip-unit($value) {
-  @return $value / ($value * 0 + 1);
+html {
+  font-size: 100%;
 }
 
-@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
-  $u1: unit($min-vw);
-  $u2: unit($max-vw);
-  $u3: unit($min-font-size);
-  $u4: unit($max-font-size);
-
-  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
-    & {
-      font-size: $min-font-size;
-      @media screen and (min-width: $min-vw) {
-        font-size: calc(
-          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
-        );
-      }
-      @media screen and (min-width: $max-vw) {
-        font-size: $max-font-size;
-      }
-    }
-  }
+body {
+  font-size: $font-size-base; /* [1] */
+  line-height: $font-line-height; /* [1] */
+  font-family: $font-primary;
+  color: $color-body-text;
 }
 
 h1,
 h2,
 h3,
-h4 {
-  font-family: $gt-america-expanded-bold;
-  color: #231f20;
-  letter-spacing: 0;
-}
-
-h1 {
-  @include fluid-type(1440px, 2560px, 40px, 72px);
-  @include fluid-type(768px, 1339px, 32px, 40px);
-  @include fluid-type(320px, 767px, 26px, 32px);
-
-  line-height: 1.4;
-}
-
-h2 {
-  @include fluid-type(1440px, 2560px, 96px, 168px);
-  @include fluid-type(768px, 1339px, 72px, 96px);
-  @include fluid-type(320px, 767px, 48px, 72px);
-
-  line-height: 1.0833;
-}
-h3 {
-  @include fluid-type(1440px, 2560px, 64px, 104px);
-  @include fluid-type(768px, 1339px, 48px, 64px);
-  @include fluid-type(320px, 767px, 36px, 48px);
-
-  line-height: 1.125;
-}
-
-h4 {
-  @include fluid-type(1440px, 2560px, 26px, 48px);
-  @include fluid-type(768px, 1339px, 22px, 26px);
-  @include fluid-type(320px, 767px, 18px, 22px);
-
-  line-height: 1.385;
-}
-
-h5 {
-  @include fluid-type(1440px, 2560px, 28px, 48px);
-  @include fluid-type(768px, 1339px, 26px, 28px);
-  @include fluid-type(320px, 767px, 22px, 26px);
-
-  font-family: $gt-america-regular;
-  color: #4e4e4e;
-  letter-spacing: 0;
-  line-height: 1.43;
-}
-
+h4,
+h5,
 h6 {
-  @include fluid-type(1440px, 2560px, 14px, 16px);
-  @include fluid-type(768px, 1339px, 14px, 14px);
-  @include fluid-type(320px, 767px, 12px, 12px);
-
-  font-family: $gt-america-mono-regular;
-  color: #231f20;
-  letter-spacing: 1.5px;
-  line-height: 1.43;
+  font-family: $font-heading;
+  margin: 0;
+  margin-bottom: $oo-base-spacing-size;
+  color: $color-body-text;
 }
 
-p {
-  @include fluid-type(1440px, 2560px, 20px, 24px);
-  @include fluid-type(768px, 1339px, 20px, 20px);
-  @include fluid-type(320px, 767px, 18px, 18px);
-
-  font-family: $gt-america-regular;
-  color: #4e4e4e;
-  line-height: 1.6;
-
-  &.caption {
-    @include fluid-type(1440px, 2560px, 16px, 20px);
-    @include fluid-type(320px, 1339px, 16px, 16px);
-
-    font-family: $gt-america-regular;
-    font-size: 16px;
-  }
+body,
+input,
+textarea,
+button,
+select {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; /* [5] */
+  text-size-adjust: 100%;
 }
 
-a {
-  @include fluid-type(1440px, 2560px, 12px, 16px);
-  @include fluid-type(320px, 1339px, 12px, 12px);
-
-  font-family: $gt-america-mono-medium;
-  color: #231f20, #ffffff;
-  letter-spacing: 1.25px;
-  line-height: 1.3333;
-}
-
-.outline {
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1px;
-  @include mq($screen-lg){
-    -webkit-text-stroke-width: 2px;
-  }
-  &--white {
-    -webkit-text-stroke-color: #fff;
-  }
-  &--black {
-    -webkit-text-stroke-color: #000;
-  }
-  &--light-blue {
-    -webkit-text-stroke-color: #bcdeed;
-  }
+a:focus {
+  color: inherit;
 }

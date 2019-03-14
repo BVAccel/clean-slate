@@ -1,0 +1,80 @@
+.oo-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: $oo-base-spacing-size calc(#{$oo-base-spacing-size} * 1.75);
+  font-family: $font-heading;
+  font-weight: $font-heading-bold-weight;
+  font-size: $font-size-minor;
+  text-transform: uppercase;
+  line-height: $font-line-height;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-appearance: none;
+
+  &.button--primary {
+    color: $color-white;
+    background-color: $color-2;
+  }
+
+  &.button--secondary {
+    color: $color-white;
+    background-color: $color-5;
+  }
+
+  &.button--black {
+    color: $color-white;
+    background-color: $color-black;
+  }
+
+  &.button--primary-alt {
+    color: $color-2;
+    background-color: transparent;
+    border: 2px solid $color-2;
+    transition: all $oo-transition-duration $oo-transition-timing;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-2;
+    }
+  }
+
+  &.button--secondary-alt {
+    color: $color-5;
+    background-color: transparent;
+    border: 2px solid $color-5;
+    transition: all $oo-transition-duration $oo-transition-timing;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-5;
+    }
+  }
+
+  &.button--black-alt {
+    color: $color-black;
+    background-color: transparent;
+    border: 2px solid $color-black;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-black;
+    }
+  }
+
+  &.button--reset,
+  &.button--text {
+    border: 0 none;
+    background: none;
+    padding: 0;
+    user-select: text;
+    color: $color-body-text;
+  }
+}
+
+.button--content {
+  width: 100%;
+}

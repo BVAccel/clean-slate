@@ -1,255 +1,110 @@
-<div class="module-wrapper">
-  <div class="module order">
-    <div class="module-header order-header">
-      <div class="module-title page-title">
-        <h1>{{ 'customer.order.header' | t: order_number: order.name }}</h1>
-      </div>
-      <div class="module-subtitle">
-        <div class="logged-in-as">
-          {% capture user_email %}<a href="/account">{{ customer.email }}</a>{% endcapture %}
-          {{ 'customer.account.logged_in_as_html' | t: user_email: user_email }} (<a href="/account/logout">{{ 'general.general.logout' | t }}</a>)
-        </div>
-      </div>
-    </div>
-    <div class="module-body">
-      <div class="module-content">
-        <div class="order-summary">
-          <div class="cart-items-container">
-            <table class="cart-items clean">
-              <thead class="cart-items-thead">
-                <tr>
-                  <th class="first">{{ 'general.general.product' | t}}</th>
-                  <th>{{ 'general.general.price' | t }}</th>
-                  <th>{{ 'general.general.quantity' | t }}</th>
-                  <th class="last">{{ 'general.general.total' | t }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for line_item in order.line_items %}
-                  <tr class="{% include 'for-looper' %} cart-item {% if order.cancelled %}cancelled_order{% endif %}">
-                    <td class="cart-item-td cart-item-product">
-                      {% assign thumbnail = line_item.product.featured_image |  product_img_url: 'small' | img_tag %}
-                      {% for image in line_item.product.images reversed %}
-                        {% if line_item.variant.title contains image.alt %}
-                          {% assign thumbnail = image | product_img_url: 'small' | img_tag %}
-                        {% endif %}
-                      {% endfor %}
-                      <div class="cart-item-image-container">
-                        <a class="cart-image" href="{{ line_item.product.url }}">{{ thumbnail }}</a>
-                      </div>
-                      <div class="cart-item-product-wrap">
-                        <span class="cart-title">{{ line_item.product.title | link_to: line_item.product.url }}</span>
-                        <span class="cart-vendor vendor">{{ line_item.vendor }}</span>
-                        {% if line_item.variant.title != 'Default Title' %}
-                          <span class="cart-variant">{{ line_item.variant.title }}</span>
-                        {% endif %}
-                      </div>
-                    </td>
-                    <td class="cart-item-td cart-item-price">
-                      <div class="cart-item-unit-price">
-                        <span class="show-sm">{{ 'general.general.price' | t }}: </span>
+{% comment %}
+  The data-label attributes on <td> elements are mobile-friendly
+  helpers used for responsive-table labels
+{% endcomment %}
 
+<h1>{{ 'customer.account.title' | t }}</h1>
 
+<p><a href="/account">{{ 'customer.account.return' | t }}</a></p>
 
-                        <span class="money">
-                          {% comment %}{{ line_item.price | money }}{% endcomment %}
-                          {% include 'flow_localized_price' with line_item.variant %}
-                        </span>
+<h2>{{ 'customer.order.title' | t: name: order.name }}</h2>
 
+<p>{{ 'customer.order.date' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
 
+{% if order.cancelled %}
+  {%- assign cancelled_at = order.cancelled_at | date: "%B %d, %Y %I:%M%p" -%}
+  <p>{{ 'customer.order.cancelled' | t: date: cancelled_at }}</p>
+  <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}</p>
+{% endif %}
 
-                      </div>
-                    </td>
-                    <td class="cart-item-td cart-item-quantity">
-                      <span class="show-sm">{{ 'general.general.quantity' | t }}: </span>
-                      <span>{{ line_item.quantity }}</span>
-                    </td>
-                    <td class="cart-item-td cart-item-total last">
-                      <div class="cart-item-total-container">
-                        <span class="show-sm">{{ 'general.general.total' | t }}: </span>
+<table class="responsive-table">
+  <thead>
+    <tr>
+      <th>{{ 'customer.order.product' | t }}</th>
+      <th>{{ 'customer.order.sku' | t }}</th>
+      <th>{{ 'customer.order.price' | t }}</th>
+      <th>{{ 'customer.order.quantity' | t }}</th>
+      <th>{{ 'customer.order.total' | t }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for line_item in order.line_items %}
+      <tr id="{{ line_item.key }}" class="responsive-table-row">
+        <td data-label="{{ 'customer.order.product' | t }}">
+          {{ line_item.title | link_to: line_item.product.url }}
+          {% if line_item.fulfillment %}
+            <dl>
+              <dt>{{ 'customer.order.fulfilled_at' | t }}</dt>
+              <dd>{{ line_item.fulfillment.created_at | date: format: 'month_day_year' }}</dd>
 
+              {% if line_item.fulfillment.tracking_url %}
+                <dt>{{ 'customer.order.tracking_url' | t }}</dt>
+                <dd>
+                  <a href="{{ line_item.fulfillment.tracking_url }}">
+                    {{ 'customer.order.track_shipment' | t }}
+                  </a>
+                </dd>
+              {% endif %}
 
+              <dt>{{ 'customer.order.tracking_company' | t }}</dt>
+              <dd>{{ line_item.fulfillment.tracking_company }}</dd>
 
-                        <span class="money">
-                          {% comment %}{{ line_item.quantity | times: line_item.price | money }}{% endcomment %}
+              {% if line_item.fulfillment.tracking_number %}
+                <dt>{{ 'customer.order.tracking_number' | t }}</dt>
+                <dd>{{ line_item.fulfillment.tracking_number }}</dd>
+              {% endif %}
+            </dl>
+          {% endif %}
+        </td>
+        <td data-label="{{ 'customer.order.sku' | t }}">{{ line_item.sku }}</td>
+        <td data-label="{{ 'customer.order.price' | t }}">{{ line_item.price | money }}</td>
+        <td data-label="{{ 'customer.order.quantity' | t }}">{{ line_item.quantity }}</td>
+        <td data-label="{{ 'customer.order.total' | t }}">{{ line_item.quantity | times: line_item.price | money }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr class="responsive-table-row">
+      <td colspan="4" class="small--hide">{{ 'customer.order.subtotal' | t }}</td>
+      <td data-label="{{ 'customer.order.subtotal' | t }}">{{ order.subtotal_price | money }}</td>
+    </tr>
 
-                          {% include 'flow_metafields_prices' with line_item.variant %}
-                          {%- assign _flow_localized_price = flow_localized_price | remove: flow_localized_currency | times: 1 -%}
+    {% for discount in order.discounts %}
+      <tr>
+        <td colspan="4" class="small--hide">{{ discount.code }} {{ 'customer.order.discount' | t }}</td>
+        <td data-label="{{ 'customer.order.discount' | t }}">{{ discount.savings | money }}</td>
+      </tr>
+    {% endfor %}
 
+    {% for shipping_method in order.shipping_methods %}
+      <tr>
+        <td colspan="4" class="small--hide">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td>
+        <td data-label="{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})">{{ shipping_method.price | money }}</td>
+      </tr>
+    {% endfor %}
 
-                          {%- assign _price = _flow_localized_price | times: line_item.quantity -%}
+    {% for tax_line in order.tax_lines %}
+      <tr>
+        <td colspan="4" class="small--hide">{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td>
+        <td data-label="{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)">{{ tax_line.price | money }}</td>
+      </tr>
+    {% endfor %}
 
-                          {%- if flow_localized_currency.size == 1 -%}
-                            {{ _price | prepend: flow_localized_currency }}
-                          {%- elsif flow_localized_currency.size == 3 -%}
-                            {{ _price | append: flow_localized_currency }}
-                          {%- else -%}
-                            {{ _price }}
-                          {%- endif -%}
-                        </span>
+    <tr>
+      <td colspan="4" class="small--hide">{{ 'customer.order.total' | t }}</td>
+      <td data-label="{{ 'customer.order.total' | t }}">{{ order.total_price | money }} {{ order.currency }}</td>
+    </tr>
+  </tfoot>
+</table>
 
+<h3>{{ 'customer.order.billing_address' | t }}</h3>
 
+<p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
 
-                      </div>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <table class="order-totals clean">
-            <tbody>
-              <tr class="order-subtotal">
-                <td>{{ 'general.general.subtotal' | t }}</td>
+{{ order.billing_address | format_address }}
 
+<h3>{{ 'customer.order.shipping_address' | t }}</h3>
 
+<p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
 
-                <td>
-                  <span class="money" id="flow_order_subtotal_price">
-                    {% comment %}{{ order.subtotal_price | money }}{% endcomment %}
-
-                    <script>
-                      var e = document.getElementById('flow_order_subtotal_price');
-                      e.textContent = Flow.format.currency({{ order.subtotal_price | money_without_currency }});
-                    </script>
-                  </span>
-                </td>
-
-
-
-              </tr>
-              {% for shipping_method in order.shipping_methods %}
-                <tr class="order-shipping">
-                  <td>{{ 'customer.order.shipping' | t }}</td>
-
-
-
-                  <td>
-                    <span class="money" id="flow_shipping_methods_price">
-                      {% comment %}{{ shipping_method.price | money }}{% endcomment %}
-
-                      <script>
-                        var e = document.getElementById('flow_shipping_methods_price');
-                        e.textContent = Flow.format.currency({{ shipping_method.price | money_without_currency }});
-                      </script>
-                    </span>
-                  </td>
-
-
-
-                </tr>
-              {% endfor %}
-              {% for discount in order.discounts %}
-                <tr>
-                  <td>{{ "customer.orders.discount" | t }}</td>
-
-
-
-                  <td>
-                    <span>{{ "customer.orders.code_html" | t: code: discount.code }}</span>
-                    {% comment %}{{ discount.savings | money }}{% endcomment %}
-                    <span id="flow_discount_savings"></span>
-
-                    <script>
-                      var e = document.getElementById('flow_discount_savings');
-                      e.textContent = Flow.format.currency({{ discount.savings | money_without_currency }});
-                    </script>
-                  </td>
-
-
-
-                </tr>
-              {% endfor %}
-              {% for tax_line in order.tax_lines %}
-                <tr class="order-tax">
-                  <td>{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td>
-
-
-
-                  <td>
-                    <span class="money" id="flow_tax_line_price">
-                      {% comment %}{{ tax_line.price | money }}{% endcomment %}
-
-                      <script>
-                        var e = document.getElementById('flow_tax_line_price');
-                        e.textContent = Flow.format.currency({{ tax_line.price | money_without_currency }});
-                      </script>
-                    </span>
-                  </td>
-
-
-
-                </tr>
-              {% endfor %}
-              <tr class="order-total">
-                <td>{{ 'general.general.total' | t }}</td>
-
-
-
-                <td>
-                  <span class="money" id="flow_order_total_price">
-                    {% comment %}{{ order.total_price | money }}{% endcomment %}
-
-                    <script>
-                      var e = document.getElementById('flow_order_total_price');
-                      e.textContent = Flow.format.currency({{ order.total_price | money_without_currency }});
-                    </script>
-                  </span>
-                </td>
-
-
-
-              </tr>
-            </tbody>
-          </table>
-          <div class="shipping-info">
-            {% if order.shipping_address != blank %}
-              <div class="customer-address shipping-address">
-                <p><strong>{{ 'customer.order.shipping_address' | t }}</strong></p>
-                <p>
-                  <span>{{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}</span><br>
-                  {% if order.shipping_address.company.size > 0 %}
-                    <span>{{ order.shipping_address.company }}</span><br>
-                  {% endif %}
-                  {% if order.shipping_address.street.size > 0 %}
-                    <span>{{ order.shipping_address.street }}</span><br>
-                  {% endif %}
-                  {% if order.shipping_address.city.size > 0 or order.shipping_address.province_code.size > 0 %}
-                    <span>{{ order.shipping_address.city }}{% if order.shipping_address.province_code %}, {{ order.shipping_address.province_code }}{% endif %}</span><br>
-                  {% endif %}
-                  {% if order.shipping_address.country.size > 0 or order.shipping_address.zip.size > 0 %}
-                    <span>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</span><br>
-                  {% endif %}
-                  {% if order.shipping_address.phone.size > 0 %}
-                    <span>{{ order.shipping_address.phone }}</span><br>
-                  {% endif %}
-                </p>
-              </div>
-            {% endif %}
-            <div class="customer-address billing-address">
-              <p><strong>{{ 'customer.order.billing_address' | t }}</strong></p>
-              <p>
-                <span>{{ order.billing_address.first_name }} {{ order.billing_address.last_name }}</span><br>
-                {% if order.billing_address.company.size > 0 %}
-                  <span>{{ order.billing_address.company }}</span><br>
-                {% endif %}
-                {% if order.billing_address.street.size > 0 %}
-                  <span>{{ order.billing_address.street }}</span><br>
-                {% endif %}
-                {% if order.billing_address.city.size > 0 or order.billing_address.province_code.size > 0 %}
-                  <span>{{ order.billing_address.city }}{% if order.billing_address.province_code %}, {{ order.billing_address.province_code }}{% endif %}</span><br>
-                {% endif %}
-                {% if order.billing_address.country.size > 0 or order.billing_address.zip.size > 0 %}
-                  <span>{{ order.billing_address.country }} {{ order.billing_address.zip }}</span><br>
-                {% endif %}
-                {% if order.billing_address.phone.size > 0 %}
-                  <span>{{ order.billing_address.phone }}</span><br>
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{ order.shipping_address | format_address }}

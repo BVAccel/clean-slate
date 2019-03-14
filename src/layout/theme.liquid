@@ -1,157 +1,76 @@
 <!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
-<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" lang="en"><![endif]-->
-<!--[if IE 9 ]><html class="ie9 lt-ie10 no-js" lang="en"><![endif]-->
-<!--[if (gt IE 9)|!(IE)]><html class="no-js" lang="en"><![endif]-->
+  <!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
 
-<head>
-  <meta name="google-site-verification" content="SOOq6OmJ7cw2q1iZy1Qstf19wGhhYB2MXTaoMIeKZSQ" />
+  <head>
 
-  {%- include 'google-optimize' -%}
-  {%- include 'datalayer' -%}
-  {%- include 'GTM-head' -%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
 
-  {%- include 'SEOMetaManager' -%}
+    <!-- Site Meta ============================================ -->
 
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="google-site-verification" content="86p-PIYIH8pOlp7wUICzFN_dncE0ivaYT7Y9CI1N4yE" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="msvalidate.01" content="33DC66309CC8CBC399B1B4558A2B832C" />
-  <link rel="canonical" href="{{ canonical_url }}" />
-  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+      {%- include 'favicon' -%}
+      {%- include 'page-title' -%}
+      {%- include 'page-description' -%}
+      {%- include 'social-meta-tags' -%}
 
+    <!-- jQuery =============================================== -->
 
-  {%- include 'social-meta' -%}
+      <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+      </script>
 
-  <!-- Store object -->
-  {%- include 'theme-options' -%}
+    <!-- Header Content ======================================= -->
 
-  <!-- Header Content ======================================= -->
-  {{ content_for_header }}
+      {{ content_for_header }}
 
-  <!-- Stylesheets ========================================== -->
-  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+    <!-- Stylesheets ========================================== -->
 
-  {{ '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' | stylesheet_tag }}
+      {%- include 'style-tags', layout: 'theme' -%}
+      {%- include 'css-variables' -%}
 
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,700" rel="stylesheet">
-  
-  {%- include 'css-variables' -%}
-  {%- include 'style-tags', layout: 'theme' -%}
+    <!-- Scripts ============================================== -->
 
-  <!-- Scripts ============================================== -->
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,es5,es6,fetch,Array.prototype.includes,Promise.all"></script>
+      {%- include 'script-tags', layout: 'theme' -%}
+      {%- include 'shop-api' -%}
 
-  <script>
-    window.BVA = window.BVA || {};
-    window.BVA.template = "{{ template }}";
-    window.BVA.cartJSON = {{ cart | json }};
-  </script>
+    {% if template.directory == 'customers' %}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {% endif %}
 
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous">
-  </script>
+  </head>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+  <body
+    data-template="{{ template.name | handle }}"
+    {%- if template.suffix != blank -%}
+      data-alternate-template="{{ template.suffix | handle }}"
+    {%- endif -%}>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.1/cart.min.js"></script>
+    <a href="#MainContent" class="in-page-link u-visually-hidden">Skip to content</a>
 
-  {%- include 'flow-io-theme' -%}
-  {%- include 'yotpo-javascript' -%}
-  {%- include 'lucky-orange' -%}
-  {%- include 'lucky-orange' -%}
-  {%- include 'friendbuy-pixel' -%}
+    {%- section 'topbar' -%}
 
-</head>
+    {%- section 'global-header' -%}
 
-{%- include 'additional-classes' -%}
+    <main role="main" class="oo-main" id="MainContent">
 
-{%- comment -%}
-  Add class .header-mini to pages that have white backgrounds above the fold
-  to prevent white text on white bg
-{%- endcomment -%}
-{%- capture templateHandle -%}{{ template | handleize }}{%- endcapture -%}
+      {{ content_for_layout }}
 
-{%- if
-  templateHandle == 'page-contact' or
-  templateHandle == 'page' or
-  templateHandle == 'blog' or
-  templateHandle == 'collection-super' or
-  templateHandle == 'cart'
-%}
-  {%- assign headerActiveStyleClass = 'header-mini' -%}
-{%- endif -%}
+    </main>
 
-<body class="{{ bodyClasses }} {%- if template == 'page.technology' -%}template-page-technology{%- endif -%} has-promo {{ headerActiveStyleClass }}" id="top">
-  {%- capture the_snippet_content -%}
-  {%- include 'socialshopwave-helper' -%}
-  {%- endcapture -%}
+    {%- section 'global-footer' -%}
 
-  {%- unless the_snippet_content contains 'Liquid error' -%}
-  {{ the_snippet_content }}
-  {%- endunless -%}
+    {%- section 'bottombar' -%}
 
+    {%- section 'inline-cart' -%}
 
-  <div class="top-header-content-container js-header-container" js-header-container>
-    {%- include 'promotion-bar' -%}
+    {%- section 'modal' -%}
 
-    {%- include 'header-message' -%}
+    {%- include 'overlay' -%}
 
-    {%- include 'header' -%}
-  </div>
-
-  {%- section 'inline-cart' -%}
-
-  <main class="main-content">
-    {{ content_for_layout }}
-  </main>
-
-  <script>
-  jQuery(function() {
-    jQuery('.swatch :radio').change(function() {
-      var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
-      var optionValue = jQuery(this).val();
-      jQuery(this)
-      .closest('form')
-      .find('.single-option-selector')
-      .eq(optionIndex)
-      .val(optionValue)
-      .trigger('change');
-    });
-  });
-  </script>
-
-  {%- include 'footer' -%}
-  {%- include 'scripts-styles-footer' -%}
-
-  {%- if product -%}
-    <script>
-      var boosterParams = boosterParams || {};
-      boosterParams.customer = {};
-      boosterParams.product = {{ product | json }};
-
-      {%- if  customer -%}
-        boosterParams.customer.email = "{{ customer.email }}";
-      {%- endif -%}
-    </script>
-  {%- endif -%}
-
-  {%- include 'criteo-tracking' -%}
-
-  {%- include 'mw_PO_objects' -%}
-
-  {%- include 'spurit_sct-theme-snippet' -%}
-
-  {%- include 'flow-checkout-mods' -%}
-  {%- include 'flow-GA-CheckoutFunnel' -%}
-
-  {%- include 'shop-api' -%}
-  {%- include 'script-tags', layout: 'theme' -%}
-  
-</body>
+  </body>
 </html>

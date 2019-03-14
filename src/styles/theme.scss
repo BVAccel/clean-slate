@@ -37,88 +37,21 @@
 //
 // BASE - global, generic, boilerplate styles
 
-// @import 'base/normalize';
-// @import 'base/reset';
-@import "base/fonts";
-@import "base/typography";
-@import "base/global";
-@import "base/grid";
-// @import 'base/utility';
+// Components
+@import 'components/global';
+@import 'components/heading';
+@import 'components/button';
+@import 'components/icon';
+@import 'components/link';
+@import 'components/svg';
+@import 'components/product-item';
+@import 'components/hero';
 
-//    _
-// \_|_)
-//   |     __,         __        _|_
-//  _|    /  |  |   | /  \_|   |  |
-// (/\___/\_/|_/ \_/|/\__/  \_/|_/|_/
-//                 /|
-//                 \|
-// LAYOUT - layout styles for the site
-
-// @import 'layout/container';
-
-//    ___
-//   / (_)
-//  |      _               _         _      _|_  ,
-//  |     / \_/|/|/|  |/\_/ \_/|/|  |/ /|/|  |  / \_
-//   \___/\_/  | | |_/|_/ \_/  | |_/|_/ | |_/|_/ \/
-//                   (|
-//
-// COMPONENTS - modules, objects, widgets
-
-// @import 'components/button';
-// @import 'components/inline-cart';
-// @import 'components/overlay';
-// @import 'components/rte';
-// @import 'components/scroll';
-@import "components/button";
-@import "components/hero";
-@import "components/brand-values";
-@import "components/feature-collection";
-@import "components/in-the-news";
-@import "components/our-story";
-@import "components/scroll";
-@import "components/product-reviews";
-@import "components/navigation";
-@import "components/nav-animations";
-@import "components/header";
-@import "components/promobar";
-@import "components/footer";
-@import "components/plp";
-@import "components/inline-cart";
-@import "components/select3";
-@import "components/pdp";
-@import "components/breadcrumbs";
-@import "components/sizing-guide";
-@import "components/super";
-@import "components/shipping-guide";
-@import "components/accordion";
-@import "components/units";
-@import "components/square-image";
-@import "components/page";
-@import "components/flow-country-picker";
-@import "components/flow-checkout";
-
-//  SECTIONS
-@import "components/hero";
-@import "components/heading";
-@import "components/text-image-section";
-@import "components/50-50-split";
-@import "components/text-overlay";
-@import "components/image-banner";
-@import "components/text-section";
-@import "components/yotpo-ugc";
-
-// @import 'pages/404';
-@import "templates/our-tech/index.scss";
-@import "templates/cart/index.scss";
-
-//    ()
-//    /\ |)    _,           _
-//   /  \|/\  / |  /|/|/|  |/
-//  /(__/|  |/\/|_/ | | |_/|_/
-//
-
-// @import 'base/shame';
+// Layout
+@import 'layout/global-header/index';
+@import 'layout/bottombar';
+@import 'layout/global-footer';
+@import 'layout/topbar';
 
 // vendor
 
