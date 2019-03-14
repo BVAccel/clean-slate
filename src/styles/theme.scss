@@ -13,8 +13,6 @@
 //                                 |/
 //
 
-@import "vendor/slick";
-
 //   ,
 //  /|   |
 //   |___|  _ |\      _  ,_   ,
@@ -54,6 +52,7 @@
 @import 'layout/topbar';
 
 // vendor
+@import "vendor/slick";
 
 #preview-bar-iframe {
   display: none;

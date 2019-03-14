@@ -1,4 +1,3 @@
-import * as FlowCart from "components/FlowCart";
 import {
   addClass,
   deepCopy,

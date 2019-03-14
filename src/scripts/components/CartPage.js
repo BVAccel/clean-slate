@@ -13,7 +13,7 @@ const cacheDom = () => {
 
 const penniesToDollars = pennies => `$${(pennies / 100).toFixed(2)}`;
 
-const updateCartSubtotal = () => {
+const updateCartSubtotal = ({ isFlowCart }) => {
   const price = !isFlowCart
     ? penniesToDollars(CartJS.cart.total_price)
     : CartJS.cart.local.total_price.label;
@@ -40,7 +40,7 @@ const updateCartOptions = qtySelected => {
     .join("");
 };
 
-const updateCartItems = () => {
+const updateCartItems = ({ isFlowCart }) => {
   if (CartJS.cart.items.length === 0) {
     addClass($dom.cart, "cart--empty");
 
@@ -143,7 +143,7 @@ const updateInternationalForm = () => {
   $('[name="BongoCheckoutForm"]').replaceWith(formHTML);
 };
 
-const addSelectListeners = () => {
+const addSelectListeners = ({ isFlowCart }) => {
   [...document.querySelectorAll(".cart select")].forEach(select =>
     select.addEventListener("change", async e => {
       const { value } = e.target;
@@ -179,7 +179,7 @@ const addSelectListeners = () => {
   );
 };
 
-const addListeners = () => {
+const addListeners = ({ isFlowCart }) => {
   // cart toggles
   $("[data-toggle-cart]").on("click", function() {
     toggleClass($dom.cart, "inline-cart--toggled");
@@ -189,9 +189,9 @@ const addListeners = () => {
 
   // cart initialize && updates
   $(document).on("cart.ready cart.requestComplete", (e, cart) => {
-    updateCartSubtotal();
-    updateCartItems();
-    addSelectListeners();
+    updateCartSubtotal({ isFlowCart });
+    updateCartItems({ isFlowCart });
+    addSelectListeners({ isFlowCart });
 
     Select3.reInit(document.querySelector(".cart"));
 
@@ -214,9 +214,9 @@ const addListeners = () => {
   });
 };
 
-export const init = () => {
+export const init = ({ isFlowCart }) => {
   console.log("%cinit: CartPage.js", "color: green;");
 
   cacheDom();
-  addListeners();
+  addListeners({ isFlowCart });
 };
