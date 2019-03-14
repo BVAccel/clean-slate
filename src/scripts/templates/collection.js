@@ -1,9 +1,18 @@
-import * as AffixInParent from "components/AffixInParent.js";
-import * as ChangeBackgroundOnProductHover from "components/ChangeBackgroundOnProductHover.js";
-import * as Parallax from "components/Parallax";
+import 'styles/templates/collection/index.scss';
 
-document.addEventListener("DOMContentLoaded", () => {
-  AffixInParent.init();
-  Parallax.init();
-  ChangeBackgroundOnProductHover.init();
+import Quickshop from 'components/Quickshop';
+import Modal from 'components/Modal';
+
+import 'components/_Collection';
+
+Quickshop.initSubscribers();
+Modal.initSubscribers();
+
+document.addEventListener('DOMContentLoaded', () => {
+  Quickshop.bindActions();
+  Modal.bindActions();
+});
+
+window.addEventListener('load', () => {
+
 });

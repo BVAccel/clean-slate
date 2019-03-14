@@ -1,10 +1,13 @@
-import Slider from "components/Slider";
-import "styles/templates/index/index.scss";
+import 'styles/templates/index/index.scss';
+
+import Slider from 'components/Slider';
 
 Slider.initSubscribers();
 
-document.addEventListener("DOMContentLoaded", () => {});
+document.addEventListener('DOMContentLoaded', () => {
 
-window.addEventListener("load", () => {
+});
+
+window.addEventListener('load', () => {
   Slider.initSliders();
 });

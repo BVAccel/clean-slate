@@ -22,50 +22,21 @@ PubSub.immediateExceptions = true;
 
 State.init();
 
-// State.initSubscribers();
-// Toggle.initSubscribers();
-// CartControls.initSubscribers();
-// QuantitySelect.initSubscribers();
+State.initSubscribers();
+Toggle.initSubscribers();
+Overlay.initSubscribers();
+InlineCart.initSubscribers();
+CartControls.initSubscribers();
+QuantitySelect.initSubscribers();
 
-document.addEventListener("DOMContentLoaded", () => {
-  SetInternational.init();
+document.addEventListener('DOMContentLoaded', () => {
   CartControls.bindActions();
   Toggle.bindActions();
+  Overlay.bindActions();
+  InlineCart.bindActions();
   QuantitySelect.bindActions();
-  DetermineDevice.init();
-  DetermineIP.init();
-  Header.init();
-  Meganav.init();
-  Select3.init();
-  PromotionBar.init();
-  Newsletter.init();
-  MobileImageCheck.init();
-  Sliders.init();
 });
 
-Flow.set("on", "ready", function() {
-  window.isFlowCart = !!Flow.getExperience();
+window.addEventListener('load', () => {
 
-  window.flow.countryPicker.createCountryPicker({});
-  window.flow.countryPicker.createCountryPicker({
-    containerId: "country-picker-mobile"
-  });
-
-  FlowCart.init();
-  InlineCart.init({ isFlowCart });
-  CartUpsell.init();
-
-  if (isFlowCart) {
-    init();
-    $("head").append(
-      '<style type="text/css">[id$="_ribbon_container"] { display: none; }</style>'
-    );
-    $('a[href="/pages/referral"]')
-      .parent()
-      .hide();
-  } else {
-    CartJS.init(window.BVA.cartJSON);
-  }
 });
-
-window.addEventListener("load", () => {});
