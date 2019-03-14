@@ -1,5 +1,5 @@
-import * as FlowCart from "components/FlowCart";
-import * as Select3 from "components/Select3";
+console.log("%cmodule: CartPage", "color: green;");
+
 import * as SetInternational from "components/SetInternational";
 import { addClass, removeClass, toggleClass } from "components/Utils";
 
@@ -167,12 +167,7 @@ const addSelectListeners = ({ isFlowCart }) => {
               index,
               parseInt(value, 10),
               {},
-              {
-                success: FlowCart.genericFlowOptions.success,
-                error: (status, error) => {
-                  error.messages.forEach(msg => alert(msg));
-                }
-              }
+              FlowCart.genericFlowOptions
             );
       }
     })
@@ -216,7 +211,6 @@ const addListeners = ({ isFlowCart }) => {
 
 export const init = ({ isFlowCart }) => {
   console.log("%cinit: CartPage.js", "color: green;");
-
   cacheDom();
   addListeners({ isFlowCart });
 };

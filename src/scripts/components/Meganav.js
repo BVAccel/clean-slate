@@ -103,20 +103,14 @@ const bindUIActions = function() {
   $(".main-desktop-header .js-header-nav--item").on("mouseenter", function(
     event
   ) {
-    var shopAllLinkHeight =
-      $(this)
-        .find(".sub-nav-shop-all-link")
-        .outerHeight() || 0;
-
     var submenuHeight =
       $(this)
         .find(".header-nav-item--sub-images-container")
         .outerHeight() +
-      shopAllLinkHeight +
+      $(this)
+        .find(".sub-nav-shop-all-link")
+        .outerHeight() +
       94;
-
-    console.log($(this), $(this).find(".sub-nav-shop-all-link"));
-
     if ($(window).width() > 992) {
       if ($dom.MegaNav.hasClass("sub-header--active")) {
         $(this)
@@ -126,8 +120,6 @@ const bindUIActions = function() {
             opacity: "1",
             height: submenuHeight
           });
-
-        console.log({ submenuHeight });
         $(this)
           .find(".header-nav-item--sub-menu")
           .removeClass("hover-between--inactive")

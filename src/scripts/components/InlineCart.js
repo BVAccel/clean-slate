@@ -163,12 +163,7 @@ const addSelectListeners = () => {
       if (value === 0) {
         !isFlowCart
           ? CartJS.removeItem(index)
-          : Flow.cart.removeItem(index, {
-              success: FlowCart.genericFlowOptions.success,
-              error: (status, error) => {
-                error.messages.forEach(msg => alert(msg));
-              }
-            });
+          : Flow.cart.removeItem(index, FlowCart.genericFlowOptions);
       } else {
         !isFlowCart
           ? CartJS.updateItemById(parseInt(productId, 10), parseInt(value, 10))
@@ -176,12 +171,7 @@ const addSelectListeners = () => {
               index,
               parseInt(value, 10),
               {},
-              {
-                success: FlowCart.genericFlowOptions.success,
-                error: (status, error) => {
-                  error.messages.forEach(msg => alert(msg));
-                }
-              }
+              FlowCart.genericFlowOptions
             );
       }
     })

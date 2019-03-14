@@ -1,4 +1,3 @@
-import * as Newsletter from "components/Newsletter";
 import Cookies from "../vendor/Cookies";
 
 let $dom = {};
