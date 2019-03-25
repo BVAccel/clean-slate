@@ -42,3 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
 
 });
+
+// PubSub.subscribe('BVA', (message, data) => console.log(message, data));
+
+// HMR
+// if (module.hot) {
+//   module.hot.accept();
+// }
+
+// if (module.hot) {
+//   module.hot.dispose(() => {
+//     // reset/undo the behavior/side effect that as possibly enabled/enacted
+
+//   });
+// }
