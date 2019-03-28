@@ -56,7 +56,9 @@
     "react": "^16.7.0",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
-    "react-select": "^2.3.0"
+    "react-select": "^2.3.0",
+    "stylelint-order": "^2.1.0",
+    "stylelint-scss": "^3.5.4"
   },
   "scripts": {
     "dev": "slate-tools start --skipPrompts",
