@@ -1,7 +1,7 @@
 {
   "plugins": [
-    './.stylelint-config/stylelint-scss',
-    './.stylelint-config/stylelint-order',
+    'stylelint-scss',
+    'stylelint-order',
   ],
   "rules": {
     'indentation': 2,

@@ -20,7 +20,9 @@
     "babel-preset-shopify": "^16.2.0",
     "eslint-plugin-shopify": "^19.0.0",
     "stylelint-config-prettier": "^3.0.4",
-    "stylelint-config-shopify": "^5.0.0"
+    "stylelint-config-shopify": "^5.0.0",
+    "stylelint-order": "^2.1.0",
+    "stylelint-scss": "^3.5.4"
   },
   "dependencies": {
     "@shopify/theme-a11y": "^1.0.1",
@@ -56,9 +58,7 @@
     "react": "^16.7.0",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
-    "react-select": "^2.3.0",
-    "stylelint-order": "^2.1.0",
-    "stylelint-scss": "^3.5.4"
+    "react-select": "^2.3.0"
   },
   "scripts": {
     "dev": "slate-tools start --skipPrompts",
