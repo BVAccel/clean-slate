@@ -4,9 +4,7 @@ import Slider from 'components/Slider';
 
 Slider.initSubscribers();
 
-document.addEventListener('DOMContentLoaded', () => {
-
-});
+document.addEventListener('DOMContentLoaded', () => {});
 
 window.addEventListener('load', () => {
   Slider.initSliders();

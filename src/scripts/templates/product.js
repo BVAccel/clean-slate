@@ -15,10 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   Modal.bindActions();
 
   Slider.initSliders()
-    .then(sliders => Slider.filterSlides())
-    .then(sliders => Slider.bindActions());
+    .then((sliders) => Slider.filterSlides())
+    .then((sliders) => Slider.bindActions());
 });
 
-window.addEventListener('load', () => {
-
-});
+window.addEventListener('load', () => {});

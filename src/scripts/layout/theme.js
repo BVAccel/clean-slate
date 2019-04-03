@@ -14,7 +14,7 @@ import State from 'state';
 import 'styles/theme.scss';
 import 'styles/theme.scss.liquid';
 
-console.log("theme running");
+console.log('theme running');
 
 PubSub.immediateExceptions = true;
 
@@ -39,9 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   QuantitySelect.bindActions();
 });
 
-window.addEventListener('load', () => {
-
-});
+window.addEventListener('load', () => {});
 
 // PubSub.subscribe('BVA', (message, data) => console.log(message, data));
 

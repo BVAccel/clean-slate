@@ -4,9 +4,7 @@ import { gql } from 'apollo-boost';
 import isBase64 from 'is-base64';
 import uniqby from 'lodash.uniqby';
 
-import {
-  productData as PRODUCT_DATA,
-  fetchProducts as FETCH_PRODUCTS, } from './query.gql';
+import { productData as PRODUCT_DATA, fetchProducts as FETCH_PRODUCTS } from './query.gql';
 
 import CollectionGrid from 'collection/CollectionGrid';
 
@@ -24,10 +22,10 @@ const updateQuery = (prev, { fetchMoreResult: next }) => {
 
     return {
       ...prev,
-      collectionProducts: uniqby([ ...oldData, ...newData ], 'handle'),
+      collectionProducts: uniqby([...oldData, ...newData], 'handle'),
       pageInfo: next.collectionByHandle.products.pageInfo,
       cursor,
-    }
+    };
   }
 
   return {
@@ -36,7 +34,7 @@ const updateQuery = (prev, { fetchMoreResult: next }) => {
   };
 };
 
-const fetchMoreProducts = apollo => {
+const fetchMoreProducts = (apollo) => {
   if (apollo.data.productsLoaded) return;
   const { data, fetchMore } = apollo;
 
@@ -47,30 +45,26 @@ const fetchMoreProducts = apollo => {
   const variables = { step, handle, cursor };
 
   if (cursor === false) {
-    apollo.client.writeData({ data: {
-      productsLoaded: true,
-      collectionProducts: data.collectionProducts,
-      _collectionProducts: data.collectionProducts,
-    }});
+    apollo.client.writeData({
+      data: {
+        productsLoaded: true,
+        collectionProducts: data.collectionProducts,
+        _collectionProducts: data.collectionProducts,
+      },
+    });
   } else {
     fetchMore({ query, updateQuery, variables });
   }
 };
 
-const App = props => {
+const App = (props) => {
   return (
     <Query query={PRODUCT_DATA}>
-      {apollo => {
+      {(apollo) => {
         const { collectionProducts: products, productsLoaded } = apollo.data;
         fetchMoreProducts(apollo);
 
-        return (
-          <CollectionGrid
-            products={products}
-            loaded={productsLoaded}
-            apollo={apollo}
-            {...props} />
-        );
+        return <CollectionGrid products={products} loaded={productsLoaded} apollo={apollo} {...props} />;
       }}
     </Query>
   );

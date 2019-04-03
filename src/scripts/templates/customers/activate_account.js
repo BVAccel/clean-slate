@@ -1,10 +1,5 @@
 import 'styles/templates/customers/activate_account.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {});
 
-});
-
-window.addEventListener('load', () => {
-
-});
-
+window.addEventListener('load', () => {});

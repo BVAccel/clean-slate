@@ -1,10 +1,5 @@
 import 'styles/templates/customers/order.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {});
 
-});
-
-window.addEventListener('load', () => {
-
-});
-
+window.addEventListener('load', () => {});

@@ -10,6 +10,6 @@ const handleToggleInlineCartClick = () => {
 };
 
 export const bindActions = () => {
-  $(dom.toggleInlineCart).on('click', handleToggleInlineCartClick)
-  $(dom.inlineCart).on('click', dom.closeInlineCart, handleCloseInlineCartClick)
+  $(dom.toggleInlineCart).on('click', handleToggleInlineCartClick);
+  $(dom.inlineCart).on('click', dom.closeInlineCart, handleCloseInlineCartClick);
 };

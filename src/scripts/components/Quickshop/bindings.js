@@ -12,7 +12,7 @@ const handleOpenQuickshopClick = ({ currentTarget: self }) => {
   const containerData = getProductContainerData(productContainer);
   const topic = bva.showModal;
   const modalData = { id: productContainer.dataset.containerId, containerData };
-  const data = { name: 'quickshop', data: { ...modalData }};
+  const data = { name: 'quickshop', data: { ...modalData } };
 
   PubSub.publish(topic, data);
 

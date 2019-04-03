@@ -13,6 +13,4 @@ document.addEventListener('DOMContentLoaded', () => {
   Modal.bindActions();
 });
 
-window.addEventListener('load', () => {
-
-});
+window.addEventListener('load', () => {});

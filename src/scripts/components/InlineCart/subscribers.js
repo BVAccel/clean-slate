@@ -1,9 +1,5 @@
 import bva from 'common/Constants';
-import {
-  openInlineCart,
-  closeInlineCart,
-  toggleInlineCart,
-  updateInlineCartUI, } from './handlers';
+import { openInlineCart, closeInlineCart, toggleInlineCart, updateInlineCartUI } from './handlers';
 
 export const initSubscribers = () => {
   PubSub.subscribe(bva.openInlineCart, (message, data) => {

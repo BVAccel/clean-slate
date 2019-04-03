@@ -3,16 +3,9 @@ import bva from 'common/Constants';
 import { updateModal } from './modal';
 import { updateCart } from './cart';
 
-import {
-  updateProductQuantity,
-  updateOptionGroupValue,
-  updateVariant,
-  updateInventory,
-  updatePrice, } from './product';
+import { updateProductQuantity, updateOptionGroupValue, updateVariant, updateInventory, updatePrice } from './product';
 
-import {
-  initLineItemContainers,
-  updateLineItemQuantity, } from './line-item';
+import { initLineItemContainers, updateLineItemQuantity } from './line-item';
 
 export const initSubscribers = () => {
   PubSub.subscribe(bva.updateInlineCartUI, (message, data) => {
