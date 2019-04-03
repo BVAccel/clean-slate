@@ -6,7 +6,7 @@
   "rules": {
     'indentation': 2,
     'number-leading-zero': 'always',
-    'string-quotes': 'double',
+    'string-quotes': 'single',
     'selector-max-id': 0,
     'selector-list-comma-newline-after': 'always',
     'at-rule-no-unknown': null,
