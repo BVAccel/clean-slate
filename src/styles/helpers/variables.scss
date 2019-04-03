@@ -7,13 +7,13 @@
 //
 // ============================================================================
 
-  $enable-box-sizing-border-box: true;
+$enable-box-sizing-border-box: true;
 
-  $oo-container-max: var(--size-main-container);
-  $oo-base-spacing-size: var(--size-spacing-base);
+$oo-container-max: var(--size-main-container);
+$oo-base-spacing-size: var(--size-spacing-base);
 
-  $oo-transition-duration: var(--duration-transition);
-  $oo-transition-timing: ease-in-out;
+$oo-transition-duration: var(--duration-transition);
+$oo-transition-timing: ease-in-out;
 
 // ============================================================================
 //   ______     ______     __         ______     ______     ______
@@ -24,18 +24,18 @@
 //
 // ===========================================================================
 
-  $color-white: var(--color-default-white);
-  $color-black: var(--color-default-black);
-  $color-gray: var(--color-default-gray);
+$color-white: var(--color-default-white);
+$color-black: var(--color-default-black);
+$color-gray: var(--color-default-gray);
 
-  $color-1: var(--color-palette-1);
-  $color-2: var(--color-palette-2);
-  $color-3: var(--color-palette-3);
-  $color-4: var(--color-palette-4);
-  $color-5: var(--color-palette-5);
+$color-1: var(--color-palette-1);
+$color-2: var(--color-palette-2);
+$color-3: var(--color-palette-3);
+$color-4: var(--color-palette-4);
+$color-5: var(--color-palette-5);
 
-  $color-body-text: var(--color-body-text);
-  $color-body-background: var(--color-body-background);
+$color-body-text: var(--color-body-text);
+$color-body-background: var(--color-body-background);
 
 // =========================================================================
 //  ______   ______     __   __     ______   ______
@@ -46,18 +46,17 @@
 //
 // =========================================================================
 
-  $font-heading: var(--font-heading);
-  $font-heading-bold-weight: var(--font-heading-bold-weight);
-  $font-primary: var(--font-primary);
-  $font-primary-light-weight: var(--font-primary-light-weight);
-  $font-primary-bold-weight: var(--font-primary-bold-weight);
+$font-heading: var(--font-heading);
+$font-heading-bold-weight: var(--font-heading-bold-weight);
+$font-primary: var(--font-primary);
+$font-primary-light-weight: var(--font-primary-light-weight);
+$font-primary-bold-weight: var(--font-primary-bold-weight);
 
-  $font-size-base:    var(--size-font-base);
-  $font-size-minor:   var(--size-font-minor);
-  $font-size-major:   var(--size-font-major);
-  $font-size-super:   var(--size-font-super);
-  $font-line-height:  var(--size-line-height-base);
-
+$font-size-base: var(--size-font-base);
+$font-size-minor: var(--size-font-minor);
+$font-size-major: var(--size-font-major);
+$font-size-super: var(--size-font-super);
+$font-line-height: var(--size-line-height-base);
 
 // =========================================================================
 //  __    __     ______
@@ -68,14 +67,14 @@
 //
 // =========================================================================
 
-  $breakpoints: (
-    480px  xs xsmall,
-    600px  s small,
-    768px  m medium,
-    992px  l large,
-    1280px xl xlarge,
-    1440px xxl xxlarge,
-  );
+$breakpoints: (
+  480px xs xsmall,
+  600px s small,
+  768px m medium,
+  992px l large,
+  1280px xl xlarge,
+  1440px xxl xxlarge
+);
 
 // =========================================================================
 //  ______     ______     __     _____
@@ -86,14 +85,14 @@
 //
 // =========================================================================
 
-  $columns: 12;
+$columns: 12;
 
-  $named-widths: (
-    1: full,
-    .5: half,
-    .333: third,
-    .25: quarter,
-    .2: fifth,
-    .166: sixth,
-    .125: eighth,
-  );
+$named-widths: (
+  1: full,
+  0.5: half,
+  0.333: third,
+  0.25: quarter,
+  0.2: fifth,
+  0.166: sixth,
+  0.125: eighth
+);
