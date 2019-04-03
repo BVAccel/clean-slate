@@ -14,6 +14,8 @@ import State from 'state';
 import 'styles/theme.scss';
 import 'styles/theme.scss.liquid';
 
+console.log("theme running");
+
 PubSub.immediateExceptions = true;
 
 // Common a11y fixes
