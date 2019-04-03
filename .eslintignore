@@ -3,3 +3,4 @@ test/
 src/assets/
 slate.config.js
 node_modules/
+markdownlint.json
