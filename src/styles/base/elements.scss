@@ -32,15 +32,15 @@ li {
 button {
   cursor: pointer;
   padding: 0;
-  border: none;
+  border: 0;
   background: none;
 }
 
 input {
   font-family: $color-body-text;
 
-  &[type="number"]::-webkit-inner-spin-button,
-  &[type="number"]::-webkit-outer-spin-button {
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
     opacity: 1;
   }
 

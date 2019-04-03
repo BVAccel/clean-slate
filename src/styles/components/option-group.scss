@@ -55,7 +55,7 @@
   background-color: darkred;
 }
 
-.oo-input--radio[name="Size"] + .swatch {
+.oo-input--radio[name='Size'] + .swatch {
   position: relative;
 
   &::after {
@@ -68,21 +68,21 @@
 }
 
 .swatch-extra-small::after {
-  content: "XS";
+  content: 'XS';
 }
 
 .swatch-small::after {
-  content: "S";
+  content: 'S';
 }
 
 .swatch-medium::after {
-  content: "M";
+  content: 'M';
 }
 
 .swatch-large::after {
-  content: "L";
+  content: 'L';
 }
 
 .swatch-xl::after {
-  content: "XL";
+  content: 'XL';
 }
