@@ -1,32 +1,37 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 
 // Uncomment to include normalize.css
-@import '~normalize.css/normalize';
+@import "~normalize.css/normalize";
 
 // Helpers
-@import 'helpers/index';
+@import "helpers/index";
 
 // Base
-@import 'base/index';
+@import "base/index";
+
+// Blocks
+// @import "blocks/global-primary-navigation";
+// @import "blocks/global-secondary-navigation";
+// @import "blocks/global-header-search";
 
 // Components
-@import 'components/global';
-@import 'components/heading';
-@import 'components/button';
-@import 'components/icon';
-@import 'components/link';
-@import 'components/svg';
-@import 'components/product-item';
-@import 'components/hero';
+@import "components/global";
+@import "components/heading";
+@import "components/button";
+@import "components/icon";
+@import "components/link";
+@import "components/svg";
+@import "components/product-item";
+@import "components/hero";
 
 // Layout
-@import 'layout/global-header/index';
-@import 'layout/bottombar';
-@import 'layout/global-footer';
-@import 'layout/topbar';
+@import "layout/global-header/index";
+@import "layout/bottombar";
+@import "layout/global-footer";
+@import "layout/topbar";
 
 // Shame
-@import 'base/shame';
+@import "base/shame";
 
 #preview-bar-iframe {
   display: none;

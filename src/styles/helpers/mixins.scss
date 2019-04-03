@@ -3,12 +3,12 @@
  *
  *  Accepts:
  *  - $value: {String||Number} Breakpoint name (list found in variables.scss)
- *  - $direction: {String} direction of media query (default: 'min')
+ *  - $direction: {String} direction of media query (default: "min")
  *
  *  Usage:
  *
  *  .selector {
- *    @include mq('xs') {
+ *    @include mq("xs") {
  *      color: red;
  *    }
  *    @include mq(992px) {
@@ -18,11 +18,10 @@
  *
  */
 
-@mixin mq($value, $direction: 'min') {
+@mixin mq($value, $direction: "min") {
   @if type-of($value) == number and unitless($value) {
     $value: $value + "px";
   }
-
   @if type-of($value) == string {
     @each $breakpoint in $breakpoints {
       @if index($breakpoint, $value) != null {
