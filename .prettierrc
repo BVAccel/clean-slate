@@ -5,7 +5,6 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
-  "parser": "babel",
   "semi": true,
   "requirePragma": false,
   "proseWrap": "preserve",
