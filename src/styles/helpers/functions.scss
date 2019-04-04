@@ -9,11 +9,11 @@
 
 @function rem($value) {
   @if (type-of($value) == number) {
-    @if (unit($value) != "px") {
-      @error "`#{$value}` needs to be a pixel value.";
+    @if (unit($value) != 'px') {
+      @error '`#{$value}` needs to be a pixel value.';
     }
   } @else {
-    @error "`#{$value}` needs to be a number.";
+    @error '`#{$value}` needs to be a number.';
   }
 
   @return $value / $oo-size-base * 1rem;
@@ -40,17 +40,17 @@
   $n: 1;
   // $number must be a number
   @if type-of($number) != number {
-    @warn "#{ $number } is not a number.";
+    @warn '#{ $number } is not a number.';
 
     @return $number;
   }
   // $digits must be a unitless number
   @if type-of($digits) != number {
-    @warn "#{ $digits } is not a number.";
+    @warn '#{ $digits } is not a number.';
 
     @return $number;
   } @else if not unitless($digits) {
-    @warn "#{ $digits } has a unit.";
+    @warn '#{ $digits } has a unit.';
 
     @return $number;
   }
@@ -66,7 +66,7 @@
   } @else if $mode == floor {
     @return floor($number * $n) / $n;
   } @else {
-    @warn "#{ $mode } is undefined keyword.";
+    @warn '#{ $mode } is undefined keyword.';
 
     @return $number;
   }
