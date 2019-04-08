@@ -12,7 +12,7 @@ const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([{
   to: '[name].min.[ext]',
   from: { glob: scriptPaths },
   flatten: true,
-  transform: (code, path) => babel.transform(code, { presets: ['minify'] }).code,
+  transform: (code) => babel.transform(code, { presets: ['minify'] }).code,
 }]);
 
 const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
