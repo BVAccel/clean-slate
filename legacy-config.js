@@ -9,11 +9,10 @@ const scriptName = process.env.LEGACY_SCRIPT_NAME || 'legacy';
 const scriptFilename = `${scriptName}.js.liquid`;
 
 const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([{
-  to: '/',
+  to: '[name].min.[ext]',
   from: { glob: scriptPaths },
   flatten: true,
   transform: (code, path) => babel.transform(code, { presets: ['minify'] }).code,
-  transformPath: (targetPath, absolutePath) => path.resolve(targetPath.replace('.js', '.min.js')),
 }]);
 
 const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
