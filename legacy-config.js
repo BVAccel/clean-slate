@@ -8,7 +8,8 @@ const scriptPaths = `${path.resolve('./src/assets/scripts/legacy')}/**/*.js`;
 const scriptName = process.env.LEGACY_SCRIPT_NAME || 'legacy';
 const scriptFilename = `${scriptName}.js.liquid`;
 
-const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([
+const minLegacySingleScriptsPlugin = new CopyWebpackPlugin(
+[
   {
     to: '[name].min.[ext]',
     from: { glob: scriptPaths },
@@ -17,7 +18,8 @@ const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([
   },
 ]);
 
-const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
+const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin(
+{
   files: [
     {
       src: glob.sync(scriptPaths),
