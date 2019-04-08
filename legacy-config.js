@@ -17,8 +17,7 @@ const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([
   },
 ]);
 
-const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin(
-{
+const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
   files: [
     {
       src: glob.sync(scriptPaths),
