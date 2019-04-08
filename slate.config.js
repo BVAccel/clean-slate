@@ -4,7 +4,7 @@
 // For more information, visit https://github.com/Shopify/slate/wiki/Slate-Configuration
 
 const path = require('path');
-const { HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
+const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const graphqlLoader = require('graphql-tag/loader');
 const { minLegacySingleScriptsPlugin, minLegacyMegaScriptPlugin } = require('./legacy-config');
