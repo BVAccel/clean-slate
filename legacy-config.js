@@ -30,7 +30,4 @@ const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
   ],
 });
 
-module.exports = {
-  minLegacySingleScriptsPlugin,
-  minLegacyMegaScriptPlugin,
-};
+module.exports = { minLegacySingleScriptsPlugin, minLegacyMegaScriptPlugin };
