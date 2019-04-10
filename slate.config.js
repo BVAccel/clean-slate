@@ -7,6 +7,7 @@ const path = require('path');
 const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const graphqlLoader = require('graphql-tag/loader');
+const { minLegacySingleScriptsPlugin, minLegacyMegaScriptPlugin } = require('./legacy-config');
 
 const sectionsBase = 'core';
 const snippetsBase = 'core';
@@ -32,8 +33,20 @@ const plugins = [
       from: 'snippets/**/*',
       to: '../snippets/',
       flatten: true
-    }
+    },
   ], { ignore: [ 'core/*' ] }),
+  minLegacyMegaScriptPlugin,
+  minLegacySingleScriptsPlugin,
+];
+
+const rules = [
+  {
+    test: /\.(graphql|gql)$/,
+    exclude: /node_modules/,
+    use: [
+      { loader: 'graphql-tag/loader' }
+    ]
+  }
 ];
 
 const alias = {
@@ -54,6 +67,7 @@ module.exports = {
     externals,
     plugins,
     resolve: { alias },
+    module: { rules },
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {
@@ -67,16 +81,5 @@ module.exports = {
         },
       },
     },
-    module: {
-      rules: [
-        {
-          test: /\.(graphql|gql)$/,
-          exclude: /node_modules/,
-          use: [
-            { loader: 'graphql-tag/loader' }
-          ]
-        }
-      ]
-    }
   },
 };
