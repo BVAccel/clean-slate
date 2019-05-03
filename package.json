@@ -25,7 +25,8 @@
     "stylelint-config-prettier": "^3.0.4",
     "stylelint-config-shopify": "^5.0.0",
     "stylelint-order": "^2.1.0",
-    "stylelint-scss": "^3.5.4"
+    "stylelint-scss": "^3.5.4",
+    "terser": "^3.17.0"
   },
   "dependencies": {
     "@shopify/theme-a11y": "^1.0.1",

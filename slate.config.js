@@ -18,23 +18,26 @@ const externals = {
 
 const plugins = [
   new ProvidePlugin({
-    '$': 'jquery',
-    'jQuery': 'jquery',
+    $: 'jquery',
+    jQuery: 'jquery',
     'window.$': 'jquery',
     'window.jQuery': 'jquery',
   }),
-  new CopyWebpackPlugin([
-    {
-      from: 'sections/**/*',
-      to: '../sections/',
-      flatten: true
-    },
-    {
-      from: 'snippets/**/*',
-      to: '../snippets/',
-      flatten: true
-    },
-  ], { ignore: [ 'core/*' ] }),
+  new CopyWebpackPlugin(
+    [
+      {
+        from: 'sections/**/*',
+        to: '../sections/',
+        flatten: true,
+      },
+      {
+        from: 'snippets/**/*',
+        to: '../snippets/',
+        flatten: true,
+      },
+    ],
+    { ignore: ['core/*'] },
+  ),
   minLegacyMegaScriptPlugin,
   minLegacySingleScriptsPlugin,
 ];
@@ -43,19 +46,17 @@ const rules = [
   {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,
-    use: [
-      { loader: 'graphql-tag/loader' }
-    ]
-  }
+    use: [{ loader: 'graphql-tag/loader' }],
+  },
 ];
 
 const alias = {
-  'styles': path.resolve('./src/styles'),
-  'scripts': path.resolve('./src/scripts'),
-  'common': path.resolve('./src/scripts/common'),
-  'components': path.resolve('./src/scripts/components'),
-  'state': path.resolve('./src/scripts/state'),
-  'collection': path.resolve('./src/scripts/components/_Collection/components'),
+  styles: path.resolve('./src/styles'),
+  scripts: path.resolve('./src/scripts'),
+  common: path.resolve('./src/scripts/common'),
+  components: path.resolve('./src/scripts/components'),
+  state: path.resolve('./src/scripts/state'),
+  collection: path.resolve('./src/scripts/components/_Collection/components'),
 };
 
 module.exports = {
@@ -77,7 +78,7 @@ module.exports = {
             name: 'vendor',
             chunks: 'all',
             enforce: true,
-          }
+          },
         },
       },
     },

@@ -1,10 +1,11 @@
-const babel = require('@babel/core');
+// const babel = require('@babel/core');
+const Terser = require('terser');
 const path = require('path');
 const glob = require('glob');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
-const scriptPaths = `${path.resolve('./src/assets/scripts/legacy')}/**/*.js`;
+const scriptPaths = `${path.resolve('./src/assets/scripts/legacy')}/*.js`;
 const scriptName = process.env.LEGACY_SCRIPT_NAME || 'legacy';
 const scriptFilename = `${scriptName}.js.liquid`;
 
@@ -13,7 +14,8 @@ const minLegacySingleScriptsPlugin = new CopyWebpackPlugin([
     to: '[name].min.[ext]',
     from: { glob: scriptPaths },
     flatten: true,
-    transform: (code) => babel.transform(code, { presets: ['minify'] }).code,
+    // transform: (code) => babel.transform(code, { presets: ['minify'] }).code,
+    transform: (code) => Terser.minify(code.toString()).code,
   },
 ]);
 
@@ -23,7 +25,8 @@ const minLegacyMegaScriptPlugin = new MergeIntoSingleFilePlugin({
       src: glob.sync(scriptPaths),
       dest: (code) => {
         const data = {};
-        data[scriptFilename] = babel.transform(code, { presets: ['minify'] }).code;
+        // data[scriptFilename] = babel.transform(code, { presets: ['minify'] }).code;
+        data[scriptFilename] = Terser.minify(code.toString()).code;
         return data;
       },
     },
