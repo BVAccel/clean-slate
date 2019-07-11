@@ -55,7 +55,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.differencewith": "^4.5.0",
     "lodash.isequal": "^4.5.0",
-    "lodash.merge": "^4.6.1",
+    "lodash.merge": "^4.6.2",
     "lodash.uniqby": "^4.7.0",
     "lodash.uniqwith": "^4.5.0",
     "normalize.css": "^7.0.0",
