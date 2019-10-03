@@ -1,10 +1,11 @@
-[![Build Status](https://travis-ci.org/Shopify/starter-theme.svg?branch=master)](https://travis-ci.org/Shopify/starter-theme)
+# Clean Slate
 
-# Starter Theme
+## ⚠ Clean Slate on Low Maintenance
+Due to project priority and resource constraints, this project is currently on low maintenance. We recognize that there are a lot of activities around this package. However, we are unable to accommodate the maintenance this project requires.
 
-> **Starter Theme and [Slate v1](https://github.com/Shopify/slate) are currently in beta!** You should expect potentially breaking changes between updates and more bugs than a finalized release. Slate v1.0 has not yet been tested on Windows.
+> **Clean Slate and [Slate v1](https://github.com/Shopify/slate) are currently in beta!** You should expect potentially breaking changes between updates and more bugs than a finalized release. Slate v1.0 has not yet been tested on Windows.
 
-Starter Theme represents the Shopify Themes Team's opinionated starting point for new Slate theme projects. It strives to include up-to-date best practices and solutions that we have deemed needed for the majority of themes we build. It is a reflection of what’s possible when building a theme!
+Clean Slate represents the BVA Team's opinionated starting point for new Shopify Slate theme projects. It strives to include up-to-date best practices and solutions that we have deemed needed for the majority of themes we build. It is a reflection of what’s possible when building a theme!
 
 ## Intentional lack of styles
 
@@ -25,7 +26,7 @@ You'll want to ensure you have the following already installed on your local mac
 To get started with Starter Theme, run the following command in your terminal:
 
 ```
-$ yarn create slate-theme my-new-theme
+$ yarn create slate-theme my-new-theme BVAccel/clean-slate
 ```
 
 For more information on connecting your new project with a Shopify store, see the [Slate docs](https://github.com/Shopify/slate/wiki/3.-Connect-to-your-store).
