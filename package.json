@@ -51,7 +51,7 @@
     "graphql-tag": "^2.10.1",
     "is-base64": "^0.1.0",
     "lazysizes": "^4.1.5",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
     "lodash.differencewith": "^4.5.0",
     "lodash.isequal": "^4.5.0",
